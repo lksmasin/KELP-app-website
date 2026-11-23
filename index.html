@@ -1,146 +1,311 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KELP | Katalog filmů, vyhledávač streamů a přehrávač</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="icon" type="image/png" href="assets/logo.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KELP | Otevřené mediální centrum</title>
+  <meta name="description" content="KELP je otevřené mediální centrum pro Android TV, Android, Linux a Windows. Katalog z TMDb, otevřené zdroje, offline režim, Živá TV s EPG a E2EE synchronizace bez účtu.">
+  <meta property="og:title" content="KELP — Otevřené mediální centrum">
+  <meta property="og:description" content="Nativní aplikace pro Android TV, Android, Linux a Windows. Čisté OLED rozhraní, otevřené protokoly, offline stahování a šifrovaná synchronizace bez účtu.">
+  <meta property="og:image" content="https://kelp.page/assets/screenshots/tv-home.webp">
+  <meta property="og:url" content="https://kelp.page/">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header>
-        <a href="index.html" class="logo-container">
-            <img src="assets/logo.png" alt="KELP Logo">
-            <span>KELP</span>
-        </a>
-        <nav>
-            <ul>
-                <li><a href="#features">Funkce</a></li>
-                <li><a href="download.html#changelog">Změny</a></li>
-                <li><a href="faq.html">FAQ</a></li>
-                <li><a href="addon-docs.html">Addon Docs</a></li>
-            </ul>
-        </nav>
-        <a href="download.html" class="btn-download">Stáhnout</a>
-    </header>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand-link" aria-label="KELP domů">
+        <img src="assets/kelp-logo.svg" alt="KELP" class="brand-logo" width="67" height="24">
+      </a>
+      <nav class="site-nav" aria-label="Hlavní navigace">
+        <a href="index.html" class="nav-pill active">Přehled</a>
+        <a href="download.html" class="nav-pill">Stáhnout</a>
+        <a href="faq.html" class="nav-pill">FAQ</a>
+        <a href="addon-docs.html" class="nav-pill">Doplňky</a>
+      </nav>
+      <div class="header-actions">
+        <a href="download.html" class="btn btn-primary btn-sm header-cta">Stáhnout v2.0</a>
+        <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-label="Otevřít menu">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </div>
+    <nav class="mobile-menu" data-mobile-menu aria-label="Mobilní navigace">
+      <a href="index.html" class="active">Přehled</a>
+      <a href="download.html">Stáhnout</a>
+      <a href="faq.html">FAQ</a>
+      <a href="addon-docs.html">Doplňky</a>
+      <a href="disclaimer.html">Právní doložka</a>
+    </nav>
+  </header>
 
+  <main>
     <section class="hero">
-        <h1>Katalog. Vyhledávač. <br>Přehrávač. <span style="color: var(--primary)">Vše v jednom.</span></h1>
-        <p><strong>K</strong>elp <strong>E</strong>ntertains <strong>L</strong>azy <strong>P</strong>eople. KELP je katalog filmů a seriálů, který vyhledá streamy na vašem úložišti — ať už lokálním, nebo přes doplněk — a rovnou je přehraje. Žádné zdlouhavé hledání, prostě jen sledujte.</p>
-        <div class="hero-btns">
-            <a href="download.html" class="btn-primary">Stáhnout zdarma</a>
-            <a href="#features" class="btn-secondary">Více informací</a>
+      <div class="container">
+        <div class="hero-copy">
+          <div class="meta-eyebrow">
+            Android TV<span class="sep">•</span>Android<span class="sep">•</span>Linux<span class="sep">•</span>Windows<span class="sep">•</span><span style="white-space: nowrap;">CZ / SK / EN</span>
+          </div>
+          <h1>Otevřené mediální centrum pro vaše vlastní zdroje.</h1>
+          <p class="hero-lead">
+            Katalog z TMDb, paralelní výběr streamů, offline stahování, Živá TV s EPG a šifrovaná synchronizace bez účtu. Žádný předinstalovaný obsah ani reklamy.
+          </p>
+          <div class="hero-actions">
+            <a href="download.html" class="btn btn-primary">
+              <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v12m0 0l-4-4m4 4l4-4M5 20h14"/></svg>
+              Stáhnout KELP
+            </a>
+            <a href="addon-docs.html" class="btn">Dokumentace doplňků</a>
+          </div>
         </div>
-        
-        <div class="hero-mockup">
-            <img src="assets/screenshots/home_page.png" alt="KELP Hlavní obrazovka">
+
+        <div class="stage" data-stage tabindex="0" aria-label="Ukázky prostředí aplikace KELP">
+          <div class="stage-toolbar">
+            <div class="pill-group" role="tablist" aria-label="Filtrovat podle platformy">
+              <button type="button" class="filter-pill active" data-platform-filter="all">Vše (7)</button>
+              <button type="button" class="filter-pill" data-platform-filter="tv">Android TV</button>
+              <button type="button" class="filter-pill" data-platform-filter="desktop">Desktop</button>
+              <button type="button" class="filter-pill" data-platform-filter="mobile">Android Mobil</button>
+            </div>
+            <span class="section-sub mono">Kliknutím zvětšíte snímek</span>
+          </div>
+
+          <div class="stage-viewport" data-stage-viewport>
+            <img src="assets/screenshots/tv-home.webp" alt="Android TV — Domovská obrazovka" data-stage-img width="1920" height="1080">
+          </div>
+
+          <div class="stage-inspector">
+            <div class="inspector-text">
+              <div class="inspector-title" data-stage-title>Android TV — Domovská obrazovka</div>
+              <div class="inspector-desc" data-stage-desc>10-foot ovládání D-padem, levě ukotvená 16:9 karta s Clear Art logem a ztmavení okolí na čisté OLED černé.</div>
+            </div>
+            <div class="inspector-controls">
+              <span class="inspector-counter" data-stage-count>1 / 7</span>
+              <button type="button" class="icon-btn" data-stage-prev aria-label="Předchozí snímek">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+              </button>
+              <button type="button" class="icon-btn" data-stage-next aria-label="Další snímek">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="thumb-strip">
+            <button type="button" class="thumb-btn active"
+              data-shot
+              data-platform="tv"
+              data-src="assets/screenshots/tv-home.webp"
+              data-title="Android TV — Domovská obrazovka"
+              data-desc="10-foot ovládání D-padem, levě ukotvená 16:9 karta s Clear Art logem a ztmavení okolí na čisté OLED černé.">
+              <img src="assets/screenshots/tv-home.webp" alt="Android TV Domů" loading="lazy">
+              <span class="thumb-label">TV • Domů</span>
+            </button>
+
+            <button type="button" class="thumb-btn"
+              data-shot
+              data-platform="tv"
+              data-src="assets/screenshots/tv-detail.webp"
+              data-title="Android TV — Detail titulu"
+              data-desc="Celoobrazovkový backdrop s Clear Art logem, synopsí a 3 monochromatickými akcemi bez přehlcených tlačítek.">
+              <img src="assets/screenshots/tv-detail.webp" alt="Android TV Detail" loading="lazy">
+              <span class="thumb-label">TV • Detail</span>
+            </button>
+
+            <button type="button" class="thumb-btn"
+              data-shot
+              data-platform="tv"
+              data-src="assets/screenshots/tv-search.webp"
+              data-title="Android TV — Vyhledávání"
+              data-desc="Kompaktní 6×6 klávesnice, historie dotazů a 4sloupcová mřížka 2:3 plakátů s podporou HW klávesnice.">
+              <img src="assets/screenshots/tv-search.webp" alt="Android TV Hledání" loading="lazy">
+              <span class="thumb-label">TV • Hledání</span>
+            </button>
+
+            <button type="button" class="thumb-btn"
+              data-shot
+              data-platform="desktop"
+              data-src="assets/screenshots/desktop-home.webp"
+              data-title="Desktop (Linux / Windows) — Přehled"
+              data-desc="Nulové ztmavování, širokoúhlé 16:9 karty, nativní HiDPI detekce a rychlé škálování přes Ctrl +/-/0.">
+              <img src="assets/screenshots/desktop-home.webp" alt="Desktop Domů" loading="lazy">
+              <span class="thumb-label">Desktop • Domů</span>
+            </button>
+
+            <button type="button" class="thumb-btn"
+              data-shot
+              data-platform="desktop"
+              data-src="assets/screenshots/desktop-detail.webp"
+              data-title="Desktop — Detail titulu"
+              data-desc="Přímá akční tlačítka pro přehrání, offline stažení, kolekce i označení zhlédnutí bez mezikroků.">
+              <img src="assets/screenshots/desktop-detail.webp" alt="Desktop Detail" loading="lazy">
+              <span class="thumb-label">Desktop • Detail</span>
+            </button>
+
+            <button type="button" class="thumb-btn"
+              data-shot
+              data-platform="desktop"
+              data-src="assets/screenshots/desktop-streams.webp"
+              data-title="Výběr streamu — MediaTagParser"
+              data-desc="Automatická detekce rozlišení, HDR/DV, kodeků, zvuku a CZ/SK dabingu či titulků s monochromatickou inverzí.">
+              <img src="assets/screenshots/desktop-streams.webp" alt="Výběr streamu" loading="lazy">
+              <span class="thumb-label">Streamy</span>
+            </button>
+
+            <button type="button" class="thumb-btn"
+              data-shot
+              data-platform="mobile"
+              data-src="assets/screenshots/mobile-showcase.webp"
+              data-title="Android Mobil &amp; Tablet — Dotykové UI"
+              data-desc="Úvodní průvodce, domovská obrazovka a detail epizod s offline stažením, PiP, dotykovými gesty a QR synchronizací.">
+              <img src="assets/screenshots/mobile-showcase.webp" alt="Android Mobil" loading="lazy">
+              <span class="thumb-label">Mobil</span>
+            </button>
+          </div>
         </div>
+      </div>
     </section>
 
-    <section class="features" id="features">
-        <h2 class="section-title">Jak to funguje?</h2>
-        <p style="text-align: center; max-width: 700px; margin: 0 auto 3rem; color: var(--on-surface-variant);">
-            Vyberte si film nebo seriál z katalogu → aplikace vyhledá dostupné streamy na vašem úložišti → klikněte a sledujte. Tak jednoduché to je.
-        </p>
-        <div class="features-grid">
-            <div class="feature-card">
-                <i class="fas fa-film"></i>
-                <h3>Katalog filmů a seriálů</h3>
-                <p>Procházejte tisíce titulů s plakáty, hodnocením a popisky. Katalog čerpá z TMDb a Trakt.tv a je vždy aktuální.</p>
-            </div>
-            <div class="feature-card">
-                <i class="fas fa-search"></i>
-                <h3>Vyhledávač streamů</h3>
-                <p>Ke zvolenému titulu aplikace automaticky prohledá vaše úložiště — lokální složku nebo připojený doplněk — a najde dostupné streamy.</p>
-            </div>
-            <div class="feature-card">
-                <i class="fas fa-play-circle"></i>
-                <h3>Vestavěný přehrávač</h3>
-                <p>Nalezený stream rovnou přehrajete v aplikaci. Podpora titulků, změna rychlosti, skip intro — vše na jednom místě.</p>
-            </div>
-            <div class="feature-card">
-                <i class="fas fa-puzzle-piece"></i>
-                <h3>Doplňky (Addony)</h3>
-                <p>Připojte vlastní úložiště přes JSON doplňky. Komunita tvoří nové addony a vy si jen vyberete, které chcete používat.</p>
-            </div>
-            <div class="feature-card">
-                <i class="fas fa-hdd"></i>
-                <h3>Lokální úložiště</h3>
-                <p>Máte filmy na disku? Přidejte lokální složku a KELP je zařadí do katalogu a přehraje jako každý jiný stream.</p>
-            </div>
-            <div class="feature-card">
-                <i class="fas fa-users"></i>
-                <h3>Více profilů</h3>
-                <p>Každý člen rodiny má vlastní profil s vlastní historií sledování, seznamem oblíbených a pokračováním v přehrávání.</p>
-            </div>
-            <div class="feature-card">
-                <i class="fas fa-tv"></i>
-                <h3>Chromecast</h3>
-                <p>Přeneste film z mobilu nebo počítače přímo na televizi. Stačí vybrat Chromecast zařízení a sledovat.</p>
-            </div>
-            <div class="feature-card">
-                <i class="fas fa-laptop"></i>
-                <h3>Linux, Windows, Android</h3>
-                <p>Jedna aplikace na všech vašich zařízeních. Synchronizujte pokrok přes Trakt.tv a pokračujte odkudkoli.</p>
-            </div>
-            <div class="feature-card">
-                <i class="fab fa-discord"></i>
-                <h3>Discord Rich Presence</h3>
-                <p>Automaticky ukažte přátelům na Discordu, jaký film nebo seriál právě sledujete.</p>
-            </div>
+    <section class="section" id="features">
+      <div class="container">
+        <div class="section-head">
+          <h2>Základní funkce</h2>
+          <span class="section-sub">Otevřené protokoly  •  Nativní výkon na všech obrazovkách</span>
         </div>
+
+        <div class="cap-grid">
+          <article class="cap-card">
+            <div class="cap-top">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 10h8M8 14h5"/></svg>
+              <span class="badge">STREMIO • JSON • WEBDAV</span>
+            </div>
+            <h3>Otevřené zdroje</h3>
+            <p>Připojte Stremio v3, deklarativní JSON doplňky, WebDAV server nebo lokální složku na disku.</p>
+          </article>
+
+          <article class="cap-card">
+            <div class="cap-top">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><polygon points="6,4 20,12 6,20" fill="currentColor" stroke="none"/></svg>
+              <span class="badge">MEDIA3 • LIBMPV</span>
+            </div>
+            <h3>Nativní přehrávač</h3>
+            <p>AFR, kapitoly, Přeskočit intro, Další díl, vlastní styl titulků a dotyková gesta s PiP na mobilu.</p>
+          </article>
+
+          <article class="cap-card">
+            <div class="cap-top">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v12m0 0l-4-4m4 4l4-4M5 20h14"/></svg>
+              <span class="badge">HTTP RANGE • HLS</span>
+            </div>
+            <h3>Offline stahování</h3>
+            <p>Jednotlivé filmy i celé série s obnovením přenosu, titulky, limitem úložiště a předností lokální kopie.</p>
+          </article>
+
+          <article class="cap-card">
+            <div class="cap-top">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 4v5c0 4.5-3 8-7 9-4-1-7-4.5-7-9V7l7-4z"/></svg>
+              <span class="badge">AES-256-GCM • LAN</span>
+            </div>
+            <h3>E2EE synchronizace</h3>
+            <p>Bez uživatelského účtu. Párování QR kódem, lokální přenos „Na TV“ a volitelný zero-knowledge relay.</p>
+          </article>
+
+          <article class="cap-card">
+            <div class="cap-top">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="12" rx="2"/><path d="M8 3l4 4 4-4"/></svg>
+              <span class="badge">M3U • XTREAM • XMLTV</span>
+            </div>
+            <h3>Živá TV &amp; EPG</h3>
+            <p>Vlastní playlisty, skupiny kanálů, programový průvodce i zpětné přehrání z archivu.</p>
+          </article>
+
+          <article class="cap-card">
+            <div class="cap-top">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M3 19c1.2-3.5 10.8-3.5 12 0"/><circle cx="17" cy="9" r="2.5"/><path d="M16 19c.6-2 3.5-2.8 5-1.5"/></svg>
+              <span class="badge">PROFILY • KOLEKCE</span>
+            </div>
+            <h3>Profily a knihovna</h3>
+            <p>Oddělené dospělé i dětské profily, rozkoukané tituly, vlastní kolekce a záloha do JSON.</p>
+          </article>
+        </div>
+      </div>
     </section>
 
-    <section class="gallery" id="gallery">
-        <h2 class="section-title">Pohled do aplikace</h2>
-        <div class="screenshot-container">
-            <div class="screenshot-item">
-                <img src="assets/screenshots/content_screen.png" alt="Detail filmu">
-            </div>
-            <div class="screenshot-item">
-                <img src="assets/screenshots/player.png" alt="Přehrávač">
-            </div>
-            <div class="screenshot-item">
-                <img src="assets/screenshots/library.png" alt="Knihovna">
-            </div>
-            <div class="screenshot-item">
-                <img src="assets/screenshots/addons.png" alt="Doplňky">
-            </div>
-            <div class="screenshot-item">
-                <img src="assets/screenshots/settings.png" alt="Nastavení">
-            </div>
-            <div class="screenshot-item">
-                <img src="assets/screenshots/profile_selection.png" alt="Výběr profilu">
-            </div>
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Stáhnout KELP v2.0</h2>
+          <a href="download.html" class="section-sub" style="text-decoration: underline; text-underline-offset: 3px;">Požadavky a přehled změn</a>
         </div>
-        <p style="text-align: center; margin-top: 2rem; color: var(--on-surface-variant)">Posunutím do stran zobrazíte další snímky</p>
+
+        <div class="dl-grid">
+          <a href="download.html#platforms" class="dl-card">
+            <div class="dl-card-head">
+              <svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 20h8M12 17v3"/></svg>
+              <span class="badge">10-foot</span>
+            </div>
+            <h3>Android TV</h3>
+            <div class="dl-meta">Google Play  •  APK</div>
+          </a>
+
+          <a href="download.html#platforms" class="dl-card">
+            <div class="dl-card-head">
+              <svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></svg>
+              <span class="badge">Touch</span>
+            </div>
+            <h3>Android Mobil</h3>
+            <div class="dl-meta">Google Play  •  APK</div>
+          </a>
+
+          <a href="download.html#platforms" class="dl-card">
+            <div class="dl-card-head">
+              <svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M2 20h20"/></svg>
+              <span class="badge">x64</span>
+            </div>
+            <h3>Linux</h3>
+            <div class="dl-meta">ZIP  •  libmpv</div>
+          </a>
+
+          <a href="download.html#platforms" class="dl-card">
+            <div class="dl-card-head">
+              <svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg>
+              <span class="badge">x64</span>
+            </div>
+            <h3>Windows</h3>
+            <div class="dl-meta">ZIP  •  mpv-2.dll</div>
+          </a>
+        </div>
+      </div>
     </section>
+  </main>
 
-    <section class="discord-section">
-        <h2 class="section-title">Připojte se k naší komunitě</h2>
-        <p>Sledujte novinky, diskutujte o funkcích a získejte podporu na našem Discord serveru.</p>
-        <div class="discord-container">
-            <iframe src="https://canary.discord.com/widget?id=1374461716573978734&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
-        </div>
-    </section>
+  <div class="lightbox" data-lightbox aria-hidden="true" role="dialog" aria-label="Detail snímku obrazovky">
+    <div class="lightbox-inner">
+      <img src="" alt="" data-lightbox-img>
+      <div class="lightbox-bar">
+        <span data-lightbox-caption></span>
+        <button type="button" class="btn btn-sm" data-lightbox-close>Zavřít (Esc)</button>
+      </div>
+    </div>
+  </div>
 
-    <footer>
-        <div class="footer-links">
-            <a href="index.html">Domů</a>
-            <a href="download.html">Ke stažení</a>
-            <a href="download.html#changelog">Změny</a>
-            <a href="faq.html">Časté dotazy</a>
-            <a href="addon-docs.html">Addon Dokumentace</a>
-            <a href="disclaimer.html">Právní doložka</a>
-            <a href="https://discord.com/invite/N7xasCqzh6" target="_blank">Discord</a>
-        </div>
-        <div class="copyright">
-            &copy; 2026 KELP. Všechna práva vyhrazena. <br>
-            KELP je katalog a přehrávač — nehostuje ani nedistribuuje žádný obsah.
-        </div>
-    </footer>
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-copy">© 2026 KELP  •  Neutrální mediální centrum bez vlastního obsahu</div>
+      <div class="footer-links">
+        <a href="index.html">Přehled</a>
+        <a href="download.html">Stáhnout</a>
+        <a href="faq.html">FAQ</a>
+        <a href="addon-docs.html">Doplňky</a>
+        <a href="disclaimer.html">Právní doložka</a>
+        <a href="https://discord.com/invite/N7xasCqzh6" target="_blank" rel="noopener noreferrer">Discord</a>
+      </div>
+    </div>
+  </footer>
 
+  <script src="site.js"></script>
 </body>
 </html>

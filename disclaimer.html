@@ -1,266 +1,134 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Právní doložka | KELP</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="icon" type="image/png" href="assets/logo.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Právní doložka a ochrana soukromí | KELP</title>
+  <meta name="description" content="Podmínky užívání, vyloučení odpovědnosti a zásady ochrany osobních údajů (GDPR) aplikace KELP.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header>
-        <a href="index.html" class="logo-container">
-            <img src="assets/logo.png" alt="KELP Logo">
-            <span>KELP</span>
-        </a>
-        <nav>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand-link" aria-label="KELP domů">
+        <img src="assets/kelp-logo.svg" alt="KELP" class="brand-logo" width="67" height="24">
+      </a>
+      <nav class="site-nav" aria-label="Hlavní navigace">
+        <a href="index.html" class="nav-pill">Přehled</a>
+        <a href="download.html" class="nav-pill">Stáhnout</a>
+        <a href="faq.html" class="nav-pill">FAQ</a>
+        <a href="addon-docs.html" class="nav-pill">Doplňky</a>
+      </nav>
+      <div class="header-actions">
+        <a href="download.html" class="btn btn-primary btn-sm header-cta">Stáhnout v2.0</a>
+        <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-label="Otevřít menu">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </div>
+    <nav class="mobile-menu" data-mobile-menu aria-label="Mobilní navigace">
+      <a href="index.html">Přehled</a>
+      <a href="download.html">Stáhnout</a>
+      <a href="faq.html">FAQ</a>
+      <a href="addon-docs.html">Doplňky</a>
+      <a href="disclaimer.html" class="active">Právní doložka</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <h1>Právní doložka a ochrana soukromí</h1>
+        <p>Podmínky užívání aplikace KELP a přehled nakládání s daty podle nařízení (EU) 2016/679 (GDPR).</p>
+      </div>
+    </section>
+
+    <div class="container">
+      <article class="legal-layout">
+        <p class="legal-meta">Poslední aktualizace: listopad 2026  •  Verze aplikace: KELP 2.x</p>
+
+        <div class="legal-part">
+          <h2>Podmínky užívání</h2>
+
+          <div class="legal-section">
+            <h3>1. Povaha softwaru</h3>
+            <p>KELP je neutrální klientské mediální rozhraní, které zobrazuje veřejná metadata (TMDb), umožňuje připojit vlastní zdroje přes otevřené protokoly (Stremio v3, deklarativní JSON, WebDAV, lokální disk, M3U, Xtream Codes, XMLTV) a přehrává zvolené soubory.</p>
+            <p>Aplikace <strong>neobsahuje, nehostuje, nenabízí ani nedistribuuje žádný audiovizuální obsah</strong> a v základní instalaci neobsahuje žádné doplňky ani playlisty.</p>
+          </div>
+
+          <div class="legal-section">
+            <h3>2. Doplňky třetích stran a odpovědnost uživatele</h3>
             <ul>
-                <li><a href="index.html#features">Funkce</a></li>
-                <li><a href="faq.html">FAQ</a></li>
-                <li><a href="addon-docs.html">Addon Docs</a></li>
+              <li>Veškeré doplňky, servery WebDAV, lokální složky a playlisty Živé TV si uživatel přidává dobrovolně na vlastní odpovědnost.</li>
+              <li>Vývojář doplňky třetích stran neschvaluje, nekontroluje ani za ně nenese odpovědnost.</li>
+              <li>Uživatel je povinen používat aplikaci pouze s obsahem a zdroji, ke kterým má oprávněný přístup v souladu s platnými zákony. Aplikace neobchází DRM ani jiná technická ochranná opatření.</li>
             </ul>
-        </nav>
-        <a href="download.html" class="btn-download">Stáhnout</a>
-    </header>
+          </div>
 
-    <main class="legal-content">
-        <h1>Právní doložka, podmínky užívání a ochrana osobních údajů</h1>
-        
-        <p><strong>Poslední aktualizace: 11. března 2026</strong></p>
-        <p style="color: var(--on-surface-variant); font-size: 0.9rem;">
-            Používáním aplikace KELP (dále jen „Aplikace") souhlasíte s níže uvedenými podmínkami.
-            Pokud s nimi nesouhlasíte, Aplikaci neinstalujte ani nepoužívejte.
-        </p>
+          <div class="legal-section">
+            <h3>3. Vyloučení záruk</h3>
+            <p>Software je poskytován <strong>„tak jak je“ (as-is)</strong> bez výslovných či předpokládaných záruk. Vývojář neodpovídá za škody vzniklé užíváním aplikace, výpadky externích API (TMDb, volitelné servery doplňků) ani za jednání uživatele.</p>
+          </div>
 
-        <hr style="border-color: rgba(255,255,255,0.08); margin: 2rem 0;">
-
-        <!-- ===================== -->
-        <!-- TOS -->
-        <!-- ===================== -->
-        <h2 style="color: var(--primary); font-size: 1.8rem; margin-bottom: 1.5rem;">Podmínky užívání (Terms of Service)</h2>
-
-        <section>
-            <h2>1. Povaha aplikace</h2>
-            <p>KELP je softwarový nástroj, který slouží jako:</p>
-            <ul>
-                <li><strong>Vyhledávač metadat</strong> – zobrazuje informace o filmech a seriálech z veřejných databází (TMDb, Trakt.tv).</li>
-                <li><strong>Indexační rozhraní</strong> – umožňuje uživateli připojit vlastní zdroje obsahu prostřednictvím externích doplňků (Addonů) nebo lokálního úložiště.</li>
-                <li><strong>Multimediální přehrávač</strong> – přehrává streamy ze zdrojů, které si uživatel konfiguruje sám.</li>
-            </ul>
-            <p>Aplikace sama o sobě <strong>neobsahuje, nehostuje, nenabízí, nešíří ani neposkytuje přístup</strong> k žádnému audiovizuálnímu obsahu (filmy, seriály, hudba apod.).</p>
-        </section>
-
-        <section>
-            <h2>2. Modulární addon systém</h2>
-            <p>Aplikace disponuje generickým engine pro zpracování externích doplňků (JSON definic). Důležité body:</p>
-            <ul>
-                <li>Aplikace v <strong>základní instalaci neobsahuje žádný doplněk ani zdroj streamů</strong>.</li>
-                <li>Doplňky si uživatel importuje <strong>zcela dobrovolně, na vlastní odpovědnost a vlastní riziko</strong>.</li>
-                <li>Vývojář Aplikace <strong>neposkytuje, neschvaluje, nekontroluje ani nedistribuuje</strong> žádné doplňky.</li>
-                <li>Vývojář nenese <strong>žádnou odpovědnost</strong> za obsah, funkčnost, bezpečnost ani legálnost doplňků třetích stran.</li>
-                <li>Komunitní repozitář doplňků (pokud existuje) je spravován komunitou a vývojář Aplikace za něj neodpovídá.</li>
-            </ul>
-        </section>
-
-        <section>
-            <h2>3. Lokální úložiště</h2>
-            <p>Aplikace umožňuje prohledávat video soubory uložené lokálně na zařízení uživatele. Tato funkce:</p>
-            <ul>
-                <li>Je ve výchozím stavu <strong>vypnuta</strong>.</li>
-                <li>Pracuje <strong>výhradně s lokálním souborovým systémem</strong> zařízení.</li>
-                <li>Žádná data o lokálních souborech nejsou odesílána na žádné servery.</li>
-            </ul>
-        </section>
-
-        <section>
-            <h2>4. Oprávněné použití</h2>
-            <p>Aplikace je určena výhradně k:</p>
-            <ul>
-                <li>Přehrávání <strong>legálně nabytého obsahu</strong> z úložišť, ke kterým má uživatel oprávněný přístup (vlastní NAS, lokální soubory, placené cloudové služby).</li>
-                <li>Osobnímu a nekomerčnímu využití.</li>
-                <li>Vzdělávacím účelům v oblasti multimédií a softwarového vývoje.</li>
-            </ul>
-            <p>Uživatel se zavazuje, že <strong>nebude</strong> Aplikaci využívat k:</p>
-            <ul>
-                <li>Přístupu k obsahu chráněnému autorským právem, ke kterému nemá oprávnění.</li>
-                <li>Obcházení jakýchkoli technických ochranných opatření (DRM).</li>
-                <li>Šíření, redistribuci nebo zpřístupňování nelegálního obsahu.</li>
-                <li>Jakékoli komerční činnosti bez písemného souhlasu vývojáře.</li>
-            </ul>
-        </section>
-
-        <section>
-            <h2>5. Autorská práva a duševní vlastnictví</h2>
-            <p>Vývojář Aplikace plně respektuje autorská práva a práva duševního vlastnictví třetích stran.</p>
-            <ul>
-                <li>Aplikace <strong>neobchází</strong> žádné ochranné mechanismy (DRM, šifrování, geo-blokaci).</li>
-                <li>Aplikace <strong>neindexuje ani neprohledává</strong> nelegální zdroje obsahu.</li>
-                <li>Veškeré obrázky, popisy a metadata filmů pocházejí z veřejně dostupných API (TMDb) a podléhají jejich licenčním podmínkám.</li>
-                <li>Pokud se domníváte, že Aplikace porušuje vaše autorská práva, kontaktujte nás na <a href="mailto:mail@lukymas.eu.org" style="color: var(--primary)">mail@lukymas.eu.org</a>.</li>
-            </ul>
-        </section>
-
-        <section>
-            <h2>6. Vyloučení odpovědnosti (Disclaimer)</h2>
-            <p>Aplikace je poskytována <strong>„tak jak je" (as-is)</strong>, bez jakýchkoli záruk, výslovných či předpokládaných.</p>
-            <p>Vývojář neodpovídá za:</p>
-            <ul>
-                <li>Jakékoli přímé, nepřímé, náhodné, zvláštní nebo následné škody vzniklé používáním Aplikace.</li>
-                <li>Porušení zákonů uživatelem při používání Aplikace.</li>
-                <li>Ztrátu dat, poškození zařízení nebo narušení bezpečnosti.</li>
-                <li>Výpadky, chyby či nedostupnost služeb třetích stran (TMDb, Trakt.tv apod.).</li>
-                <li>Obsah, funkčnost nebo bezpečnost doplňků třetích stran.</li>
-                <li>Jakékoli jednání uživatele související s doplňky, které si sám nainstaloval.</li>
-            </ul>
-        </section>
-
-        <section>
-            <h2>7. Externí služby a API</h2>
-            <p>Aplikace komunikuje s následujícími externími službami:</p>
-            <ul>
-                <li><strong>TMDb (The Movie Database)</strong> – pro metadata filmů a seriálů, plakáty a popisy. Aplikace <strong>není sponzorována ani certifikována</strong> společností TMDb.</li>
-                <li><strong>Trakt.tv</strong> – pro synchronizaci historie sledování (volitelné, vyžaduje přihlášení uživatele).</li>
-                <li><strong>Discord Rich Presence</strong> – pro zobrazení aktuálního stavu přehrávání (volitelné, pouze na desktopu).</li>
-            </ul>
-            <p>Uživatel je povinen dodržovat podmínky užití těchto externích služeb. Vývojář není nijak spojen ani oficiálně podporován těmito službami.</p>
-        </section>
-
-        <section>
-            <h2>8. Omezení distribuce</h2>
-            <ul>
-                <li>Aplikace nesmí být <strong>redistribuována v modifikované podobě</strong>.</li>
-                <li>Aplikace nesmí být použita pro <strong>komerční účely</strong> bez písemného souhlasu.</li>
-                <li>Jakékoliv forky nebo odvozená díla musí tuto právní doložku zachovat.</li>
-            </ul>
-        </section>
-
-        <section>
-            <h2>9. Věkové omezení</h2>
-            <p>Aplikace je určena uživatelům starším <strong>13 let</strong>. Uživatelé mladší 18 let by měli Aplikaci používat pod dohledem zákonného zástupce. Vývojář nenese odpovědnost za přístup nezletilých osob k nevhodnému obsahu prostřednictvím doplňků třetích stran.</p>
-        </section>
-
-        <section>
-            <h2>10. Změny podmínek</h2>
-            <p>Vývojář si vyhrazuje právo tyto podmínky kdykoli aktualizovat. Aktualizované podmínky budou zveřejněny na této stránce s novým datem „Poslední aktualizace". Pokračujícím používáním Aplikace po zveřejnění aktualizovaných podmínek uživatel vyjadřuje souhlas s novým zněním.</p>
-        </section>
-
-        <hr style="border-color: rgba(255,255,255,0.08); margin: 3rem 0;">
-
-        <!-- ===================== -->
-        <!-- GDPR / PRIVACY -->
-        <!-- ===================== -->
-        <h2 style="color: var(--primary); font-size: 1.8rem; margin-bottom: 1.5rem;">Zásady ochrany osobních údajů (Privacy Policy)</h2>
-        <p>Tato sekce popisuje, jakým způsobem Aplikace zachází s daty uživatelů, v souladu s <strong>Nařízením Evropského parlamentu a Rady (EU) 2016/679</strong> (GDPR) a dalšími relevantními právními předpisy.</p>
-
-        <section>
-            <h2>11. Správce údajů</h2>
-            <p>Správcem ve smyslu GDPR je vývojář Aplikace – fyzická osoba vystupující pod pseudonymem <strong>LUKYMAS</strong>. Kontakt: <a href="mailto:mail@lukymas.eu.org" style="color: var(--primary)">mail@lukymas.eu.org</a>.</p>
-        </section>
-
-        <section>
-            <h2>12. Jaké údaje aplikace zpracovává</h2>
-            <p>Aplikace <strong>neshromažďuje, neodesílá ani nesdílí žádné osobní údaje</strong> na vlastní servery vývojáře. Veškerá data jsou uložena <strong>výhradně lokálně</strong> na zařízení uživatele:</p>
-            <ul>
-                <li><strong>Nastavení aplikace</strong> – jazyk, téma, konfigurace přehrávače, povolená lokální složka.</li>
-                <li><strong>Historie sledování</strong> – tituly zhlédnutých filmů a seriálů, pozice přehrávání.</li>
-                <li><strong>Přístupové tokeny</strong> – tokeny pro Trakt.tv (pokud uživatel službu propojí).</li>
-                <li><strong>Credentials doplňků</strong> – přihlašovací údaje k doplňkům (uloženy šifrovaně lokálně pomocí SharedPreferences).</li>
-                <li><strong>Identifikátor zařízení</strong> – náhodně vygenerovaný UUID pro systém přístupového kódu (neodpovídá žádnému osobnímu údaji).</li>
-                <li><strong>Cache</strong> – metadata filmů, výsledky vyhledávání (dočasné, s automatickou expirací).</li>
-            </ul>
-        </section>
-
-        <section>
-            <h2>13. Komunikace se servery třetích stran</h2>
-            <p>Aplikace komunikuje <strong>výhradně</strong> s následujícími externími službami (nikoli se servery vývojáře):</p>
-            <ul>
-                <li><strong>TMDb API</strong> – odesílá vyhledávací dotazy (název filmu/seriálu). TMDb může zpracovávat IP adresu uživatele dle svých vlastních zásad.</li>
-                <li><strong>Trakt.tv API</strong> – odesílá data o sledování (pouze pokud uživatel službu propojí). Trakt.tv zpracovává údaje dle svých zásad ochrany soukromí.</li>
-                <li><strong>Servery doplňků</strong> – pokud uživatel nainstaluje doplněk, Aplikace komunikuje se servery, které doplněk definuje. Vývojář Aplikace za tyto servery <strong>neodpovídá</strong>.</li>
-            </ul>
-            <p><strong>Aplikace neobsahuje žádný vlastní backend</strong> – vývojář nemá přístup k žádným datům uživatele.</p>
-        </section>
-
-        <section>
-            <h2>14. Právní základ zpracování (čl. 6 GDPR)</h2>
-            <ul>
-                <li><strong>Souhlas</strong> (čl. 6 odst. 1 písm. a) – uživatel souhlasí s podmínkami instalací a používáním Aplikace.</li>
-                <li><strong>Oprávněný zájem</strong> (čl. 6 odst. 1 písm. f) – lokální ukládání nastavení a historie pro fungování Aplikace.</li>
-                <li><strong>Plnění smlouvy</strong> (čl. 6 odst. 1 písm. b) – zpracování nezbytné pro poskytování funkcí Aplikace.</li>
-            </ul>
-        </section>
-
-        <section>
-            <h2>15. Práva subjektu údajů (čl. 15–22 GDPR)</h2>
-            <p>Jelikož Aplikace <strong>neukládá žádná data na servery vývojáře</strong>, práva dle GDPR se uplatňují následovně:</p>
-            <ul>
-                <li><strong>Právo na přístup</strong> – veškerá data jsou uložena lokálně na zařízení, uživatel k nim má plný přístup.</li>
-                <li><strong>Právo na opravu</strong> – uživatel může kdykoli změnit svá nastavení v Aplikaci.</li>
-                <li><strong>Právo na výmaz</strong> – odinstalování Aplikace vymaže veškerá data. Uživatel může kdykoli vymazat cache, historii a credentials v Nastavení → Data.</li>
-                <li><strong>Právo na přenositelnost</strong> – data jsou uložena v standardních formátech na zařízení.</li>
-                <li><strong>Právo vznést námitku</strong> – kontaktujte vývojáře na <a href="mailto:mail@lukymas.eu.org" style="color: var(--primary)">mail@lukymas.eu.org</a>.</li>
-            </ul>
-        </section>
-
-        <section>
-            <h2>16. Cookies a sledování</h2>
-            <p>Aplikace <strong>nepoužívá cookies, analytické nástroje, reklamní sítě ani sledovací technologie</strong>. Neexistuje žádný tracking, fingerprinting ani profilování uživatelů.</p>
-        </section>
-
-        <section>
-            <h2>17. Předávání údajů do třetích zemí</h2>
-            <p>Aplikace přímo nepředává osobní údaje do třetích zemí. Servery TMDb a Trakt.tv mohou být umístěny mimo EU/EHP – v takovém případě se uplatňují podmínky těchto služeb. Vývojář Aplikace za předávání údajů těmito službami neodpovídá.</p>
-        </section>
-
-        <section>
-            <h2>18. Uchovávání údajů</h2>
-            <ul>
-                <li>Data jsou uchovávána <strong>po dobu instalace Aplikace</strong> na zařízení.</li>
-                <li>Cache výsledků vyhledávání má <strong>automatickou expiraci 24 hodin</strong>.</li>
-                <li>Odinstalací Aplikace jsou <strong>všechna data nenávratně smazána</strong>.</li>
-            </ul>
-        </section>
-
-        <section>
-            <h2>19. Bezpečnost údajů</h2>
-            <p>Aplikace ukládá přihlašovací údaje k doplňkům pomocí SharedPreferences. Přestože jsou data uložena pouze lokálně, uživatel by měl dbát na zabezpečení svého zařízení (zámek obrazovky, šifrování disku). Vývojář nenese odpovědnost za neoprávněný přístup k zařízení.</p>
-        </section>
-
-        <hr style="border-color: rgba(255,255,255,0.08); margin: 3rem 0;">
-
-        <!-- ===================== -->
-        <!-- SOUHLAS -->
-        <!-- ===================== -->
-        <section>
-            <h2 style="color: var(--primary); font-size: 1.5rem;">Souhlas s podmínkami</h2>
-            <p>Stažením, instalací nebo používáním Aplikace uživatel vyjadřuje <strong>bezvýhradný souhlas</strong> s těmito podmínkami užívání, vyloučením odpovědnosti a zásadami ochrany osobních údajů.</p>
-            <p>Pokud s těmito podmínkami nesouhlasíte, <strong>Aplikaci nepoužívejte a okamžitě ji odstraňte</strong> ze svého zařízení.</p>
-        </section>
-
-        <hr style="border-color: rgba(255,255,255,0.08); margin: 2rem 0;">
-
-        <p style="text-align: center; color: var(--on-surface-variant); font-size: 0.85rem; margin-top: 2rem;">
-            © 2025–2026 LUKYMAS / KELP. Všechna práva vyhrazena.<br>
-            Tato aplikace nehostuje žádný obsah.
-        </p>
-    </main>
-
-    <footer>
-        <div class="footer-links">
-            <a href="index.html">Domů</a>
-            <a href="download.html">Ke stažení</a>
-            <a href="faq.html">Časté dotazy</a>
-            <a href="addon-docs.html">Addon Dokumentace</a>
-            <a href="disclaimer.html">Právní doložka</a>
-            <a href="https://discord.com/invite/N7xasCqzh6" target="_blank">Discord</a>
+          <div class="legal-section">
+            <h3>4. Autorská práva a kontakt</h3>
+            <p>Metadata, plakáty a popisy pocházejí z veřejného TMDb API a podléhají jeho podmínkám; aplikace není společností TMDb certifikována ani sponzorována. Podněty k autorským právům nebo podmínkám směrujte na <a href="mailto:mail@lukymas.eu.org">mail@lukymas.eu.org</a>.</p>
+          </div>
         </div>
-        <div class="copyright">
-            &copy; 2026 KELP. Všechna práva vyhrazena. <br>
-            KELP je katalog a přehrávač — nehostuje ani nedistribuuje žádný obsah.
-        </div>
-    </footer>
 
+        <div class="legal-part">
+          <h2>Ochrana osobních údajů (GDPR)</h2>
+
+          <div class="legal-section">
+            <h3>5. Správce údajů</h3>
+            <p>Správcem je vývojář projektu KELP (LUKYMAS), kontakt: <a href="mailto:mail@lukymas.eu.org">mail@lukymas.eu.org</a>.</p>
+          </div>
+
+          <div class="legal-section">
+            <h3>6. Lokální ukládání dat</h3>
+            <p>KELP nevyžaduje registraci ani uživatelský účet. Profily, historie sledování, kolekce, nastavení, offline stažené soubory a konfigurace zdrojů jsou uloženy <strong>lokálně v databázi SQLite</strong> přímo na vašem zařízení.</p>
+            <p>Odinstalací aplikace nebo vymazáním dat v nastavení aplikace dojde k jejich odstranění ze zařízení.</p>
+          </div>
+
+          <div class="legal-section">
+            <h3>7. Volitelná šifrovaná synchronizace (E2EE)</h3>
+            <ul>
+              <li>Synchronizace mezi zařízeními je volitelná a ve výchozím stavu může běžet výhradně v lokální síti (LAN P2P).</li>
+              <li>Při zapnutí vzdálené synchronizace přes zero-knowledge relay (např. <span class="inline-code">relay.kelp.page</span> nebo vlastní instanci) se data před opuštěním zařízení komprimují a šifrují pomocí <strong>AES-256-GCM</strong> klíčem, který zařízení nikdy neodesílá.</li>
+              <li>Relay server neukládá osobní údaje ani čitelný obsah — zpracovává pouze anonymní identifikátor schránky a šifrované bloky s automatickou expirací po 180 dnech neaktivity (párovací kódy expirují po 5 minutách).</li>
+            </ul>
+          </div>
+
+          <div class="legal-section">
+            <h3>8. Externí služby a sledování</h3>
+            <ul>
+              <li><strong>TMDb API:</strong> vyhledávací dotazy a načítání metadat/obrázků (řídí se zásadami TMDb).</li>
+              <li><strong>Uživatelem přidané zdroje:</strong> aplikace komunikuje přímo se servery definovanými uživatelem v doplňcích nebo playlistech Živé TV.</li>
+              <li><strong>Žádné cookies ani analytika:</strong> aplikace ani tento web nepoužívají reklamní sítě, sledovací skripty ani telemetrii.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-copy">© 2026 KELP  •  Neutrální mediální centrum bez vlastního obsahu</div>
+      <div class="footer-links">
+        <a href="index.html">Přehled</a>
+        <a href="download.html">Stáhnout</a>
+        <a href="faq.html">FAQ</a>
+        <a href="addon-docs.html">Doplňky</a>
+        <a href="disclaimer.html">Právní doložka</a>
+        <a href="https://discord.com/invite/N7xasCqzh6" target="_blank" rel="noopener noreferrer">Discord</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="site.js"></script>
 </body>
 </html>

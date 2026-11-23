@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+  <defs>
+    <linearGradient id="kelp-fav-grad" x1="36" y1="30" x2="88" y2="104" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#C80082"/>
+      <stop offset="55%" stop-color="#C60638"/>
+      <stop offset="100%" stop-color="#D20522"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="#0A0A0A"/>
+  <rect x="1.5" y="1.5" width="125" height="125" rx="26.5" stroke="rgba(255,255,255,0.16)" stroke-width="3"/>
+  <g transform="translate(-14 -25.5) scale(1.0)">
+    <path d="M115.7 78.5232C123.747 83.629 123.747 95.371 115.7 100.477L95.125 113.532L77.2149 124.896C68.5597 130.388 57.25 124.17 57.25 113.92L57.25 89.5L57.25 65.0804C57.25 54.8299 68.5598 48.6118 77.2149 54.1036L95.125 65.4678L115.7 78.5232Z" fill="url(#kelp-fav-grad)"/>
+  </g>
+</svg>

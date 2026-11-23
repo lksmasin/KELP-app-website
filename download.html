@@ -1,321 +1,174 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stáhnout | KELP</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="icon" type="image/png" href="assets/logo.png">
-    <style>
-        .download-container {
-            max-width: 1000px;
-            margin: 10rem auto 4rem;
-            text-align: center;
-            padding: 2rem;
-        }
-        .download-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 4rem;
-        }
-        .download-card {
-            background: var(--surface-variant);
-            padding: 3rem 2rem;
-            border-radius: var(--border-radius);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-        }
-        .download-card:hover:not(.disabled) {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.05);
-            border-color: var(--primary);
-        }
-        .download-card i {
-            font-size: 3.5rem;
-            color: #fff;
-            margin-bottom: 1.5rem;
-        }
-        .download-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
-        .download-card p {
-            color: var(--on-surface-variant);
-            font-size: 0.9rem;
-        }
-        .version-info {
-            color: var(--on-surface-variant);
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-        .download-card.disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-        .error-tag {
-            background: var(--accent-red);
-            color: white;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 0.7rem;
-            margin-bottom: 1rem;
-            display: none;
-        }
-        .beta-tag {
-            background: var(--accent-red);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-        }
-
-        /* Changelog Section */
-        .changelog-section {
-            max-width: 800px;
-            margin: 4rem auto 8rem;
-            text-align: left;
-            padding: 0 2rem;
-        }
-        .changelog-section h2 {
-            font-size: 2.5rem;
-            font-weight: 900;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-        .changelog-item {
-            background: var(--surface-variant);
-            padding: 2rem;
-            border-radius: 20px;
-            margin-bottom: 1.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.03);
-        }
-        .changelog-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-        .changelog-version {
-            font-weight: 900;
-            font-size: 1.2rem;
-        }
-        .changelog-date {
-            color: var(--on-surface-variant);
-            font-size: 0.9rem;
-        }
-        .changelog-list {
-            list-style: none;
-        }
-        .changelog-list li {
-            position: relative;
-            padding-left: 1.5rem;
-            margin-bottom: 0.5rem;
-            color: var(--on-surface-variant);
-        }
-        .changelog-list li::before {
-            content: "•";
-            color: var(--accent-red);
-            font-weight: bold;
-            position: absolute;
-            left: 0;
-        }
-
-        .beta-info {
-            background: rgba(229, 9, 20, 0.1);
-            border: 1px solid rgba(229, 9, 20, 0.3);
-            padding: 1.5rem;
-            border-radius: 20px;
-            margin-top: 2rem;
-            text-align: left;
-        }
-        .beta-info h4 {
-            color: #fff;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .beta-info p {
-            font-size: 0.95rem;
-            color: var(--on-surface-variant);
-        }
-        .beta-info a {
-            color: #fff;
-            font-weight: bold;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stáhnout | KELP</title>
+  <meta name="description" content="Stáhněte si KELP v2.0 pro Android TV, Android telefony a tablety, Linux x64 a Windows x64.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header>
-        <a href="index.html" class="logo-container">
-            <img src="assets/logo.png" alt="KELP Logo">
-            <span>KELP</span>
-        </a>
-        <nav>
-            <ul>
-                <li><a href="index.html#features">Funkce</a></li>
-                <li><a href="#changelog">Změny</a></li>
-                <li><a href="faq.html">FAQ</a></li>
-                <li><a href="addon-docs.html">Addon Docs</a></li>
-            </ul>
-        </nav>
-        <a href="download.html" class="btn-download">Stáhnout</a>
-    </header>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand-link" aria-label="KELP domů">
+        <img src="assets/kelp-logo.svg" alt="KELP" class="brand-logo" width="67" height="24">
+      </a>
+      <nav class="site-nav" aria-label="Hlavní navigace">
+        <a href="index.html" class="nav-pill">Přehled</a>
+        <a href="download.html" class="nav-pill active">Stáhnout</a>
+        <a href="faq.html" class="nav-pill">FAQ</a>
+        <a href="addon-docs.html" class="nav-pill">Doplňky</a>
+      </nav>
+      <div class="header-actions">
+        <a href="#platforms" class="btn btn-primary btn-sm header-cta">Stáhnout v2.0</a>
+        <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-label="Otevřít menu">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </div>
+    <nav class="mobile-menu" data-mobile-menu aria-label="Mobilní navigace">
+      <a href="index.html">Přehled</a>
+      <a href="download.html" class="active">Stáhnout</a>
+      <a href="faq.html">FAQ</a>
+      <a href="addon-docs.html">Doplňky</a>
+      <a href="disclaimer.html">Právní doložka</a>
+    </nav>
+  </header>
 
-    <main class="download-container">
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <div class="meta-eyebrow">Aktuální vydání<span class="sep">•</span><span class="mono" data-latest-version>v2.0.0</span><span class="sep">•</span>Android 10+  •  Linux x64  •  Windows x64</div>
         <h1>Stáhnout KELP</h1>
-        <p>Vyberte si verzi pro svůj operační systém.</p>
-
-        <div class="download-grid">
-            <a href="releases/latest/linux.zip" class="download-card" id="btn-linux">
-                <i class="fab fa-linux"></i>
-                <h3>Linux</h3>
-                <span class="version-info" id="ver-linux">Načítám...</span>
-                <span class="error-tag" id="err-linux">Dočasně nedostupné</span>
-                <p>Spustitelný binární soubor</p>
-            </a>
-            
-            <a href="https://play.google.com/store/apps/details?id=page.kelp" class="download-card" id="btn-android" target="_blank">
-                <span class="beta-tag">Uzavřená Beta</span>
-                <i class="fab fa-android"></i>
-                <h3>Android / AndroidTV</h3>
-                <span class="version-info" id="ver-android">Načítám...</span>
-                <span class="error-tag" id="err-android">Dočasně nedostupné</span>
-                <p>Instalujte přímo z Google Play</p>
-                <img src="assets/google-play-badge.png" alt="Get it on Google Play" style="height: 60px; margin-top: 1rem; border-radius: 8px;">
-            </a>
-
-            <a href="releases/latest/windows.zip" class="download-card" id="btn-windows">
-                <i class="fab fa-windows"></i>
-                <h3>Windows</h3>
-                <span class="version-info" id="ver-windows">Načítám...</span>
-                <span class="error-tag" id="err-windows">Dočasně nedostupné</span>
-                <p>Spustitelný EXE soubor (x64)</p>
-            </a>
-        </div>
-
-        <div class="beta-info">
-            <h4><i class="fas fa-info-circle"></i> Přístup k uzavřené betě</h4>
-            <p>
-                Pro získání přístupu k verzi na Google Play mi prosím napište e-mail na 
-                <a href="mailto:mail@lukymas.eu.org">mail@lukymas.eu.org</a> a uveďte váš <strong>Gmail účet</strong>, který používáte pro přihlášení do Google Play. 
-                Případně mě můžete kontaktovat napřímo na našem <strong>Discordu</strong>.
-            </p>
-        </div>
-
-        <div style="margin-top: 4rem;">
-            <a href="archive.html" style="color: var(--on-surface-variant); text-decoration: underline;">Archiv starších verzí</a>
-        </div>
-    </main>
-
-    <section class="changelog-section" id="changelog">
-        <h2>Co je nového</h2>
-        
-        <div class="changelog-item">
-            <div class="changelog-header">
-                <span class="changelog-version">v5-openbeta</span>
-                <span class="changelog-date">5. dubna 2026</span>
-            </div>
-            <div style="margin-bottom: 1.5rem;">
-                <h4 style="color: #fff; margin-bottom: 0.5rem;">Novinky v této verzi: ✨</h4>
-                <ul class="changelog-list">
-                    <li><strong>Systém doplňků:</strong> Aplikace nyní sama o sobě neobsahuje žádné vzdálené úložiště. Uživatel může nastavit lokální úložiště nebo použít doplňky z internetu. Dokumentaci najdete na <a href="https://kelp.page/addon-docs" style="color: var(--accent-red)">webu</a>.</li>
-                    <li><strong>Nový přehrávač:</strong> Přehrávač je nyní pokročilejší a jednodušší na ovládání.
-                        <ul>
-                            <li>Výběr mezi MPV a ExoPlayer jádrem na Androidu.</li>
-                            <li>Funkce "Přeskočit intro" založená na kapitolách v MKV.</li>
-                            <li>Přidán Automatic Frame Rate (AFR).</li>
-                            <li>Funkce "Přehrát další epizodu" (detekce přes kapitoly).</li>
-                            <li>Nastavení poměru stran videa a nové klávesové zkratky (i, a, esc...).</li>
-                        </ul>
-                    </li>
-                    <li><strong>Design a UX:</strong> Nové barevné schéma (černá, bílá, červená), předělaná Domovská obrazovka, Knihovna a Detail filmu. Přidáno intro a zvuky při navigaci.</li>
-                    <li><strong>Profily a Trakt.tv:</strong> Podpora více uživatelských profilů. Trakt.tv již není vyžadován, ale je doporučen pro nejlepší zážitek.</li>
-                    <li><strong>Lokalizace:</strong> Kompletní podpora slovenštiny.</li>
-                    <li><strong>TV Optimalizace:</strong> Automatická detekce a přizpůsobení měřítka UI, možnost manuální změny velikosti prvků a textu.</li>
-                </ul>
-            </div>
-
-            <div>
-                <h4 style="color: #fff; margin-bottom: 0.5rem;">Opraveno a vylepšení: 🛠️</h4>
-                <ul class="changelog-list">
-                    <li>Vylepšené ovládání TV ovladačem včetně podpory klávesových zkratek.</li>
-                    <li>Zlepšený výkon a celková stabilita aplikace.</li>
-                    <li>Synchronizace Trakt.tv (beta).</li>
-                    <li>Standardizované widgety pro domovskou obrazovku a knihovnu.</li>
-                    <li>Dynamická cache pro data, widgety a obrázky.</li>
-                </ul>
-            </div>
-        </div>
+        <p>Vyberte sestavení pro svou platformu. Všechny verze sdílejí stejnou knihovnu i šifrovanou synchronizaci bez účtu.</p>
+      </div>
     </section>
 
-    <script>
-        async function checkAvailability() {
-            try {
-                const response = await fetch(`releases/latest/version.json?t=${Date.now()}`, { cache: 'no-store' });
-                if (!response.ok) return;
-                const data = await response.json();
-                
-                const versionText = data.version ? `Verze ${data.version}` : "Nejnovější verze";
-                ['linux', 'windows', 'android'].forEach(id => {
-                    const el = document.getElementById(`ver-${id}`);
-                    if (el) el.innerText = versionText;
-                });
+    <section class="section" id="platforms" data-releases-repo="lksmasin/KELP-app-website">
+      <div class="container">
+        <div class="dl-grid">
 
-                if (data.platforms) {
-                    const check = (id, key) => {
-                        const isOk = data.platforms[key];
-                        if (isOk === false) {
-                            const btn = document.getElementById(`btn-${id}`);
-                            if (btn) {
-                                btn.classList.add('disabled');
-                                if (btn.tagName === 'A') btn.href = 'javascript:void(0)';
-                            }
-                            const errEl = document.getElementById(`err-${id}`);
-                            if (errEl) errEl.style.display = 'inline-block';
-                            const verEl = document.getElementById(`ver-${id}`);
-                            if (verEl) verEl.style.display = 'none';
-                        }
-                    };
-                    check('linux', 'linux');
-                    check('windows', 'windows');
-                    check('android', 'android');
-                }
-            } catch (e) {
-                console.error("Chyba při kontrole verzí:", e);
-            }
-        }
-        checkAvailability();
-    </script>
+          <a href="https://play.google.com/store/apps/details?id=page.kelp" target="_blank" rel="noopener noreferrer" class="dl-card" id="dl-tv">
+            <div class="dl-card-head">
+              <svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 20h8M12 17v3"/></svg>
+              <span class="badge badge-emp">Google Play</span>
+            </div>
+            <h3>Android TV</h3>
+            <div class="dl-meta" data-dl-meta>v2.0.0  •  10-foot UI</div>
+            <p class="dl-note">Optimalizováno pro dálkový ovladač, Media3 + AFR a 4K televize. Sideload APK najdete v GitHub Releases.</p>
+          </a>
 
-    <footer>
-        <div class="footer-links">
-            <a href="index.html">Domů</a>
-            <a href="download.html">Ke stažení</a>
-            <a href="#changelog">Změny</a>
-            <a href="faq.html">Časté dotazy</a>
-            <a href="addon-docs.html">Addon Dokumentace</a>
-            <a href="disclaimer.html">Právní doložka</a>
-            <a href="https://discord.com/invite/N7xasCqzh6" target="_blank">Discord</a>
+          <a href="https://play.google.com/store/apps/details?id=page.kelp" target="_blank" rel="noopener noreferrer" class="dl-card" id="dl-mobile">
+            <div class="dl-card-head">
+              <svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></svg>
+              <span class="badge badge-emp">Google Play</span>
+            </div>
+            <h3>Android Mobil &amp; Tablet</h3>
+            <div class="dl-meta" data-dl-meta>v2.0.0  •  Dotykové UI</div>
+            <p class="dl-note">Material 3 na OLED černé, dotyková gesta, Picture-in-Picture, QR skener a posílání „Na TV“.</p>
+          </a>
+
+          <a href="https://github.com/lksmasin/KELP-app-website/releases/latest" target="_blank" rel="noopener noreferrer" class="dl-card" id="dl-linux">
+            <div class="dl-card-head">
+              <svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M2 20h20"/></svg>
+              <span class="badge">ZIP x64</span>
+            </div>
+            <h3>Linux</h3>
+            <div class="dl-meta" data-dl-meta>GitHub Releases  •  x64</div>
+            <p class="dl-note">Přenosný balík s nativním HiDPI škálováním, podporou myši i klávesnice a libmpv přehrávačem.</p>
+          </a>
+
+          <a href="https://github.com/lksmasin/KELP-app-website/releases/latest" target="_blank" rel="noopener noreferrer" class="dl-card" id="dl-windows">
+            <div class="dl-card-head">
+              <svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg>
+              <span class="badge">ZIP x64</span>
+            </div>
+            <h3>Windows</h3>
+            <div class="dl-meta" data-dl-meta>GitHub Releases  •  Windows 10/11</div>
+            <p class="dl-note">Spustitelný balík <span class="inline-code">page.kelp.exe</span> s klávesovými zkratkami <span class="inline-code">F11</span> a <span class="inline-code">Ctrl +/-/0</span>.</p>
+          </a>
+
         </div>
-        <div class="copyright">
-            &copy; 2026 KELP. Všechna práva vyhrazena. <br>
-            KELP je katalog a přehrávač — nehostuje ani nedistribuuje žádný obsah.
-        </div>
-    </footer>
 
+        <div class="req-grid">
+          <div class="notice-box">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 10v6M12 7h.01"/></svg>
+            <div>
+              <h4>Přístup k uzavřené betě na Google Play</h4>
+              <p>Pokud není veřejná verze na Google Play pro váš účet dostupná, napište Gmail účet na <a href="mailto:mail@lukymas.eu.org">mail@lukymas.eu.org</a> nebo na <a href="https://discord.com/invite/N7xasCqzh6" target="_blank" rel="noopener noreferrer">Discord</a>. Přímá APK sestavení jsou k dispozici v <a href="https://github.com/lksmasin/KELP-app-website/releases" target="_blank" rel="noopener noreferrer">GitHub Releases</a>.</p>
+            </div>
+          </div>
+
+          <div class="panel">
+            <h3>Požadavky přehrávače na Desktopu</h3>
+            <ul>
+              <li><strong>Linux:</strong> nainstalovaný balíček <span class="inline-code">mpv-libs</span> (Fedora) nebo <span class="inline-code">libmpv2</span> (Debian / Ubuntu).</li>
+              <li><strong>Windows:</strong> knihovna <span class="inline-code">mpv-2.dll</span> v <span class="inline-code">PATH</span> nebo ve složce s <span class="inline-code">page.kelp.exe</span>.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="changelog">
+      <div class="container">
+        <div class="section-head">
+          <h2>Přehled změn</h2>
+          <a href="https://github.com/lksmasin/KELP-app-website/releases" target="_blank" rel="noopener noreferrer" class="section-sub" style="text-decoration: underline; text-underline-offset: 3px;">Všechna vydání na GitHubu</a>
+        </div>
+
+        <article class="changelog-entry">
+          <div class="changelog-head">
+            <div class="changelog-ver">
+              <span>KELP v2.0.0</span>
+              <span class="badge badge-emp">Nová generace</span>
+            </div>
+            <span class="mono section-sub">Kotlin Multiplatform &amp; Compose</span>
+          </div>
+
+          <div class="changelog-cols">
+            <div class="changelog-group">
+              <h4>Architektura a platformy</h4>
+              <ul>
+                <li><strong>Kompletní přepis do KMP / Compose:</strong> nativní aplikace pro Android TV, Android telefony/tablety, Linux x64 a Windows x64 ze sdíleného jádra.</li>
+                <li><strong>Nové mobilní rozhraní:</strong> dotyková gesta jasu, hlasitosti a posunu, Picture-in-Picture, zámek obrazovky a CameraX + ZXing QR skener.</li>
+                <li><strong>Hybridní E2EE synchronizace:</strong> AES-256-GCM bez účtu — LAN P2P včetně přenosu „Na TV“ a volitelný zero-knowledge relay.</li>
+                <li><strong>Lokalizace:</strong> kompletní podpora češtiny, slovenštiny a angličtiny s úvodním průvodcem.</li>
+              </ul>
+            </div>
+
+            <div class="changelog-group">
+              <h4>Přehrávání, offline a zdroje</h4>
+              <ul>
+                <li><strong>Otevřené zdroje:</strong> Stremio v3, deklarativní JSON doplňky, WebDAV, lokální disk a Živá TV (M3U, Xtream Codes, XMLTV EPG s archivem).</li>
+                <li><strong>Strukturovaný výběr streamů:</strong> detekce rozlišení, HDR/DV, kodeků, zvuku a CZ/SK dabingu/titulků s monochromatickým řazením.</li>
+                <li><strong>Offline stahování:</strong> HTTP Range s obnovením, HLS, dávkové stažení sérií, titulky, limity úložiště a přednost lokálních kopií.</li>
+                <li><strong>Přehrávač:</strong> Media3 s AFR na Androidu, libmpv na Desktopu, kapitoly, Přeskočit intro a karta Další díl.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-copy">© 2026 KELP  •  Neutrální mediální centrum bez vlastního obsahu</div>
+      <div class="footer-links">
+        <a href="index.html">Přehled</a>
+        <a href="download.html">Stáhnout</a>
+        <a href="faq.html">FAQ</a>
+        <a href="addon-docs.html">Doplňky</a>
+        <a href="disclaimer.html">Právní doložka</a>
+        <a href="https://discord.com/invite/N7xasCqzh6" target="_blank" rel="noopener noreferrer">Discord</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="site.js"></script>
 </body>
 </html>
