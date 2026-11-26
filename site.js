@@ -219,39 +219,87 @@
     }
   }
 
-  // Dynamic GitHub Releases lookup (download.html)
+  // Dynamic GitHub Releases lookup (download.html) — supports both stable & beta prereleases
   const releaseRoot = document.querySelector('[data-releases-repo]');
   if (releaseRoot) {
     const repo = releaseRoot.dataset.releasesRepo;
     const versionBadge = document.querySelector('[data-latest-version]');
+    const isSubdirPage = window.location.pathname.startsWith('/en/') || window.location.pathname.startsWith('/sk/');
+    const localVersionUrl = isSubdirPage ? '../releases/latest/version.json' : 'releases/latest/version.json';
 
-    fetch(`https://api.github.com/repos/${repo}/releases/latest`, {
+    const applyReleaseAssets = (release) => {
+      if (!release) return;
+      if (versionBadge && release.tag_name) {
+        versionBadge.textContent = release.tag_name;
+      }
+      if (release.html_url) {
+        document.querySelectorAll('[data-release-page-link]').forEach((el) => {
+          el.href = release.html_url;
+        });
+      }
+      const assets = Array.isArray(release.assets) ? release.assets : [];
+      const bind = (id, patterns) => {
+        const link = document.getElementById(id);
+        if (!link) return;
+        for (const re of patterns) {
+          const asset = assets.find((a) => re.test(a.name));
+          if (asset) {
+            link.href = asset.browser_download_url;
+            const meta = document.querySelector(`[data-meta-for="${id}"]`);
+            if (meta && typeof asset.size === 'number' && asset.size > 0) {
+              const mb = (asset.size / (1024 * 1024)).toFixed(1);
+              meta.textContent = `${asset.name}  •  ${mb} MB`;
+            }
+            return;
+          }
+        }
+        if (release.html_url) {
+          link.href = release.html_url;
+        }
+      };
+      bind('dl-windows', [/windows.*\.msi$/i, /windows.*\.zip$/i]);
+      bind('dl-linux', [/linux.*\.deb$/i, /linux.*\.tar\.gz$/i, /linux.*\.zip$/i]);
+      bind('dl-android-tv', [/android-tv.*\.apk$/i]);
+      bind('dl-android-mobile', [/android-mobile.*\.apk$/i]);
+    };
+
+    fetch(`https://api.github.com/repos/${repo}/releases?per_page=10`, {
       headers: { Accept: 'application/vnd.github+json' }
     })
       .then((res) => (res.ok ? res.json() : null))
-      .then((release) => {
-        if (!release || !release.assets) return;
-        if (versionBadge && release.tag_name) {
-          versionBadge.textContent = release.tag_name;
+      .then((releases) => {
+        if (!Array.isArray(releases) || releases.length === 0) return null;
+        const published = releases.filter((r) => !r.draft);
+        // Prefer latest stable release if present, otherwise newest beta prerelease
+        const chosen = published.find((r) => !r.prerelease) || published[0];
+        if (chosen) {
+          applyReleaseAssets(chosen);
+          return true;
         }
-        const bind = (id, patterns) => {
-          const link = document.getElementById(id);
-          if (!link) return;
-          for (const re of patterns) {
-            const asset = release.assets.find((a) => re.test(a.name));
-            if (asset) {
-              link.href = asset.browser_download_url;
-              const meta = document.querySelector(`[data-meta-for="${id}"]`);
-              if (meta) {
-                const mb = (asset.size / (1024 * 1024)).toFixed(1);
-                meta.textContent = `${asset.name}  •  ${mb} MB`;
-              }
-              return;
+        return null;
+      })
+      .then((applied) => {
+        if (applied) return;
+        return fetch(localVersionUrl)
+          .then((res) => (res.ok ? res.json() : null))
+          .then((meta) => {
+            if (!meta) return;
+            if (versionBadge && meta.version) {
+              versionBadge.textContent = meta.tag || `v${meta.version}`;
             }
-          }
-        };
-        bind('dl-windows', [/windows.*\.msi$/i, /windows.*\.zip$/i]);
-        bind('dl-linux', [/linux.*\.deb$/i, /linux.*\.tar\.gz$/i, /linux.*\.zip$/i]);
+            if (meta.assets && typeof meta.assets === 'object') {
+              const fakeAssets = Object.entries(meta.assets).map(([_, info]) => ({
+                name: info.name,
+                browser_download_url: info.url,
+                size: info.size || 0
+              }));
+              applyReleaseAssets({
+                tag_name: meta.tag || `v${meta.version}`,
+                html_url: meta.releases_url,
+                assets: fakeAssets
+              });
+            }
+          });
       })
       .catch(() => {
         // Keep static fallback URLs pointing to GitHub Releases & Google Play

@@ -56,7 +56,7 @@
       </div>
     </section>
 
-    <section class="section" id="platforms" data-releases-repo="lksmasin/KELP-app-website">
+    <section class="section" id="platforms" data-releases-repo="lksmasin/KELP-app">
       <div class="container">
         <div class="dl-platforms">
 
@@ -65,11 +65,12 @@
               <svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 20h8M12 17v3"/></svg>
               <h2>Android a Android TV</h2>
             </div>
-            <p class="platform-desc">Verejne dostupné na Google Play pre telefóny, tablety aj televízory s Android TV (Android 10 a novší).</p>
-            <div class="platform-meta">Google Play  •  Android 10+</div>
+            <p class="platform-desc">Verejne dostupné na Google Play aj ako priame APK pre telefóny, tablety a televízory s Android TV (Android 10 a novší).</p>
+            <div class="platform-meta">Google Play  •  Android 10+  •  APK</div>
             <div class="platform-actions">
               <a href="https://play.google.com/store/apps/details?id=page.kelp" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-full">Otvoriť na Google Play</a>
-              <a href="https://github.com/lksmasin/KELP-app-website/releases" target="_blank" rel="noopener noreferrer" class="platform-alt">Priame APK na GitHub Releases</a>
+              <a href="https://github.com/lksmasin/KELP-app/releases/tag/v7.0.0-beta.1" target="_blank" rel="noopener noreferrer" class="platform-alt" id="dl-android-tv">Stiahnuť APK pre Android TV</a>
+              <a href="https://github.com/lksmasin/KELP-app/releases/tag/v7.0.0-beta.1" target="_blank" rel="noopener noreferrer" class="platform-alt" id="dl-android-mobile">Stiahnuť APK pre Android mobil / tablet</a>
             </div>
           </article>
 
@@ -81,8 +82,8 @@
             <p class="platform-desc">Inštalátor MSI alebo prenosný ZIP balík pre 64-bitové Windows 10 a 11 vrátane pribaleného prehrávača.</p>
             <div class="platform-meta" data-meta-for="dl-windows">Windows 10 / 11 (x64)  •  MSI / ZIP</div>
             <div class="platform-actions">
-              <a href="https://github.com/lksmasin/KELP-app-website/releases/latest" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-full" id="dl-windows">Stiahnuť pre Windows</a>
-              <a href="https://github.com/lksmasin/KELP-app-website/releases" target="_blank" rel="noopener noreferrer" class="platform-alt">Všetky balíky (MSI a prenosný ZIP)</a>
+              <a href="https://github.com/lksmasin/KELP-app/releases/tag/v7.0.0-beta.1" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-full" id="dl-windows">Stiahnuť pre Windows</a>
+              <a href="https://github.com/lksmasin/KELP-app/releases" target="_blank" rel="noopener noreferrer" class="platform-alt" data-release-page-link>Všetky balíky (MSI, prenosný ZIP a SHA256)</a>
             </div>
           </article>
 
@@ -94,8 +95,8 @@
             <p class="platform-desc">Inštalačný balík DEB aj prenosný archív tar.gz pre 64-bitové linuxové distribúcie s natívnou podporou HiDPI.</p>
             <div class="platform-meta" data-meta-for="dl-linux">Linux (x64)  •  DEB / tar.gz</div>
             <div class="platform-actions">
-              <a href="https://github.com/lksmasin/KELP-app-website/releases/latest" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-full" id="dl-linux">Stiahnuť pre Linux</a>
-              <a href="https://github.com/lksmasin/KELP-app-website/releases" target="_blank" rel="noopener noreferrer" class="platform-alt">Všetky balíky (DEB a tar.gz)</a>
+              <a href="https://github.com/lksmasin/KELP-app/releases/tag/v7.0.0-beta.1" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-full" id="dl-linux">Stiahnuť pre Linux</a>
+              <a href="https://github.com/lksmasin/KELP-app/releases" target="_blank" rel="noopener noreferrer" class="platform-alt" data-release-page-link>Všetky balíky (DEB, tar.gz a SHA256)</a>
             </div>
           </article>
 
@@ -107,7 +108,7 @@
       <div class="container">
         <div class="section-head">
           <h2>Prehľad zmien</h2>
-          <a href="https://github.com/lksmasin/KELP-app-website/releases" target="_blank" rel="noopener noreferrer" class="text-link">Archív vydaní na GitHube</a>
+          <a href="https://github.com/lksmasin/KELP-app/releases" target="_blank" rel="noopener noreferrer" class="text-link">Archív vydaní na GitHube</a>
         </div>
 
         <article class="changelog-card">
@@ -118,12 +119,11 @@
 
           <ul class="changelog-list">
             <li><strong>Úplne nový natívny základ:</strong> rýchlejší štart, plynulejšie prehliadanie katalógu a jednotný vývoj pre Android TV, Android telefóny/tablety, Windows a Linux.</li>
-            <li><strong>Samostatná aplikácia pre Android telefóny a tablety:</strong> dotykové rozhranie s gestami v prehrávači (jas, hlasitosť, posun), obrazom v obraze (PiP) a QR skenerom na párovanie.</li>
-            <li><strong>Šifrovaná synchronizácia bez účtu:</strong> prepojenie zariadení pomocou QR alebo 6-znakového kódu — synchronizácia profilov, histórie sledovania, kolekcií a doplnkov vrátane odoslania videa z mobilu priamo na TV.</li>
-            <li><strong>Offline sťahovanie:</strong> sťahovanie filmov, epizód aj celých sérií vrátane titulkov a obalov s prednostným prehraním bez pripojenia.</li>
-            <li><strong>Prepracovaný výber streamov a nové zdroje:</strong> rozpoznávanie rozlíšenia, HDR/Dolby Vision, zvuku a slovenského/českého dabingu aj titulkov; podpora Stremio v3, JSON doplnkov v2, WebDAV a lokálnych priečinkov.</li>
-            <li><strong>Živá TV s EPG a archívom:</strong> podpora M3U a Xtream playlistov, programového sprievodcu XMLTV a spätného prehrávania z archívu.</li>
-            <li><strong>Šetrič obrazovky, profily a jazyky:</strong> ambientný šetrič pri nečinnosti a pauze na TV aj Desktope, dotykové gestá pre desktopové tablety, správa dospelých aj detských profilov a podpora slovenčiny, češtiny a angličtiny.</li>
+            <li><strong>Rozšírená domovská obrazovka a žánrové filtre:</strong> nové rady (Práve v kinách, Chystané novinky, Práve vysielané, Pripravené offline), skutočné katalógy z nainštalovaných doplnkov a interaktívne filtrovanie podľa žánrov vo Filmoch aj Seriáloch.</li>
+            <li><strong>Kontrola aktualizácií v aplikácii a diagnostika:</strong> prepínanie Beta / Stable kanála s priamym stiahnutím aktualizácie, export anonymizovaných logov a Crash Reporter pre beta testerov.</li>
+            <li><strong>Záchranné otvorenie v externom prehrávači:</strong> dlhé podržanie OK / pravé tlačidlo myši vo výbere streamu aj na chybovej obrazovke prehrávača umožní prehrať stream vo VLC, mpv, MX Playeri či Nove.</li>
+            <li><strong>Desktopová ergonómia:</strong> pamätanie pozície, veľkosti a režimu okna naprieč monitormi, natívne mediálne klávesy (Linux MPRIS2 a Windows), ovládanie hlasitosti kolieskom myši a blokovanie uspania pri prehrávaní.</li>
+            <li><strong>Šifrovaná synchronizácia bez účtu a offline sťahovanie:</strong> párovanie cez QR / 6-znakový kód, odosielanie na TV, offline sťahovanie filmov, epizód aj celých sérií a Živá TV s EPG a archívom.</li>
           </ul>
         </article>
       </div>

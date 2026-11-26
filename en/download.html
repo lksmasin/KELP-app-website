@@ -56,7 +56,7 @@
       </div>
     </section>
 
-    <section class="section" id="platforms" data-releases-repo="lksmasin/KELP-app-website">
+    <section class="section" id="platforms" data-releases-repo="lksmasin/KELP-app">
       <div class="container">
         <div class="dl-platforms">
 
@@ -65,11 +65,12 @@
               <svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 20h8M12 17v3"/></svg>
               <h2>Android &amp; Android TV</h2>
             </div>
-            <p class="platform-desc">Publicly available on Google Play for Android phones, tablets, and Android TV devices (Android 10 and newer).</p>
-            <div class="platform-meta">Google Play  •  Android 10+</div>
+            <p class="platform-desc">Publicly available on Google Play and as direct sideload APKs for Android phones, tablets, and Android TV devices (Android 10+).</p>
+            <div class="platform-meta">Google Play  •  Android 10+  •  APK</div>
             <div class="platform-actions">
               <a href="https://play.google.com/store/apps/details?id=page.kelp" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-full">Get on Google Play</a>
-              <a href="https://github.com/lksmasin/KELP-app-website/releases" target="_blank" rel="noopener noreferrer" class="platform-alt">Direct APKs on GitHub Releases</a>
+              <a href="https://github.com/lksmasin/KELP-app/releases/tag/v7.0.0-beta.1" target="_blank" rel="noopener noreferrer" class="platform-alt" id="dl-android-tv">Download Android TV APK</a>
+              <a href="https://github.com/lksmasin/KELP-app/releases/tag/v7.0.0-beta.1" target="_blank" rel="noopener noreferrer" class="platform-alt" id="dl-android-mobile">Download Android Mobile / Tablet APK</a>
             </div>
           </article>
 
@@ -81,8 +82,8 @@
             <p class="platform-desc">MSI installer or portable ZIP package for 64-bit Windows 10 and 11 with the media player library bundled in.</p>
             <div class="platform-meta" data-meta-for="dl-windows">Windows 10 / 11 (x64)  •  MSI / ZIP</div>
             <div class="platform-actions">
-              <a href="https://github.com/lksmasin/KELP-app-website/releases/latest" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-full" id="dl-windows">Download for Windows</a>
-              <a href="https://github.com/lksmasin/KELP-app-website/releases" target="_blank" rel="noopener noreferrer" class="platform-alt">All packages (MSI &amp; portable ZIP)</a>
+              <a href="https://github.com/lksmasin/KELP-app/releases/tag/v7.0.0-beta.1" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-full" id="dl-windows">Download for Windows</a>
+              <a href="https://github.com/lksmasin/KELP-app/releases" target="_blank" rel="noopener noreferrer" class="platform-alt" data-release-page-link>All packages (MSI, portable ZIP &amp; SHA256)</a>
             </div>
           </article>
 
@@ -94,8 +95,8 @@
             <p class="platform-desc">DEB package and portable tar.gz archive for 64-bit Linux distributions with automatic HiDPI scaling.</p>
             <div class="platform-meta" data-meta-for="dl-linux">Linux (x64)  •  DEB / tar.gz</div>
             <div class="platform-actions">
-              <a href="https://github.com/lksmasin/KELP-app-website/releases/latest" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-full" id="dl-linux">Download for Linux</a>
-              <a href="https://github.com/lksmasin/KELP-app-website/releases" target="_blank" rel="noopener noreferrer" class="platform-alt">All packages (DEB &amp; tar.gz)</a>
+              <a href="https://github.com/lksmasin/KELP-app/releases/tag/v7.0.0-beta.1" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-full" id="dl-linux">Download for Linux</a>
+              <a href="https://github.com/lksmasin/KELP-app/releases" target="_blank" rel="noopener noreferrer" class="platform-alt" data-release-page-link>All packages (DEB, tar.gz &amp; SHA256)</a>
             </div>
           </article>
 
@@ -107,7 +108,7 @@
       <div class="container">
         <div class="section-head">
           <h2>Changelog</h2>
-          <a href="https://github.com/lksmasin/KELP-app-website/releases" target="_blank" rel="noopener noreferrer" class="text-link">Release archive on GitHub</a>
+          <a href="https://github.com/lksmasin/KELP-app/releases" target="_blank" rel="noopener noreferrer" class="text-link">Release archive on GitHub</a>
         </div>
 
         <article class="changelog-card">
@@ -118,12 +119,11 @@
 
           <ul class="changelog-list">
             <li><strong>All-new native foundation:</strong> faster startup, smoother browsing, and a unified codebase across Android TV, Android phones and tablets, Windows, and Linux.</li>
-            <li><strong>Dedicated Android phone &amp; tablet app:</strong> touch-first interface with player gestures (brightness, volume, seek), Picture-in-Picture (PiP), and a built-in QR scanner for pairing.</li>
-            <li><strong>Account-free encrypted sync:</strong> link devices with a QR or 6-character code to sync profiles, watch history, collections, and add-ons — including one-tap Send to TV from mobile.</li>
-            <li><strong>Offline downloads:</strong> save movies, individual episodes, or full seasons with subtitles and artwork, with local files taking automatic priority offline.</li>
-            <li><strong>Redesigned stream picker &amp; open sources:</strong> automatic detection of resolution, HDR/Dolby Vision, audio tracks, and languages; support for Stremio v3, declarative JSON v2 add-ons, WebDAV, and local folders.</li>
-            <li><strong>Live TV with EPG &amp; catch-up:</strong> support for M3U and Xtream playlists, XMLTV program guides, and channel archive catch-up playback.</li>
-            <li><strong>Ambient screensaver, profiles &amp; languages:</strong> ambient screensaver on idle and pause for TV and Desktop, touch-drag gestures for desktop tablets, adult and kids profile management, and full Czech, Slovak, and English localization.</li>
+            <li><strong>Expanded Home, Movies &amp; Series discovery:</strong> new curated rows (Now in Theaters, Upcoming, On the Air, Offline Ready), live add-on catalogs, and interactive genre filter chips.</li>
+            <li><strong>In-app update checker &amp; diagnostics:</strong> Beta and Stable update channels with direct downloads, secret-redacted diagnostic log export, and startup Crash Reporter.</li>
+            <li><strong>External player rescue:</strong> long-press / right-click in the stream picker or use the player error screen to hand off playback to VLC, mpv, MX Player, or Nova.</li>
+            <li><strong>Desktop ergonomics:</strong> multi-monitor window state persistence, native OS media keys (Linux MPRIS2 &amp; Windows global hotkeys), mouse wheel volume, and display sleep inhibition.</li>
+            <li><strong>Account-free encrypted sync, offline downloads &amp; Live TV:</strong> QR / 6-character pairing, Send to TV, offline movie/season downloads, and Live TV with XMLTV EPG &amp; catch-up.</li>
           </ul>
         </article>
       </div>
