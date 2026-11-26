@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Časté otázky | KELP</title>
+  <meta name="description" content="Stručné odpovede na najčastejšie otázky k aplikácii KELP — podporované zdroje, platformy, offline režim a šifrovaná synchronizácia.">
+  <link rel="alternate" hreflang="cs" href="https://kelp.page/faq.html">
+  <link rel="alternate" hreflang="sk" href="https://kelp.page/sk/faq.html">
+  <link rel="alternate" hreflang="en" href="https://kelp.page/en/faq.html">
+  <link rel="alternate" hreflang="x-default" href="https://kelp.page/en/faq.html">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand-link" aria-label="KELP domov">
+        <img src="../assets/kelp-logo.svg" alt="KELP" class="brand-logo" width="67" height="24">
+      </a>
+      <nav class="site-nav" aria-label="Hlavná navigácia">
+        <a href="index.html" class="nav-pill">Prehľad</a>
+        <a href="download.html" class="nav-pill">Stiahnuť</a>
+        <a href="faq.html" class="nav-pill active">FAQ</a>
+        <a href="addon-docs.html" class="nav-pill">Doplnky</a>
+      </nav>
+      <div class="header-actions">
+        <div class="lang-switch" role="group" aria-label="Jazyk">
+          <a href="../faq.html" class="lang-btn" data-set-lang="cs">CS</a>
+          <a href="faq.html" class="lang-btn active" data-set-lang="sk" aria-current="true">SK</a>
+          <a href="../en/faq.html" class="lang-btn" data-set-lang="en">EN</a>
+        </div>
+        <a href="download.html" class="btn btn-primary btn-sm header-cta">Stiahnuť</a>
+        <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-label="Otvoriť menu">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </div>
+    <nav class="mobile-menu" data-mobile-menu aria-label="Mobilná navigácia">
+      <a href="index.html">Prehľad</a>
+      <a href="download.html">Stiahnuť</a>
+      <a href="faq.html" class="active">FAQ</a>
+      <a href="addon-docs.html">Doplnky</a>
+      <a href="disclaimer.html">Právna doložka</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <h1>Časté otázky</h1>
+        <p>Vecné odpovede o tom, ako KELP funguje, aké zdroje podporuje a ako nakladá s údajmi.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="faq-list">
+
+          <details class="faq-item" open>
+            <summary>
+              <span>Čo je KELP a obsahuje nejaké filmy alebo seriály?</span>
+              <svg class="icon icon-sm faq-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </summary>
+            <div class="faq-body">
+              <p><strong>Nie.</strong> KELP je otvorené mediálne centrum, ktoré spája katalógové metadáta z TMDb s vašimi vlastnými zdrojmi a prehráva ich vo vstavanom prehrávači.</p>
+              <p>V základnej inštalácii neobsahuje žiadny obsah, predinštalovaný doplnok ani napojenie na konkrétne služby.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>
+              <span>Aké zdroje obsahu môžem pripojiť?</span>
+              <svg class="icon icon-sm faq-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </summary>
+            <div class="faq-body">
+              <p>KELP pracuje výhradne cez všeobecné otvorené protokoly:</p>
+              <p><strong>Filmy a seriály:</strong> Stremio v3 (<span class="inline-code">manifest.json</span>), deklaratívne JSON doplnky, WebDAV a lokálne priečinky na disku.</p>
+              <p><strong>Živá TV:</strong> M3U playlisty, Xtream Codes a programový sprievodca XMLTV EPG vrátane podpory archívu.</p>
+              <p>Technický popis tvorby doplnkov nájdete v <a href="addon-docs.html">dokumentácii doplnkov</a>.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>
+              <span>Ako funguje synchronizácia medzi telefónom, televízorom a počítačom?</span>
+              <svg class="icon icon-sm faq-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </summary>
+            <div class="faq-body">
+              <p>KELP nevyžaduje používateľský účet ani e-mail. Zariadenia spárujete <strong>QR kódom alebo 6-znakovým kódom</strong>.</p>
+              <p>Rozpozerané tituly, profily, kolekcie, doplnky aj zdroje Živej TV sa šifrujú priamo na zariadení pomocou <strong>AES-256-GCM</strong>. Synchronizácia funguje v domácej sieti cez LAN (vrátane rýchleho odoslania videa „Na TV“) aj na diaľku cez voliteľný zero-knowledge relay.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>
+              <span>Podporuje KELP sledovanie offline?</span>
+              <svg class="icon icon-sm faq-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </summary>
+            <div class="faq-body">
+              <p>Áno. Filmy, jednotlivé epizódy aj celé série (vrátane voľby „len nepozreté“) si môžete stiahnuť vopred vrátane titulkov a obalov. Stiahnutá kópia má pri ďalšom spustení automaticky prednosť.</p>
+              <p>V nastaveniach je možné nastaviť maximálny limit úložiska aj sťahovanie iba cez Wi-Fi.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>
+              <span>Na akých platformách a v akých jazykoch aplikácia beží?</span>
+              <svg class="icon icon-sm faq-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </summary>
+            <div class="faq-body">
+              <p>KELP má natívne rozhranie pre <strong>Android TV</strong>, <strong>Android telefóny a tablety</strong> (obe verejne na Google Play), <strong>Windows 10/11</strong> a <strong>Linux</strong>.</p>
+              <p>Aplikácia aj katalóg podporujú <strong>slovenčinu, češtinu a angličtinu</strong>.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>
+              <span>Potrebujem na prehrávanie na počítači niečo doinštalovať?</span>
+              <svg class="icon icon-sm faq-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </summary>
+            <div class="faq-body">
+              <p><strong>Windows:</strong> Nie — knižnica prehrávača (<span class="inline-code">libmpv-2.dll</span>) je pribalená priamo v inštalačnom aj prenosnom balíku.</p>
+              <p><strong>Linux:</strong> Ak nemáte prehrávač <span class="inline-code">mpv</span> v systéme, nainštalujte balík <span class="inline-code">mpv-libs</span> (Fedora) alebo <span class="inline-code">libmpv2</span> (Debian / Ubuntu).</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>
+              <span>Zbiera aplikácia nejaké osobné údaje alebo zobrazuje reklamy?</span>
+              <svg class="icon icon-sm faq-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </summary>
+            <div class="faq-body">
+              <p>Nie. KELP neobsahuje reklamy, analytiku, cookies ani sledovanie. Všetky údaje sú uložené lokálne na vašom zariadení. Podrobnosti nájdete v <a href="disclaimer.html">právnej doložke a zásadách GDPR</a>.</p>
+            </div>
+          </details>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-copy">© 2026 KELP  •  Neutrálne mediálne centrum bez vlastného obsahu</div>
+      <div class="footer-links">
+        <a href="index.html">Prehľad</a>
+        <a href="download.html">Stiahnuť</a>
+        <a href="faq.html">FAQ</a>
+        <a href="addon-docs.html">Doplnky</a>
+        <a href="disclaimer.html">Právna doložka</a>
+        <a href="https://discord.com/invite/N7xasCqzh6" target="_blank" rel="noopener noreferrer">Discord</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../site.js"></script>
+</body>
+</html>

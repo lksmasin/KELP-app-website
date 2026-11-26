@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KELP | Otvorené mediálne centrum</title>
+  <meta name="description" content="KELP je otvorené mediálne centrum pre Android TV, Android, Windows a Linux. Vlastné zdroje, offline sťahovanie, živá TV s EPG a šifrovaná synchronizácia bez účtu.">
+  <meta property="og:title" content="KELP — Otvorené mediálne centrum">
+  <meta property="og:description" content="Filmy, seriály aj živá televízia na jednom mieste — s vlastnými doplnkami, offline stiahnutím a šifrovanou synchronizáciou bez účtu.">
+  <meta property="og:image" content="https://kelp.page/assets/screenshots/tv-home.webp">
+  <meta property="og:url" content="https://kelp.page/sk/">
+  <meta property="og:type" content="website">
+  <link rel="alternate" hreflang="cs" href="https://kelp.page/">
+  <link rel="alternate" hreflang="sk" href="https://kelp.page/sk/">
+  <link rel="alternate" hreflang="en" href="https://kelp.page/en/">
+  <link rel="alternate" hreflang="x-default" href="https://kelp.page/en/">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand-link" aria-label="KELP domov">
+        <img src="../assets/kelp-logo.svg" alt="KELP" class="brand-logo" width="67" height="24">
+      </a>
+      <nav class="site-nav" aria-label="Hlavná navigácia">
+        <a href="index.html" class="nav-pill active">Prehľad</a>
+        <a href="download.html" class="nav-pill">Stiahnuť</a>
+        <a href="faq.html" class="nav-pill">FAQ</a>
+        <a href="addon-docs.html" class="nav-pill">Doplnky</a>
+      </nav>
+      <div class="header-actions">
+        <div class="lang-switch" role="group" aria-label="Jazyk">
+          <a href="../index.html" class="lang-btn" data-set-lang="cs">CS</a>
+          <a href="index.html" class="lang-btn active" data-set-lang="sk" aria-current="true">SK</a>
+          <a href="../en/index.html" class="lang-btn" data-set-lang="en">EN</a>
+        </div>
+        <a href="download.html" class="btn btn-primary btn-sm header-cta">Stiahnuť</a>
+        <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-label="Otvoriť menu">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </div>
+    <nav class="mobile-menu" data-mobile-menu aria-label="Mobilná navigácia">
+      <a href="index.html" class="active">Prehľad</a>
+      <a href="download.html">Stiahnuť</a>
+      <a href="faq.html">FAQ</a>
+      <a href="addon-docs.html">Doplnky</a>
+      <a href="disclaimer.html">Právna doložka</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-copy">
+          <div class="meta-eyebrow">
+            Android TV<span class="sep">•</span>Android<span class="sep">•</span>Windows<span class="sep">•</span>Linux
+          </div>
+          <h1>Otvorené mediálne centrum pre vaše vlastné zdroje.</h1>
+          <p class="hero-lead">
+            Filmy, seriály aj živá televízia na jednom mieste — s vlastnými doplnkami, offline stiahnutím a šifrovanou synchronizáciou bez účtu.
+          </p>
+          <div class="hero-actions">
+            <a href="download.html" class="btn btn-primary">
+              <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v12m0 0l-4-4m4 4l4-4M5 20h14"/></svg>
+              Stiahnuť KELP
+            </a>
+            <a href="addon-docs.html" class="btn">Dokumentácia doplnkov</a>
+          </div>
+        </div>
+
+        <div class="showcase" data-showcase>
+          <div class="showcase-frame" data-slide-frame>
+            <img src="../assets/screenshots/tv-home.webp" alt="Android TV — Domovská obrazovka" data-slide-img width="1920" height="1080">
+            <button type="button" class="showcase-nav-btn showcase-nav-prev" data-slide-prev aria-label="Predchádzajúca snímka">
+              <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            <button type="button" class="showcase-nav-btn showcase-nav-next" data-slide-next aria-label="Ďalšia snímka">
+              <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+          </div>
+
+          <div class="showcase-bar">
+            <div class="showcase-meta">
+              <div class="showcase-dots" data-slide-dots aria-label="Výber snímky"></div>
+              <div class="showcase-caption" data-slide-caption><strong>Android TV</strong><span class="sep">•</span>Domovská obrazovka</div>
+            </div>
+            <button type="button" class="btn btn-sm" data-open-gallery>
+              <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.5"/><path d="M21 15l-5-4-6 6"/></svg>
+              Zobraziť všetky snímky (7)
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <div class="container">
+        <div class="section-head">
+          <h2>Čo KELP dokáže</h2>
+        </div>
+
+        <div class="cap-grid">
+          <article class="cap-card">
+            <div class="cap-icon-wrap" aria-hidden="true">
+              <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 10h8M8 14h5"/></svg>
+            </div>
+            <h3>Vlastné zdroje bez obmedzení</h3>
+            <p>Pripojte Stremio alebo JSON doplnky, domáci NAS cez WebDAV či lokálny priečinok. Streamy zo všetkých zdrojov sa zlúčia do jedného výberu s automatickým rozpoznaním rozlíšenia, HDR a jazyka.</p>
+          </article>
+
+          <article class="cap-card">
+            <div class="cap-icon-wrap" aria-hidden="true">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M12 4v12m0 0l-4-4m4 4l4-4M5 20h14"/></svg>
+            </div>
+            <h3>Offline sťahovanie celých sérií</h3>
+            <p>Stiahnite si film, epizódu alebo celú sériu pred cestou vrátane titulkov a obalov. Stiahnuté kópie sa prehrávajú prednostne aj bez pripojenia.</p>
+          </article>
+
+          <article class="cap-card">
+            <div class="cap-icon-wrap" aria-hidden="true">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M12 3l7 4v5c0 4.5-3 8-7 9-4-1-7-4.5-7-9V7l7-4z"/></svg>
+            </div>
+            <h3>Šifrovaná synchronizácia bez účtu</h3>
+            <p>Žiadna registrácia ani heslá. Zariadenia spárujete QR kódom — rozpozerané tituly, profily, kolekcie aj doplnky sa synchronizujú automaticky a film z mobilu jedným klepnutím pošlete priamo na TV.</p>
+          </article>
+
+          <article class="cap-card">
+            <div class="cap-icon-wrap" aria-hidden="true">
+              <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="12" rx="2"/><path d="M8 3l4 4 4-4"/></svg>
+            </div>
+            <h3>Živá TV s EPG a archívom</h3>
+            <p>Pridajte vlastný M3U alebo Xtream playlist a programového sprievodcu. Prehľad bežiacich relácií aj spätné prehranie z archívu kanálov na jednom mieste.</p>
+          </article>
+
+          <article class="cap-card">
+            <div class="cap-icon-wrap" aria-hidden="true">
+              <svg class="icon" viewBox="0 0 24 24"><polygon points="6,4 20,12 6,20" fill="currentColor" stroke="none"/></svg>
+            </div>
+            <h3>Prehrávač pre náročných</h3>
+            <p>Automatické prispôsobenie snímkovej frekvencie (AFR), preskočenie intra, nadväzujúci ďalší diel, nastaviteľný vzhľad titulkov, šetrič pri pauze a na mobile obraz v obraze s dotykovými gestami.</p>
+          </article>
+
+          <article class="cap-card">
+            <div class="cap-icon-wrap" aria-hidden="true">
+              <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 20h8M12 17v3"/></svg>
+            </div>
+            <h3>Prispôsobené každej obrazovke</h3>
+            <p>Diaľkový ovládač na Android TV, dotykové ovládanie na mobile a tablete aj plná podpora myši, dotykových notebookov a HiDPI na Windows a Linuxe — so zdieľanými rodinnými aj detskými profilmi.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Stiahnuť KELP</h2>
+          <a href="download.html" class="text-link">Všetky verzie a prehľad zmien</a>
+        </div>
+
+        <div class="dl-strip">
+          <a href="https://play.google.com/store/apps/details?id=page.kelp" target="_blank" rel="noopener noreferrer" class="dl-tile">
+            <svg class="icon icon-lg dl-tile-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 20h8M12 17v3"/></svg>
+            <h3>Android TV</h3>
+            <span class="dl-tile-sub">Google Play</span>
+          </a>
+
+          <a href="https://play.google.com/store/apps/details?id=page.kelp" target="_blank" rel="noopener noreferrer" class="dl-tile">
+            <svg class="icon icon-lg dl-tile-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></svg>
+            <h3>Android</h3>
+            <span class="dl-tile-sub">Telefón a tablet</span>
+          </a>
+
+          <a href="download.html#platforms" class="dl-tile">
+            <svg class="icon icon-lg dl-tile-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg>
+            <h3>Windows</h3>
+            <span class="dl-tile-sub">Windows 10 / 11</span>
+          </a>
+
+          <a href="download.html#platforms" class="dl-tile">
+            <svg class="icon icon-lg dl-tile-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M2 20h20"/></svg>
+            <h3>Linux</h3>
+            <span class="dl-tile-sub">64-bitová verzia</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="lightbox" data-lightbox aria-hidden="true" role="dialog" aria-label="Galéria snímok aplikácie KELP">
+    <div class="lightbox-inner">
+      <div class="lightbox-stage">
+        <img src="" alt="" data-lightbox-img>
+      </div>
+      <div class="lightbox-bar">
+        <div class="lightbox-info">
+          <div class="lightbox-title" data-lightbox-title></div>
+          <div class="lightbox-desc" data-lightbox-desc></div>
+        </div>
+        <div class="lightbox-controls">
+          <span class="lightbox-counter" data-lightbox-count>1 / 7</span>
+          <button type="button" class="icon-btn" data-lightbox-prev aria-label="Predchádzajúca snímka">
+            <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <button type="button" class="icon-btn" data-lightbox-next aria-label="Ďalšia snímka">
+            <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+          <button type="button" class="btn btn-sm" data-lightbox-close>Zavrieť</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script id="kelp-gallery-data" type="application/json">
+    [
+      {
+        "src": "../assets/screenshots/tv-home.webp",
+        "platform": "Android TV",
+        "title": "Domovská obrazovka",
+        "desc": "Ovládanie diaľkovým ovládačom, vľavo ukotvená 16:9 karta s Clear Art logom a čistá OLED čierna."
+      },
+      {
+        "src": "../assets/screenshots/tv-detail.webp",
+        "platform": "Android TV",
+        "title": "Detail titulu",
+        "desc": "Celoobrazovkový backdrop s prehľadnými metadátami a tromi hlavnými akciami bez zbytočných tlačidiel."
+      },
+      {
+        "src": "../assets/screenshots/tv-search.webp",
+        "platform": "Android TV",
+        "title": "Vyhľadávanie",
+        "desc": "Kompaktná klávesnica, história dopytov a mriežka plagátov s podporou hardvérovej klávesnice."
+      },
+      {
+        "src": "../assets/screenshots/desktop-home.webp",
+        "platform": "Desktop",
+        "title": "Prehľad (Linux / Windows)",
+        "desc": "Širokouhlé 16:9 karty bez stmavovania, automatické HiDPI škálovanie a ovládanie myšou aj dotykom."
+      },
+      {
+        "src": "../assets/screenshots/desktop-detail.webp",
+        "platform": "Desktop",
+        "title": "Detail filmu",
+        "desc": "Priame akcie na prehranie, stiahnutie offline, uloženie do kolekcie aj označenie ako pozreté."
+      },
+      {
+        "src": "../assets/screenshots/desktop-streams.webp",
+        "platform": "Výber streamu",
+        "title": "Automatické radenie zdrojov",
+        "desc": "Rozpoznanie rozlíšenia, HDR/Dolby Vision, zvukových stôp a slovenského či českého dabingu a titulkov."
+      },
+      {
+        "src": "../assets/screenshots/mobile-showcase.webp",
+        "platform": "Android Mobil",
+        "title": "Telefón a tablet",
+        "desc": "Úvodný sprievodca, domovská obrazovka a detail epizód s offline stiahnutím celej série, PiP a QR párovaním."
+      }
+    ]
+  </script>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-copy">© 2026 KELP  •  Neutrálne mediálne centrum bez vlastného obsahu</div>
+      <div class="footer-links">
+        <a href="index.html">Prehľad</a>
+        <a href="download.html">Stiahnuť</a>
+        <a href="faq.html">FAQ</a>
+        <a href="addon-docs.html">Doplnky</a>
+        <a href="disclaimer.html">Právna doložka</a>
+        <a href="https://discord.com/invite/N7xasCqzh6" target="_blank" rel="noopener noreferrer">Discord</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../site.js"></script>
+</body>
+</html>

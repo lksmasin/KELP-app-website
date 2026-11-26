@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ | KELP</title>
+  <meta name="description" content="Straightforward answers to common questions about KELP — supported sources, platforms, offline viewing, and encrypted sync.">
+  <link rel="alternate" hreflang="cs" href="https://kelp.page/faq.html">
+  <link rel="alternate" hreflang="sk" href="https://kelp.page/sk/faq.html">
+  <link rel="alternate" hreflang="en" href="https://kelp.page/en/faq.html">
+  <link rel="alternate" hreflang="x-default" href="https://kelp.page/en/faq.html">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand-link" aria-label="KELP home">
+        <img src="../assets/kelp-logo.svg" alt="KELP" class="brand-logo" width="67" height="24">
+      </a>
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href="index.html" class="nav-pill">Overview</a>
+        <a href="download.html" class="nav-pill">Download</a>
+        <a href="faq.html" class="nav-pill active">FAQ</a>
+        <a href="addon-docs.html" class="nav-pill">Add-ons</a>
+      </nav>
+      <div class="header-actions">
+        <div class="lang-switch" role="group" aria-label="Language">
+          <a href="../faq.html" class="lang-btn" data-set-lang="cs">CS</a>
+          <a href="../sk/faq.html" class="lang-btn" data-set-lang="sk">SK</a>
+          <a href="faq.html" class="lang-btn active" data-set-lang="en" aria-current="true">EN</a>
+        </div>
+        <a href="download.html" class="btn btn-primary btn-sm header-cta">Download</a>
+        <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-label="Open menu">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </div>
+    <nav class="mobile-menu" data-mobile-menu aria-label="Mobile navigation">
+      <a href="index.html">Overview</a>
+      <a href="download.html">Download</a>
+      <a href="faq.html" class="active">FAQ</a>
+      <a href="addon-docs.html">Add-ons</a>
+      <a href="disclaimer.html">Legal &amp; Privacy</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <h1>Frequently Asked Questions</h1>
+        <p>Plain answers on how KELP works, what sources it supports, and how it handles your data.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="faq-list">
+
+          <details class="faq-item" open>
+            <summary>
+              <span>What is KELP and does it include any movies or shows?</span>
+              <svg class="icon icon-sm faq-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </summary>
+            <div class="faq-body">
+              <p><strong>No.</strong> KELP is an open media center that pairs catalog metadata from TMDb with your own media sources and plays them in a built-in player.</p>
+              <p>Out of the box it contains no media, no pre-installed add-ons, and no built-in third-party hosting services.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>
+              <span>What media sources can I connect?</span>
+              <svg class="icon icon-sm faq-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </summary>
+            <div class="faq-body">
+              <p>KELP works exclusively through general, open protocols:</p>
+              <p><strong>Movies &amp; series:</strong> Stremio v3 (<span class="inline-code">manifest.json</span>), declarative JSON add-ons, WebDAV servers, and local disk folders.</p>
+              <p><strong>Live TV:</strong> M3U playlists, Xtream Codes, and XMLTV EPG guides including archive catch-up.</p>
+              <p>See the <a href="addon-docs.html">add-on documentation</a> for the full JSON add-on specification.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>
+              <span>How does sync work between phone, TV, and computer?</span>
+              <svg class="icon icon-sm faq-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </summary>
+            <div class="faq-body">
+              <p>KELP requires no account, e-mail, or password. Pair devices by scanning a <strong>QR code or entering a 6-character code</strong>.</p>
+              <p>Watch progress, profiles, collections, add-ons, and Live TV sources are encrypted locally with <strong>AES-256-GCM</strong>. Sync works directly over your home LAN (including one-tap Send to TV) and optionally over a zero-knowledge relay while away from home.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>
+              <span>Does KELP support offline viewing?</span>
+              <svg class="icon icon-sm faq-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </summary>
+            <div class="faq-body">
+              <p>Yes. You can download movies, individual episodes, or whole seasons (including an unwatched-only option) together with subtitles and artwork. Local copies automatically take priority on playback.</p>
+              <p>Storage limits, download concurrency, and Wi-Fi-only downloads on mobile are configurable in Settings.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>
+              <span>Which platforms and languages are supported?</span>
+              <svg class="icon icon-sm faq-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </summary>
+            <div class="faq-body">
+              <p>KELP provides dedicated native apps for <strong>Android TV</strong>, <strong>Android phones and tablets</strong> (both publicly available on Google Play), <strong>Windows 10/11</strong>, and <strong>Linux</strong>.</p>
+              <p>The interface and catalog support <strong>English, Czech, and Slovak</strong>.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>
+              <span>Do I need to install extra codecs or player libraries on desktop?</span>
+              <svg class="icon icon-sm faq-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </summary>
+            <div class="faq-body">
+              <p><strong>Windows:</strong> No — the player library (<span class="inline-code">libmpv-2.dll</span>) is bundled directly inside both the MSI installer and the portable ZIP.</p>
+              <p><strong>Linux:</strong> If <span class="inline-code">mpv</span> is not already installed on your system, install <span class="inline-code">mpv-libs</span> (Fedora) or <span class="inline-code">libmpv2</span> (Debian / Ubuntu).</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>
+              <span>Does KELP collect personal data or show ads?</span>
+              <svg class="icon icon-sm faq-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </summary>
+            <div class="faq-body">
+              <p>No. KELP contains no ads, analytics, cookies, or tracking. All app data stays locally on your device. Read the full details in our <a href="disclaimer.html">Legal Notice &amp; Privacy Policy</a>.</p>
+            </div>
+          </details>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-copy">© 2026 KELP  •  Neutral media center with no hosted content</div>
+      <div class="footer-links">
+        <a href="index.html">Overview</a>
+        <a href="download.html">Download</a>
+        <a href="faq.html">FAQ</a>
+        <a href="addon-docs.html">Add-ons</a>
+        <a href="disclaimer.html">Legal &amp; Privacy</a>
+        <a href="https://discord.com/invite/N7xasCqzh6" target="_blank" rel="noopener noreferrer">Discord</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../site.js"></script>
+</body>
+</html>

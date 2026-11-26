@@ -207,6 +207,41 @@ button {
   gap: 8px;
 }
 
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  border-radius: var(--r-md);
+  background: var(--glass-05);
+  border: 1px solid var(--border-subtle);
+}
+
+.lang-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 8px;
+  border-radius: var(--r-sm);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--ink-secondary);
+  line-height: 1;
+  transition: background var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
+}
+
+.lang-btn.active {
+  background: var(--bg-pill-active);
+  color: var(--ink);
+}
+
+.lang-btn:hover,
+.lang-btn:focus-visible {
+  background: var(--ink);
+  color: var(--ink-inverted);
+}
+
 .nav-toggle {
   display: none;
   width: 38px;

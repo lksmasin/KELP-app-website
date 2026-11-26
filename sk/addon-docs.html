@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dokumentácia doplnkov | KELP</title>
+  <meta name="description" content="Technická dokumentácia otvorených zdrojov a deklaratívneho JSON addon systému pre KELP.">
+  <link rel="alternate" hreflang="cs" href="https://kelp.page/addon-docs.html">
+  <link rel="alternate" hreflang="sk" href="https://kelp.page/sk/addon-docs.html">
+  <link rel="alternate" hreflang="en" href="https://kelp.page/en/addon-docs.html">
+  <link rel="alternate" hreflang="x-default" href="https://kelp.page/en/addon-docs.html">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand-link" aria-label="KELP domov">
+        <img src="../assets/kelp-logo.svg" alt="KELP" class="brand-logo" width="67" height="24">
+      </a>
+      <nav class="site-nav" aria-label="Hlavná navigácia">
+        <a href="index.html" class="nav-pill">Prehľad</a>
+        <a href="download.html" class="nav-pill">Stiahnuť</a>
+        <a href="faq.html" class="nav-pill">FAQ</a>
+        <a href="addon-docs.html" class="nav-pill active">Doplnky</a>
+      </nav>
+      <div class="header-actions">
+        <div class="lang-switch" role="group" aria-label="Jazyk">
+          <a href="../addon-docs.html" class="lang-btn" data-set-lang="cs">CS</a>
+          <a href="addon-docs.html" class="lang-btn active" data-set-lang="sk" aria-current="true">SK</a>
+          <a href="../en/addon-docs.html" class="lang-btn" data-set-lang="en">EN</a>
+        </div>
+        <a href="download.html" class="btn btn-primary btn-sm header-cta">Stiahnuť</a>
+        <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-label="Otvoriť menu">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </div>
+    <nav class="mobile-menu" data-mobile-menu aria-label="Mobilná navigácia">
+      <a href="index.html">Prehľad</a>
+      <a href="download.html">Stiahnuť</a>
+      <a href="faq.html">FAQ</a>
+      <a href="addon-docs.html" class="active">Doplnky</a>
+      <a href="disclaimer.html">Právna doložka</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="docs-layout">
+      <aside class="docs-sidebar" aria-label="Obsah dokumentácie">
+            <h4>Protokoly</h4>
+            <a href="#protokoly">Podporované zdroje</a>
+
+            <h4>Prehľad</h4>
+            <a href="#uvod">Úvod</a>
+            <a href="#architektura">Architektúra</a>
+            <a href="#zivotni-cyklus">Životný cyklus</a>
+
+            <h4>JSON štruktúra</h4>
+            <a href="#korenova-struktura">Koreňová štruktúra</a>
+            <a href="#manifest">manifest</a>
+            <a href="#auth">auth</a>
+            <a href="#search">search</a>
+            <a href="#stream-url">streamUrl</a>
+
+            <h4>Akcie (Steps)</h4>
+            <a href="#akce-http">http</a>
+            <a href="#akce-md5crypt">md5crypt</a>
+            <a href="#akce-sha1">sha1</a>
+            <a href="#akce-md5">md5</a>
+            <a href="#akce-assert">assert</a>
+            <a href="#akce-clear">clear</a>
+            <a href="#akce-regex">regex</a>
+            <a href="#akce-set">set</a>
+            <a href="#akce-parallel">parallel</a>
+            <a href="#optional-steps">Voliteľné kroky</a>
+
+            <h4>Template Engine</h4>
+            <a href="#promenne">Premenné</a>
+            <a href="#interpolace">Interpolácia</a>
+            <a href="#filtry">Filtre</a>
+            <a href="#specialni-promenne">Špeciálne premenné</a>
+
+            <h4>Parsovanie odpovedí</h4>
+            <a href="#xml-parsing">XML parsing</a>
+            <a href="#json-parsing">JSON parsing</a>
+            <a href="#seznam-vysledku">Zoznam výsledkov</a>
+
+            <h4>Autentifikácia</h4>
+            <a href="#auth-typy">Typy autentifikácie</a>
+            <a href="#auth-pole">Polia (fields)</a>
+            <a href="#auth-flow">Login / Check / Logout</a>
+
+            <h4>Príklady</h4>
+            <a href="#priklad-kompletni">Kompletný doplnok</a>
+            <a href="#priklad-bez-auth">Doplnok bez autentifikácie</a>
+            <a href="#priklad-json-api">JSON API doplnok</a>
+            <a href="#priklad-token">Token-based auth</a>
+
+            <h4>Referencia</h4>
+            <a href="#capabilities">Capabilities</a>
+            <a href="#addon-types">Addon Types</a>
+            <a href="#chybove-stavy">Chybové stavy</a>
+            <a href="#omezeni">Obmedzenia a limity</a>
+            <a href="#pravni-upozorneni">Právne upozornenie</a>
+      </aside>
+
+      <main class="docs-content">
+
+            <h1>Dokumentácia Addon systému</h1>
+            <p class="subtitle">Kompletný sprievodca tvorbou externých doplnkov úložísk pre KELP</p>
+
+            <!-- ========================= PODPOROVANÉ PROTOKOLY ========================= -->
+            <h2 id="protokoly">Podporované zdroje v KELP</h2>
+            <p>
+                KELP pracuje výhradne cez všeobecné otvorené protokoly a v základnej inštalácii neobsahuje žiadny obsah ani predinštalované doplnky.
+                Nižšie je prehľad všetkých podporovaných typov zdrojov; táto stránka podrobne popisuje tvorbu <strong>deklaratívnych JSON doplnkov</strong>.
+            </p>
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead>
+                        <tr><th>Protokol / zdroj</th><th>Inštalácia v KELP</th><th>Použitie</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>STREMIO_V3</code></td><td>URL na <code>manifest.json</code> alebo <code>stremio://</code></td><td>Štandardné Stremio v3 doplnky (katalógy, streamy, titulky).</td></tr>
+                        <tr><td><code>DECLARATIVE_JSON</code></td><td>URL alebo lokálna <code>.json</code> definícia</td><td>Bezpečná deklaratívna HTTP/XML/JSON pipeline bez spustiteľného kódu (špecifikácia nižšie).</td></tr>
+                        <tr><td><code>WEBDAV</code></td><td>Adresa servera + voliteľné prihlásenie</td><td>Vlastný NAS alebo WebDAV úložisko.</td></tr>
+                        <tr><td><code>LOCAL_DISK</code></td><td>Výber lokálneho priečinka</td><td>Lokálne video súbory a disky (indexácia priamo na zariadení).</td></tr>
+                        <tr><td><code>M3U / XTREAM / XMLTV</code></td><td>Sekcia Živá TV → Zdroje</td><td>Živé vysielanie, skupiny kanálov, EPG program a spätné prehratie z archívu.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- ========================= ÚVOD ========================= -->
+            <h2 id="uvod">Úvod</h2>
+            <p>
+                Aplikácia KELP v základnej inštalácii <strong>neobsahuje žiadny zdroj streamov</strong> ani prístup k žiadnemu úložisku.
+                Všetka funkcionalita spojená s vyhľadávaním a prehrávaním súborov z externých služieb je zabezpečená <strong>doplnkami (addonmi)</strong>,
+                ktoré si používateľ importuje sám — z URL adresy alebo lokálneho JSON súboru.
+            </p>
+            <p>
+                Doplnok je <strong>čisto deklaratívny JSON súbor</strong>, ktorý popisuje:
+            </p>
+            <ul>
+                <li><strong>Manifest</strong> — metadáta doplnku (názov, autor, verzia, schopnosti)</li>
+                <li><strong>Autentifikácia</strong> — ako sa prihlásiť k danej službe</li>
+                <li><strong>Vyhľadávanie</strong> — ako vyhľadať súbory podľa dopytu</li>
+                <li><strong>Streamovanie</strong> — ako získať priamy odkaz na stream</li>
+            </ul>
+            <p>
+                Doplnok neobsahuje žiadny spustiteľný kód. Ide o <em>deklaratívnu pipeline</em>,
+                ktorú interpretuje vstavaný <strong>Addon Engine</strong> aplikácie.
+            </p>
+
+            <div class="callout callout-info">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="margin-top:2px;"><circle cx="12" cy="12" r="9"/><path d="M12 10v6M12 7h.01"/></svg>
+                <p>Addon systém je navrhnutý tak, aby bol maximálne bezpečný. JSON definícia nemôže spustiť ľubovoľný kód — môže vykonávať iba vopred definované akcie (HTTP požiadavky, hashovanie, regex).</p>
+            </div>
+
+            <!-- ========================= ARCHITEKTÚRA ========================= -->
+            <h2 id="architektura">Architektúra</h2>
+            <p>Addon systém sa skladá z nasledujúcich komponentov:</p>
+
+            <div class="arch-diagram">
+                <div class="arch-app-title">KELP App</div>
+                
+                <div class="arch-row">
+                    <div class="arch-box">
+                        <div class="arch-box-title">AddonStore</div>
+                        <div class="arch-box-sub">(persistence)</div>
+                    </div>
+                    <div class="arch-box">
+                        <div class="arch-box-title">AddonRegistry</div>
+                        <div class="arch-box-sub">(runtime)</div>
+                    </div>
+                    <div class="arch-box">
+                        <div class="arch-box-title">AddonImporter</div>
+                        <div class="arch-box-sub">(URL / file)</div>
+                    </div>
+                </div>
+                
+                <div class="arch-arrow">
+                    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="margin:0 auto;"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+                </div>
+                
+                <div class="arch-box engine">
+                    <div class="arch-box-title">AddonEngine</div>
+                    <div class="arch-box-sub">(JSON interpreter / runner)</div>
+                </div>
+                
+                <div class="arch-arrow">
+                    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="margin:0 auto;"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+                </div>
+                
+                <div class="arch-box interface">
+                    <div class="arch-box-title">AddonInterface</div>
+                    <div class="arch-box-sub">(abstraktný API kontrakt)</div>
+                </div>
+            </div>
+
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead>
+                        <tr><th>Komponent</th><th>Popis</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>AddonDefinition</code></td><td>Dátový model parsovaný z JSON súboru. Obsahuje sekcie manifest, auth, search a streamUrl.</td></tr>
+                        <tr><td><code>AddonEngine</code></td><td>Interpreter, ktorý implementuje <code>AddonInterface</code> na základe JSON definície. Vykonáva pipeline krokov (steps).</td></tr>
+                        <tr><td><code>AddonStore</code></td><td>Perzistentné úložisko (SQLite databáza <code>installed_addons</code>). Ukladá raw JSON definície, takže prežijú reštart aplikácie.</td></tr>
+                        <tr><td><code>AddonRegistry</code></td><td>Singleton register bežiacich doplnkov. Spravuje stav, prihlasovacie údaje a aktívne doplnky.</td></tr>
+                        <tr><td><code>AddonImporter</code></td><td>Import z URL (HTTP stiahnutie) alebo z lokálneho súboru (výber súboru).</td></tr>
+                        <tr><td><code>AddonInterface</code></td><td>Abstraktný kontrakt definujúci metódy: <code>authenticate</code>, <code>search</code>, <code>getStreamUrl</code> a pod.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- ========================= ŽIVOTNÝ CYKLUS ========================= -->
+            <h2 id="zivotni-cyklus">Životný cyklus doplnku</h2>
+            <ol>
+                <li><strong>Import</strong> — používateľ zadá URL alebo vyberie JSON súbor. <code>AddonImporter</code> stiahne/prečíta JSON a zvaliduje ho.</li>
+                <li><strong>Parsovanie</strong> — <code>AddonDefinition.fromJson()</code> rozloží JSON na štruktúrované objekty (manifest, auth, search, streamUrl).</li>
+                <li><strong>Registrácia</strong> — vytvorí sa inštancia <code>AddonEngine</code> a zaregistruje sa do <code>AddonRegistry</code>.</li>
+                <li><strong>Perzistencia</strong> — raw JSON sa uloží do SQLite tabuľky <code>installed_addons</code>, aby doplnok prežil reštart.</li>
+                <li><strong>Autentifikácia</strong> — používateľ vyplní prihlasovacie údaje → engine spustí <code>auth.login</code> pipeline.</li>
+                <li><strong>Použitie</strong> — pri vyhľadávaní engine spustí <code>search</code> pipeline, pri prehrávaní <code>streamUrl</code> pipeline.</li>
+                <li><strong>Obnova</strong> — pri štarte aplikácie <code>AddonRegistryManager</code> obnoví všetky uložené definície z SQLite a obnoví enginy aj autentifikáciu.</li>
+            </ol>
+
+            <!-- ========================= KOREŇOVÁ ŠTRUKTÚRA ========================= -->
+            <h2 id="korenova-struktura">Koreňová štruktúra JSON</h2>
+            <p>Každý doplnok je jeden JSON súbor s nasledujúcou koreňovou štruktúrou:</p>
+            <pre><code><span class="code-label">JSON</span>{
+  "manifest": { ... },
+  "auth": { ... },
+  "search": { ... },
+  "streamUrl": { ... }
+}</code></pre>
+
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead>
+                        <tr><th>Kľúč</th><th>Typ</th><th>Povinný</th><th>Popis</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>manifest</code></td><td>Object</td><td><span class="badge badge-required">Áno</span></td><td>Metadáta doplnku — identifikácia, verzia, schopnosti.</td></tr>
+                        <tr><td><code>auth</code></td><td>Object</td><td><span class="badge badge-optional">Nie</span></td><td>Definícia autentifikačného flow. Ak chýba, doplnok nevyžaduje prihlásenie.</td></tr>
+                        <tr><td><code>search</code></td><td>Object</td><td><span class="badge badge-required">Áno</span></td><td>Pipeline na vyhľadávanie súborov.</td></tr>
+                        <tr><td><code>streamUrl</code></td><td>Object</td><td><span class="badge badge-required">Áno</span></td><td>Pipeline na získanie priameho odkazu na stream.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- ========================= MANIFEST ========================= -->
+            <h2 id="manifest">Sekcia <code>manifest</code></h2>
+            <p>Manifest obsahuje všetky metadáta o doplnku. Tieto informácie sa zobrazujú v nastaveniach aplikácie.</p>
+            <pre><code><span class="code-label">JSON</span>{
+  "manifest": {
+    "id": "moj-doplnok",
+    "name": "Môj doplnok",
+    "version": "1.0.0",
+    "description": "Popis toho, čo doplnok robí.",
+    "author": "Ján Novák",
+    "type": "api",
+    "capabilities": ["search", "auth", "directStream"],
+    "homeUrl": "https://example.com",
+    "iconUrl": "https://example.com/icon.png"
+  }
+}</code></pre>
+
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead>
+                        <tr><th>Pole</th><th>Typ</th><th>Povinný</th><th>Popis</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>id</code></td><td>String</td><td><span class="badge badge-required">Áno</span></td><td>Unikátny identifikátor doplnku. Používa sa interne na ukladanie stavu, prihlasovacích údajov a pod. Odporúčaný formát: <code>kebab-case</code> bez medzier a diakritiky (napr. <code>"moj-nas"</code>, <code>"moj-doplnok"</code>).</td></tr>
+                        <tr><td><code>name</code></td><td>String</td><td><span class="badge badge-required">Áno</span></td><td>Zobrazovaný názov doplnku v UI (napr. <code>"Môj doplnok"</code>).</td></tr>
+                        <tr><td><code>version</code></td><td>String</td><td><span class="badge badge-optional">Nie</span></td><td>Verzia doplnku vo formáte semver. Predvolené: <code>"1.0.0"</code>.</td></tr>
+                        <tr><td><code>description</code></td><td>String</td><td><span class="badge badge-optional">Nie</span></td><td>Krátky popis doplnku.</td></tr>
+                        <tr><td><code>author</code></td><td>String</td><td><span class="badge badge-optional">Nie</span></td><td>Meno autora doplnku. Predvolené: <code>"Unknown"</code>.</td></tr>
+                        <tr><td><code>type</code></td><td>String</td><td><span class="badge badge-optional">Nie</span></td><td>Typ doplnku: <code>"api"</code>, <code>"scraper"</code> alebo <code>"hybrid"</code>. Predvolené: <code>"api"</code>. Pozri <a href="#addon-types">Addon Types</a>.</td></tr>
+                        <tr><td><code>capabilities</code></td><td>Array&lt;String&gt;</td><td><span class="badge badge-optional">Nie</span></td><td>Zoznam schopností doplnku. Predvolené: <code>["search"]</code>. Pozri <a href="#capabilities">Capabilities</a>.</td></tr>
+                        <tr><td><code>homeUrl</code></td><td>String</td><td><span class="badge badge-optional">Nie</span></td><td>URL domovskej stránky služby.</td></tr>
+                        <tr><td><code>iconUrl</code></td><td>String</td><td><span class="badge badge-optional">Nie</span></td><td>URL ikony doplnku (zobrazuje sa v UI).</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="callout callout-info">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="margin-top:2px;"><circle cx="12" cy="12" r="9"/><path d="M12 10v6M12 7h.01"/></svg>
+                <p>Pole <code>id</code> musí byť naprieč všetkými doplnkami unikátne. Ak sa pokúsite importovať doplnok s rovnakým <code>id</code> ako už nainštalovaný, import bude odmietnutý.</p>
+            </div>
+
+            <!-- ========================= AUTH ========================= -->
+            <h2 id="auth">Sekcia <code>auth</code></h2>
+            <p>Definuje autentifikačný flow — teda aké polia používateľ vyplní a aké kroky sa vykonajú na prihlásenie, overenie stavu a odhlásenie.</p>
+            <pre><code><span class="code-label">JSON</span>{
+  "auth": {
+    "type": "credentials",
+    "fields": [
+      {
+        "key": "username",
+        "label": "Používateľské meno",
+        "hint": "Zadajte používateľské meno",
+        "isSecret": false,
+        "required": true
+      },
+      {
+        "key": "password",
+        "label": "Heslo",
+        "hint": "Zadajte heslo",
+        "isSecret": true,
+        "required": true
+      }
+    ],
+    "login": [ ... ],
+    "check": [ ... ],
+    "logout": [ ... ]
+  }
+}</code></pre>
+
+            <h3 id="auth-typy">Typy autentifikácie</h3>
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead><tr><th>Hodnota <code>type</code></th><th>Popis</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>"none"</code></td><td>Doplnok nevyžaduje prihlásenie. Sekcia <code>auth</code> môže úplne chýbať.</td></tr>
+                        <tr><td><code>"credentials"</code></td><td>Klasické prihlásenie používateľským menom a heslom.</td></tr>
+                        <tr><td><code>"token"</code></td><td>Autentifikácia API tokenom / kľúčom.</td></tr>
+                        <tr><td><code>"oauth"</code></td><td>OAuth2 flow (rezervované pre budúce použitie).</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 id="auth-pole">Definícia polí (<code>fields</code>)</h3>
+            <p>Polia definujú formulár, ktorý sa zobrazí používateľovi v nastaveniach. Kľúč (<code>key</code>) sa použije ako názov premennej — pozri <a href="#promenne">Premenné</a>.</p>
+
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead><tr><th>Pole</th><th>Typ</th><th>Povinný</th><th>Popis</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>key</code></td><td>String</td><td><span class="badge badge-required">Áno</span></td><td>Unikátny kľúč poľa. Stane sa názvom runtime premennej (napr. <code>"username"</code>, <code>"api_key"</code>).</td></tr>
+                        <tr><td><code>label</code></td><td>String</td><td><span class="badge badge-required">Áno</span></td><td>Popisok zobrazený v UI.</td></tr>
+                        <tr><td><code>hint</code></td><td>String</td><td><span class="badge badge-optional">Nie</span></td><td>Placeholder / nápoveda v textovom poli.</td></tr>
+                        <tr><td><code>isSecret</code></td><td>Boolean</td><td><span class="badge badge-optional">Nie</span></td><td>Zobraziť ako heslo (skryté znaky). Predvolené: <code>false</code>.</td></tr>
+                        <tr><td><code>required</code></td><td>Boolean</td><td><span class="badge badge-optional">Nie</span></td><td>Je pole povinné? Predvolené: <code>true</code>.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 id="auth-flow">Login / Check / Logout pipelines</h3>
+            <p>Každá z týchto sekcií je <strong>pole krokov (steps)</strong> — pozri <a href="#akce-http">Akcie</a>.</p>
+
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead><tr><th>Pipeline</th><th>Kedy sa spúšťa</th><th>Povinný</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>login</code></td><td>Keď používateľ vyplní prihlasovacie údaje a potvrdí prihlásenie.</td><td><span class="badge badge-optional">Nie</span> (bez neho sa však prihlásenie nespustí)</td></tr>
+                        <tr><td><code>check</code></td><td>Keď engine potrebuje overiť, či je relácia stále platná.</td><td><span class="badge badge-optional">Nie</span> (fallback: kontrola existencie premennej <code>token</code>)</td></tr>
+                        <tr><td><code>logout</code></td><td>Keď sa používateľ odhlási.</td><td><span class="badge badge-optional">Nie</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="callout callout-info">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="margin-top:2px;"><circle cx="12" cy="12" r="9"/><path d="M12 10v6M12 7h.01"/></svg>
+                <p>Ak pipeline <code>check</code> nie je definovaná, engine ako fallback skontroluje, či existuje neprázdna runtime premenná <code>token</code>. Preto sa odporúča, aby login kroky uložili token do premennej s kľúčom <code>"token"</code>.</p>
+            </div>
+
+            <!-- ========================= SEARCH ========================= -->
+            <h2 id="search">Sekcia <code>search</code></h2>
+            <p>Definuje pipeline na vyhľadávanie súborov. Výsledkom musí byť zoznam položiek (pozri <a href="#seznam-vysledku">Zoznam výsledkov</a>).</p>
+            <pre><code><span class="code-label">JSON</span>{
+  "search": {
+    "steps": [
+      {
+        "action": "http",
+        "method": "POST",
+        "url": "https://api.example.com/search",
+        "contentType": "application/x-www-form-urlencoded",
+        "body": "q={{query}}&limit=100&token={{token}}",
+        "responseType": "xml",
+        "listElement": "file",
+        "itemMapping": {
+          "title": "name",
+          "size": "size",
+          "link": "ident"
+        }
+      }
+    ]
+  }
+}</code></pre>
+
+            <p>Search pipeline má prístup k týmto automaticky dostupným premenným:</p>
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead><tr><th>Premenná</th><th>Hodnota</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>{{query}}</code></td><td>Hľadaný text zadaný používateľom.</td></tr>
+                        <tr><td><code>{{page}}</code></td><td>Číslo stránky (od 1) pre stránkovanie výsledkov.</td></tr>
+                        <tr><td><code>{{token}}</code></td><td>Autentifikačný token (ak doplnok vyžaduje auth).</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Item Mapping</h3>
+            <p>Kľúčový parameter HTTP kroku v search pipeline je <code>itemMapping</code>, ktorý mapuje polia z odpovede na internú štruktúru:</p>
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead><tr><th>Cieľové pole</th><th>Povinný</th><th>Popis</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>title</code> alebo <code>name</code></td><td><span class="badge badge-required">Áno</span></td><td>Názov súboru. Engine najprv hľadá <code>title</code>, potom <code>name</code>.</td></tr>
+                        <tr><td><code>size</code></td><td><span class="badge badge-optional">Nie</span></td><td>Veľkosť súboru <strong>v bajtoch</strong> (celé číslo). Engine automaticky prevedie na čitateľný formát (MB/GB).</td></tr>
+                        <tr><td><code>link</code> alebo <code>url</code></td><td><span class="badge badge-required">Áno</span></td><td>Unikátny identifikátor položky. Bude odovzdaný do <code>streamUrl</code> pipeline ako <code>{{identifier}}</code>.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- ========================= STREAM URL ========================= -->
+            <h2 id="stream-url">Sekcia <code>streamUrl</code></h2>
+            <p>Definuje pipeline na získanie priameho streamovacieho odkazu zo zvoleného súboru.</p>
+            <pre><code><span class="code-label">JSON</span>{
+  "streamUrl": {
+    "steps": [
+      {
+        "action": "http",
+        "method": "POST",
+        "url": "https://api.example.com/file_link",
+        "contentType": "application/x-www-form-urlencoded",
+        "body": "ident={{identifier}}&token={{token}}",
+        "responseType": "xml",
+        "outputs": {
+          "stream_url": "link"
+        }
+      }
+    ],
+    "result": "{{stream_url}}",
+    "headers": {
+      "Referer": "https://example.com/",
+      "User-Agent": "KELP/1.0",
+      "Authorization": "Bearer {{token}}"
+    }
+  }
+}</code></pre>
+
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead><tr><th>Pole</th><th>Typ</th><th>Popis</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>steps</code></td><td>Array&lt;Step&gt;</td><td>Pipeline krokov na získanie odkazu.</td></tr>
+                        <tr><td><code>result</code></td><td>String</td><td>Šablóna s premennou, ktorá obsahuje finálnu stream URL. Typicky <code>"{{stream_url}}"</code>.</td></tr>
+                        <tr><td><code>headers</code></td><td>Object</td><td><span class="badge badge-optional">Nie</span> Extra HTTP hlavičky, ktoré prehrávač pošle pri streamovaní. Podporuje template premenné. Typicky <code>Referer</code>, <code>User-Agent</code>, <code>Cookie</code> alebo <code>Authorization</code>.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p>StreamUrl pipeline má automaticky k dispozícii:</p>
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead><tr><th>Premenná</th><th>Hodnota</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>{{identifier}}</code></td><td>Identifikátor súboru zo search výsledkov (hodnota z <code>link</code>/<code>url</code> v itemMapping).</td></tr>
+                        <tr><td><code>{{token}}</code></td><td>Autentifikačný token.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- ========================= AKCIE ========================= -->
+            <h2 id="akce-http">Akcia: <code>http</code></h2>
+            <p>Vykoná HTTP požiadavku. Najdôležitejšia a najčastejšie používaná akcia.</p>
+            <pre><code><span class="code-label">JSON</span>{
+  "action": "http",
+  "method": "POST",
+  "url": "https://api.example.com/endpoint",
+  "contentType": "application/x-www-form-urlencoded",
+  "body": "param1={{value1}}&param2={{value2}}",
+  "responseType": "xml",
+  "headers": {
+    "Authorization": "Bearer {{token}}",
+    "X-Custom": "value"
+  },
+  "outputs": {
+    "moja_premenna": "xml_tag_name"
+  }
+}</code></pre>
+
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead><tr><th>Parameter</th><th>Typ</th><th>Predvolené</th><th>Popis</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>action</code></td><td>String</td><td>—</td><td>Musí byť <code>"http"</code>.</td></tr>
+                        <tr><td><code>method</code></td><td>String</td><td><code>"GET"</code></td><td>HTTP metóda: <code>"GET"</code> alebo <code>"POST"</code>.</td></tr>
+                        <tr><td><code>url</code></td><td>String</td><td>—</td><td>URL endpointu. Podporuje <a href="#interpolace">interpoláciu</a>.</td></tr>
+                        <tr><td><code>contentType</code></td><td>String</td><td>—</td><td>Hodnota hlavičky <code>Content-Type</code>.</td></tr>
+                        <tr><td><code>body</code></td><td>String</td><td>—</td><td>Telo požiadavky (pre POST). Podporuje interpoláciu.</td></tr>
+                        <tr><td><code>responseType</code></td><td>String</td><td><code>"xml"</code></td><td>Formát odpovede: <code>"xml"</code> alebo <code>"json"</code>. Ovplyvňuje parsovanie <code>outputs</code>.</td></tr>
+                        <tr><td><code>headers</code></td><td>Object</td><td><code>{}</code></td><td>Vlastné HTTP hlavičky. Hodnoty podporujú interpoláciu.</td></tr>
+                        <tr><td><code>outputs</code></td><td>Object</td><td>—</td><td>Mapovanie: <code>{ "nazov_premennej": "cesta_v_odpovedi" }</code>. Pozri <a href="#xml-parsing">XML</a> / <a href="#json-parsing">JSON parsing</a>.</td></tr>
+                        <tr><td><code>listElement</code></td><td>String</td><td>—</td><td><strong>Iba v search:</strong> názov elementu, ktorý predstavuje jednu položku v zozname.</td></tr>
+                        <tr><td><code>itemMapping</code></td><td>Object</td><td>—</td><td><strong>Iba v search:</strong> mapovanie polí položky. Pozri <a href="#seznam-vysledku">Zoznam výsledkov</a>.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="callout callout-warn">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="margin-top:2px;"><path d="M12 3L2 20h20L12 3z"/><path d="M12 9v5M12 17h.01"/></svg>
+                <p>Ak HTTP krok vráti iný status ako <code>200</code>, celá pipeline zlyhá. Engine <strong>nepodporuje</strong> presmerovania ani iné 2xx kódy.</p>
+            </div>
+
+            <!-- --- md5crypt --- -->
+            <h2 id="akce-md5crypt">Akcia: <code>md5crypt</code></h2>
+            <p>Vypočíta Unix MD5-crypt hash (formát <code>$1$salt$hash</code>). Používa sa typicky pre staršie API, ktoré vyžadujú tento typ hashovania hesiel.</p>
+            <pre><code><span class="code-label">JSON</span>{
+  "action": "md5crypt",
+  "input": "{{password}}",
+  "salt": "{{salt}}",
+  "output": "crypted_password"
+}</code></pre>
+
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead><tr><th>Parameter</th><th>Typ</th><th>Popis</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>input</code></td><td>String</td><td>Vstupný text (typicky heslo). Podporuje interpoláciu.</td></tr>
+                        <tr><td><code>salt</code></td><td>String</td><td>Salt pre hashovanie. Podporuje interpoláciu. Max 8 znakov.</td></tr>
+                        <tr><td><code>output</code></td><td>String</td><td>Názov premennej, do ktorej sa uloží výsledný hash.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p><strong>Príklad výstupu:</strong> <code>$1$abcdefgh$k4x3gHwmKj1vC0B.Xr5M/.</code></p>
+
+            <!-- --- sha1 --- -->
+            <h2 id="akce-sha1">Akcia: <code>sha1</code></h2>
+            <p>Vypočíta SHA-1 hash vstupného textu.</p>
+            <pre><code><span class="code-label">JSON</span>{
+  "action": "sha1",
+  "input": "{{crypted_password}}",
+  "output": "hashed_password"
+}</code></pre>
+
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead><tr><th>Parameter</th><th>Typ</th><th>Popis</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>input</code></td><td>String</td><td>Vstupný text. Podporuje interpoláciu.</td></tr>
+                        <tr><td><code>output</code></td><td>String</td><td>Názov premennej pre hex-encoded výstup.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p><strong>Príklad výstupu:</strong> <code>a94a8fe5ccb19ba61c4c0873d391e987982fbbd3</code></p>
+
+            <!-- --- md5 --- -->
+            <h2 id="akce-md5">Akcia: <code>md5</code></h2>
+            <p>Vypočíta MD5 hash vstupného textu.</p>
+            <pre><code><span class="code-label">JSON</span>{
+  "action": "md5",
+  "input": "{{some_value}}",
+  "output": "md5_hash"
+}</code></pre>
+
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead><tr><th>Parameter</th><th>Typ</th><th>Popis</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>input</code></td><td>String</td><td>Vstupný text. Podporuje interpoláciu.</td></tr>
+                        <tr><td><code>output</code></td><td>String</td><td>Názov premennej pre hex-encoded výstup.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p><strong>Príklad výstupu:</strong> <code>5d41402abc4b2a76b9719d911017c592</code></p>
+
+            <!-- --- assert --- -->
+            <h2 id="akce-assert">Akcia: <code>assert</code></h2>
+            <p>Porovná hodnotu runtime premennej s očakávanou hodnotou. Ak sa nezhodujú, pipeline <strong>zlyhá</strong> a ďalšie kroky sa nevykonajú.</p>
+            <pre><code><span class="code-label">JSON</span>{
+  "action": "assert",
+  "variable": "login_status",
+  "equals": "OK"
+}</code></pre>
+
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead><tr><th>Parameter</th><th>Typ</th><th>Popis</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>variable</code></td><td>String</td><td>Názov runtime premennej na overenie.</td></tr>
+                        <tr><td><code>equals</code></td><td>String</td><td>Očakávaná hodnota.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="callout callout-info">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="margin-top:2px;"><circle cx="12" cy="12" r="9"/><path d="M12 10v6M12 7h.01"/></svg>
+                <p>Assert je kľúčový na validáciu odpovedí API. Umiestnite ho bezprostredne za HTTP krok, aby ste overili, že operácia (prihlásenie, vyhľadávanie) prebehla úspešne.</p>
+            </div>
+
+            <!-- --- clear --- -->
+            <h2 id="akce-clear">Akcia: <code>clear</code></h2>
+            <p>Odstráni runtime premenné zo stavu enginu.</p>
+            <pre><code><span class="code-label">JSON</span>{
+  "action": "clear",
+  "variables": ["token", "salt", "crypted_password", "temp_value"]
+}</code></pre>
+
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead><tr><th>Parameter</th><th>Typ</th><th>Popis</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>variables</code></td><td>Array&lt;String&gt;</td><td>Zoznam názvov premenných na odstránenie.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p>Typicky sa používa v <code>logout</code> pipeline na vyčistenie tokenov.</p>
+
+            <!-- --- regex --- -->
+            <h2 id="akce-regex">Akcia: <code>regex</code></h2>
+            <p>Extrahuje text z hodnoty premennej pomocou regulárneho výrazu.</p>
+            <pre><code><span class="code-label">JSON</span>{
+  "action": "regex",
+  "input": "{{_response}}",
+  "pattern": "href=\"(https://[^\"]+\\.mp4)\"",
+  "group": 1,
+  "output": "video_url"
+}</code></pre>
+
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead><tr><th>Parameter</th><th>Typ</th><th>Predvolené</th><th>Popis</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>input</code></td><td>String</td><td>—</td><td>Vstupný text. Podporuje interpoláciu. Typicky <code>{{_response}}</code>.</td></tr>
+                        <tr><td><code>pattern</code></td><td>String</td><td>—</td><td>Regulárny výraz (PCRE / Java Regex syntax).</td></tr>
+                        <tr><td><code>group</code></td><td>Integer</td><td><code>1</code></td><td>Číslo zachytávacej skupiny na extrakciu.</td></tr>
+                        <tr><td><code>output</code></td><td>String</td><td>—</td><td>Názov premennej pre extrahovanú hodnotu.</td></tr>
+                        <tr><td><code>optional</code></td><td>Boolean</td><td><code>false</code></td><td>Ak je <code>true</code>, zlyhanie kroku nespôsobí zlyhanie celej pipeline — pokračuje sa ďalším krokom. Pozri <a href="#optional-steps">Voliteľné kroky</a>.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="callout callout-warn">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="margin-top:2px;"><path d="M12 3L2 20h20L12 3z"/><path d="M12 9v5M12 17h.01"/></svg>
+                <p>Ak regex nenájde zhodu a krok <strong>nie je</strong> označený ako <code>"optional": true</code>, pipeline zlyhá. Uistite sa, že vzor zodpovedá formátu odpovede, alebo použite voliteľné kroky s fallbackom.</p>
+            </div>
+
+            <h3 id="optional-steps">Voliteľné kroky (<code>optional</code>)</h3>
+            <p>Akýkoľvek krok v pipeline môže byť označený ako voliteľný pridaním <code>"optional": true</code>. Ak voliteľný krok zlyhá, pipeline pokračuje ďalším krokom namiesto okamžitého ukončenia.</p>
+            <p>Pri akcii <code>regex</code> navyše platí: ak je výstupná premenná (<code>output</code>) už naplnená predchádzajúcim krokom, voliteľný regex sa preskočí. To umožňuje reťazenie fallbackov:</p>
+            <pre><code><span class="code-label">Príklad — reťazenie fallbackov</span>{
+  "steps": [
+    { "action": "http", "method": "GET", "url": "https://api.example.com/{{identifier}}", "responseType": "json" },
+    {
+      "action": "regex",
+      "input": "{{_response}}",
+      "pattern": "\"name\":\\s*\"([^\"]+\\.mp4)\",\\s*\"source\":\\s*\"original\"",
+      "group": 1,
+      "output": "video_file",
+      "optional": true
+    },
+    {
+      "action": "regex",
+      "input": "{{_response}}",
+      "pattern": "\"name\":\\s*\"([^/\"]+\\.mp4)\"",
+      "group": 1,
+      "output": "video_file",
+      "optional": true
+    }
+  ],
+  "result": "https://example.com/download/{{identifier}}/{{video_file|urlencode}}"
+}</code></pre>
+            <p>V tomto príklade sa najprv hľadá MP4 súbor so <code>source: "original"</code>. Ak sa nenájde, druhý regex skúsi nájsť akýkoľvek MP4. Ak prvý regex uspeje, druhý sa preskočí (premenná <code>video_file</code> je už nastavená).</p>
+
+            <div class="callout callout-info">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="margin-top:2px;"><circle cx="12" cy="12" r="9"/><path d="M12 10v6M12 7h.01"/></svg>
+                <p>Parameter <code>optional</code> je možné použiť pri všetkých akciách (http, regex, assert atď.), nielen pri regex.</p>
+            </div>
+
+            <!-- --- set --- -->
+            <h2 id="akce-set">Akcia: <code>set</code></h2>
+            <p>Priamo nastaví premennú na zadanú hodnotu. Užitočné na zostavenie zložených hodnôt z viacerých premenných alebo nastavenie predvolenej hodnoty.</p>
+            <pre><code><span class="code-label">JSON</span>{
+  "action": "set",
+  "output": "full_url",
+  "value": "https://cdn.example.com/{{path}}/{{filename|urlencode}}"
+}</code></pre>
+
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead><tr><th>Parameter</th><th>Typ</th><th>Popis</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>output</code></td><td>String</td><td>Názov premennej, do ktorej sa uloží výsledok.</td></tr>
+                        <tr><td><code>value</code></td><td>String</td><td>Hodnota (podporuje interpoláciu a filtre).</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- --- parallel --- -->
+            <h2 id="akce-parallel">Akcia: <code>parallel</code></h2>
+            <p>Spustí viacero nezávislých krokov súčasne. Všetky vnorené kroky bežia paralelne a výsledok je úspešný, ak uspejú všetky.</p>
+            <pre><code><span class="code-label">JSON</span>{
+  "action": "parallel",
+  "steps": [
+    {
+      "action": "http",
+      "method": "GET",
+      "url": "https://api.example.com/metadata/{{identifier}}",
+      "responseType": "json",
+      "outputs": { "meta_title": "title" }
+    },
+    {
+      "action": "http",
+      "method": "GET",
+      "url": "https://api.example.com/files/{{identifier}}",
+      "responseType": "json",
+      "outputs": { "file_url": "url" }
+    }
+  ]
+}</code></pre>
+
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead><tr><th>Parameter</th><th>Typ</th><th>Popis</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>steps</code></td><td>Array&lt;Step&gt;</td><td>Zoznam krokov na paralelné spustenie. Každý krok je štandardná definícia akcie.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="callout callout-warn">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="margin-top:2px;"><path d="M12 3L2 20h20L12 3z"/><path d="M12 9v5M12 17h.01"/></svg>
+                <p>Paralelné kroky by nemali od seba navzájom závisieť svojimi výstupmi. Ak krok B potrebuje výstup kroku A, musia bežať sekvenčne (mimo <code>parallel</code>).</p>
+            </div>
+
+            <!-- ========================= TEMPLATE ENGINE ========================= -->
+            <h2 id="promenne">Premenné</h2>
+            <p>Addon Engine udržiava runtime slovník premenných (<code>Map&lt;String, String&gt;</code>). Premenné sa plnia z:</p>
+            <ul>
+                <li><strong>Credentials</strong> — kľúče z <code>auth.fields</code> (napr. <code>username</code>, <code>password</code>, <code>api_key</code>)</li>
+                <li><strong>HTTP outputs</strong> — hodnoty extrahované z odpovedí API</li>
+                <li><strong>Crypto kroky</strong> — výstupy hashov (<code>md5crypt</code>, <code>sha1</code>, <code>md5</code>)</li>
+                <li><strong>Regex</strong> — extrahované podreťazce</li>
+                <li><strong>Automatické</strong> — <code>query</code>, <code>page</code>, <code>identifier</code></li>
+            </ul>
+
+            <h3 id="interpolace">Interpolácia <code>{{premenná}}</code></h3>
+            <p>Kdekoľvek má parameter textovú hodnotu, je možné použiť interpoláciu dvojitými zloženými zátvorkami:</p>
+            <pre><code><span class="code-label">Príklad</span>"url": "https://api.example.com/search?q={{query}}&token={{token}}"
+"body": "username={{username}}&password={{hashed_password}}"
+"input": "{{crypted}}"</code></pre>
+            <p>Engine nahradí každý výskyt <code>{{nazov}}</code> aktuálnou hodnotou zo slovníka premenných. Ak premenná neexistuje, nahradí sa prázdnym reťazcom.</p>
+
+            <h3 id="filtry">Filtre <code>{{premenná|filter}}</code></h3>
+            <p>Za názov premennej je možné pridať filter oddelený zvislou čiarou (<code>|</code>), ktorý transformuje hodnotu pred vložením:</p>
+            <pre><code><span class="code-label">Príklad</span>"url": "https://api.example.com/search?q={{query|urlencode}}"
+"body": "token={{token|base64}}"
+"header": "{{api_key|uppercase}}"</code></pre>
+
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead><tr><th>Filter</th><th>Popis</th><th>Príklad vstupu → výstupu</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>urlencode</code></td><td>URL-enkódovanie (percent-encoding). <strong>Odporúčané</strong> pre <code>{{query}}</code> v URL.</td><td><code>Slovenský film</code> → <code>Slovensk%C3%BD%20film</code></td></tr>
+                        <tr><td><code>base64</code></td><td>Base64 enkódovanie.</td><td><code>hello</code> → <code>aGVsbG8=</code></td></tr>
+                        <tr><td><code>lowercase</code></td><td>Prevod na malé písmená.</td><td><code>HELLO</code> → <code>hello</code></td></tr>
+                        <tr><td><code>uppercase</code></td><td>Prevod na veľké písmená.</td><td><code>hello</code> → <code>HELLO</code></td></tr>
+                        <tr><td><code>trim</code></td><td>Odstráni biele znaky na začiatku a na konci.</td><td><code> hello </code> → <code>hello</code></td></tr>
+                        <tr><td><code>htmldecode</code></td><td>Dekóduje HTML entity.</td><td><code>&amp;amp; &amp;lt;</code> → <code>&amp; &lt;</code></td></tr>
+                        <tr><td><code>length</code></td><td>Dĺžka reťazca (výstup je číslo).</td><td><code>hello</code> → <code>5</code></td></tr>
+                        <tr><td><code>reverse</code></td><td>Obráti znaky v reťazci.</td><td><code>hello</code> → <code>olleh</code></td></tr>
+                        <tr><td><code>timestamp</code></td><td>Vráti aktuálny Unix timestamp v sekundách (ignoruje hodnotu premennej).</td><td>→ <code>1741700000</code></td></tr>
+                        <tr><td><code>timestamp_ms</code></td><td>Vráti aktuálny Unix timestamp v milisekundách.</td><td>→ <code>1741700000000</code></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="callout callout-warn">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="margin-top:2px;"><path d="M12 3L2 20h20L12 3z"/><path d="M12 9v5M12 17h.01"/></svg>
+                <p>Ak filter nie je rozpoznaný, hodnota sa vloží bez transformácie.</p>
+            </div>
+
+            <h3 id="specialni-promenne">Špeciálne premenné</h3>
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead><tr><th>Premenná</th><th>Automaticky dostupná</th><th>Popis</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>_response</code></td><td>Po každom HTTP kroku</td><td>Celé telo poslednej HTTP odpovede (raw text). Užitočné pre akciu <code>regex</code>.</td></tr>
+                        <tr><td><code>_http_status</code></td><td>Po neúspešnom HTTP kroku</td><td>HTTP stavový kód poslednej neúspešnej požiadavky (napr. <code>403</code>, <code>500</code>). Užitočné pre diagnostiku.</td></tr>
+                        <tr><td><code>query</code></td><td>V search pipeline</td><td>Text, ktorý používateľ hľadá.</td></tr>
+                        <tr><td><code>page</code></td><td>V search pipeline</td><td>Číslo stránky (1, 2, 3...).</td></tr>
+                        <tr><td><code>identifier</code></td><td>V streamUrl pipeline</td><td>Identifikátor vybraného súboru (z itemMapping <code>link</code>/<code>url</code>).</td></tr>
+                        <tr><td><code>token</code></td><td>Po login pipeline</td><td>Autentifikačný token. Odporúčaný názov pre výstup z login krokov.</td></tr>
+                        <tr><td><code>{{timestamp}}</code></td><td>Vždy</td><td>Aktuálny Unix timestamp v sekundách. Možno použiť priamo bez premennej.</td></tr>
+                        <tr><td><code>{{timestamp_ms}}</code></td><td>Vždy</td><td>Aktuálny Unix timestamp v milisekundách.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- ========================= PARSOVANIE ========================= -->
+            <h2 id="xml-parsing">XML parsing</h2>
+            <p>Pri <code>"responseType": "xml"</code> engine extrahuje hodnoty pomocou názvov XML tagov.</p>
+            <pre><code><span class="code-label">XML odpoveď</span>&lt;response&gt;
+  &lt;status&gt;OK&lt;/status&gt;
+  &lt;token&gt;abc123xyz&lt;/token&gt;
+  &lt;user_id&gt;42&lt;/user_id&gt;
+&lt;/response&gt;</code></pre>
+            <pre><code><span class="code-label">outputs</span>"outputs": {
+  "status_var": "status",
+  "token": "token",
+  "uid": "user_id"
+}</code></pre>
+            <p>Výsledok: <code>status_var = "OK"</code>, <code>token = "abc123xyz"</code>, <code>uid = "42"</code></p>
+
+            <div class="callout callout-info">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="margin-top:2px;"><circle cx="12" cy="12" r="9"/><path d="M12 10v6M12 7h.01"/></svg>
+                <p>XML parser podporuje tagy s atribútmi — napr. <code>&lt;file id="123"&gt;...&lt;/file&gt;</code> sa nájde pri hľadaní tagu <code>file</code>. Na extrakciu atribútov použite notáciu <code>tag@attr</code> v mapovaní (pozri nižšie).</p>
+            </div>
+            <p>Na extrakciu atribútov z XML tagov použite notáciu <code>tag@atribút</code>:</p>
+            <pre><code><span class="code-label">XML s atribútmi</span>&lt;files&gt;
+  &lt;file id="abc123" type="video"&gt;Film.mp4&lt;/file&gt;
+  &lt;file id="def456" type="subtitle"&gt;Film.srt&lt;/file&gt;
+&lt;/files&gt;</code></pre>
+            <pre><code><span class="code-label">itemMapping</span>"itemMapping": {
+  "title": "file",
+  "link": "file@id",
+  "type": "file@type"
+}</code></pre>
+            <p>Výsledok: <code>link = "abc123"</code>, <code>type = "video"</code>. Notácia <code>@attr</code> (bez tagu) extrahuje atribút z nadradeného elementu.</p>
+
+            <h2 id="json-parsing">JSON parsing</h2>
+            <p>Pri <code>"responseType": "json"</code> engine používa bodkovú notáciu na navigáciu v JSON štruktúre.</p>
+            <pre><code><span class="code-label">JSON odpoveď</span>{
+  "status": "ok",
+  "data": {
+    "token": "xyz789",
+    "user": {
+      "id": 42,
+      "name": "Ján"
+    }
+  }
+}</code></pre>
+            <pre><code><span class="code-label">outputs</span>"outputs": {
+  "my_token": "data.token",
+  "user_name": "data.user.name",
+  "user_id": "data.user.id"
+}</code></pre>
+            <p>Výsledok: <code>my_token = "xyz789"</code>, <code>user_name = "Ján"</code>, <code>user_id = "42"</code></p>
+
+            <p>Na prístup k prvkom poľa použite číselný index alebo hranatú notáciu:</p>
+            <pre><code><span class="code-label">JSON cesta s poľom</span>"outputs": {
+  "first_item": "results[0].name",
+  "first_item_alt": "results.0.name"
+}</code></pre>
+
+            <p>Na filtrovanie poľa podľa hodnoty kľúča použite <code>[?(@.key=='value')]</code>:</p>
+            <pre><code><span class="code-label">JSON cesta s filtrom</span>"outputs": {
+  "video_file": "files[?(@.source=='original')].name"
+}</code></pre>
+            <p>Filter prejde pole <code>files</code> a vráti prvý prvok, kde <code>source</code> je <code>"original"</code>, následne z neho extrahuje <code>name</code>.</p>
+
+            <div class="callout callout-info">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="margin-top:2px;"><circle cx="12" cy="12" r="9"/><path d="M12 10v6M12 7h.01"/></svg>
+                <p>V itemMapping search krokov možno takisto použiť vnorené cesty: <code>"title": "metadata.title"</code> alebo <code>"id": "files[0].id"</code>.</p>
+            </div>
+
+            <h2 id="seznam-vysledku">Zoznam výsledkov (List parsing)</h2>
+            <p>Pre search pipeline musí HTTP krok s <code>listElement</code> identifikovať opakujúce sa prvky v odpovedi:</p>
+
+            <h4>XML zoznam</h4>
+            <pre><code><span class="code-label">XML odpoveď</span>&lt;response&gt;
+  &lt;status&gt;OK&lt;/status&gt;
+  &lt;file&gt;
+    &lt;name&gt;Film.2024.SK.mkv&lt;/name&gt;
+    &lt;size&gt;1536000000&lt;/size&gt;
+    &lt;ident&gt;abc123&lt;/ident&gt;
+  &lt;/file&gt;
+  &lt;file&gt;
+    &lt;name&gt;Film.2024.EN.mp4&lt;/name&gt;
+    &lt;size&gt;987000000&lt;/size&gt;
+    &lt;ident&gt;def456&lt;/ident&gt;
+  &lt;/file&gt;
+&lt;/response&gt;</code></pre>
+            <pre><code><span class="code-label">Search krok</span>{
+  "action": "http",
+  "method": "POST",
+  "url": "https://api.example.com/search",
+  "body": "q={{query}}&token={{token}}",
+  "responseType": "xml",
+  "listElement": "file",
+  "itemMapping": {
+    "title": "name",
+    "size": "size",
+    "link": "ident"
+  }
+}</code></pre>
+            <p>Engine nájde všetky <code>&lt;file&gt;...&lt;/file&gt;</code> bloky a z každého extrahuje <code>name</code>, <code>size</code> a <code>ident</code> podľa mapovania.</p>
+
+            <h4>JSON zoznam</h4>
+            <pre><code><span class="code-label">JSON odpoveď</span>{
+  "status": "ok",
+  "results": [
+    { "title": "Film.2024.SK.mkv", "filesize": 1536000000, "id": "abc123" },
+    { "title": "Film.2024.EN.mp4", "filesize": 987000000, "id": "def456" }
+  ]
+}</code></pre>
+            <pre><code><span class="code-label">Search krok</span>{
+  "action": "http",
+  "method": "GET",
+  "url": "https://api.example.com/search?q={{query|urlencode}}",
+  "responseType": "json",
+  "listElement": "results",
+  "itemMapping": {
+    "title": "title",
+    "size": "filesize",
+    "link": "id"
+  }
+}</code></pre>
+            <p><code>listElement</code> pri JSON odpovedi je cesta (bodková notácia) k poľu objektov. Pri každom objekte sa kľúče z <code>itemMapping</code> použijú na nájdenie príslušnej hodnoty.</p>
+
+            <!-- ========================= PRÍKLADY ========================= -->
+            <h2 id="priklad-kompletni">Príklad: Kompletný doplnok s autentifikáciou</h2>
+            <p>Ukážkový doplnok pre fiktívnu službu „CloudStorage“ s plným auth flow (salt + md5crypt + sha1):</p>
+            <pre><code><span class="code-label">cloudstorage.json</span>{
+  "manifest": {
+    "id": "cloudstorage",
+    "name": "CloudStorage",
+    "version": "1.0.0",
+    "description": "Demo doplnok pre CloudStorage.",
+    "author": "Komunita",
+    "type": "api",
+    "capabilities": ["search", "auth", "directStream"],
+    "homeUrl": "https://cloudstorage.example"
+  },
+  "auth": {
+    "type": "credentials",
+    "fields": [
+      {
+        "key": "username",
+        "label": "Používateľské meno",
+        "hint": "Váš e-mail alebo prezývka",
+        "isSecret": false,
+        "required": true
+      },
+      {
+        "key": "password",
+        "label": "Heslo",
+        "hint": "Zadajte heslo k účtu",
+        "isSecret": true,
+        "required": true
+      }
+    ],
+    "login": [
+      {
+        "action": "http",
+        "method": "POST",
+        "url": "https://cloudstorage.example/api/salt/",
+        "contentType": "application/x-www-form-urlencoded",
+        "body": "username={{username}}",
+        "responseType": "xml",
+        "outputs": {
+          "salt": "salt",
+          "salt_status": "status"
+        }
+      },
+      {
+        "action": "assert",
+        "variable": "salt_status",
+        "equals": "OK"
+      },
+      {
+        "action": "md5crypt",
+        "input": "{{password}}",
+        "salt": "{{salt}}",
+        "output": "crypted"
+      },
+      {
+        "action": "sha1",
+        "input": "{{crypted}}",
+        "output": "hashed_password"
+      },
+      {
+        "action": "http",
+        "method": "POST",
+        "url": "https://cloudstorage.example/api/login/",
+        "contentType": "application/x-www-form-urlencoded",
+        "body": "username={{username}}&password={{hashed_password}}&keep_logged_in=1",
+        "responseType": "xml",
+        "outputs": {
+          "token": "token",
+          "login_status": "status"
+        }
+      },
+      {
+        "action": "assert",
+        "variable": "login_status",
+        "equals": "OK"
+      }
+    ],
+    "check": [
+      {
+        "action": "http",
+        "method": "POST",
+        "url": "https://cloudstorage.example/api/user_data/",
+        "contentType": "application/x-www-form-urlencoded",
+        "body": "token={{token}}",
+        "responseType": "xml",
+        "outputs": {
+          "check_status": "status"
+        }
+      },
+      {
+        "action": "assert",
+        "variable": "check_status",
+        "equals": "OK"
+      }
+    ],
+    "logout": [
+      {
+        "action": "clear",
+        "variables": ["token", "salt", "crypted", "hashed_password"]
+      }
+    ]
+  },
+  "search": {
+    "steps": [
+      {
+        "action": "http",
+        "method": "POST",
+        "url": "https://cloudstorage.example/api/search/",
+        "contentType": "application/x-www-form-urlencoded",
+        "body": "what={{query}}&sort=largest&limit=100&category=video&token={{token}}",
+        "responseType": "xml",
+        "listElement": "file",
+        "itemMapping": {
+          "title": "name",
+          "size": "size",
+          "link": "ident"
+        }
+      }
+    ]
+  },
+  "streamUrl": {
+    "steps": [
+      {
+        "action": "http",
+        "method": "POST",
+        "url": "https://cloudstorage.example/api/file_link/",
+        "contentType": "application/x-www-form-urlencoded",
+        "body": "ident={{identifier}}&download_type=video_stream&token={{token}}",
+        "responseType": "xml",
+        "outputs": {
+          "stream_url": "link"
+        }
+      }
+    ],
+    "result": "{{stream_url}}"
+  }
+}</code></pre>
+
+            <h2 id="priklad-bez-auth">Príklad: Doplnok bez autentifikácie</h2>
+            <p>Jednoduchý doplnok pre verejné API, ktoré nevyžaduje prihlásenie:</p>
+            <pre><code><span class="code-label">public-api.json</span>{
+  "manifest": {
+    "id": "public-videos",
+    "name": "Public Videos API",
+    "version": "1.0.0",
+    "description": "Verejné API na vyhľadávanie videí.",
+    "author": "Komunita",
+    "type": "api",
+    "capabilities": ["search", "directStream"]
+  },
+  "search": {
+    "steps": [
+      {
+        "action": "http",
+        "method": "GET",
+        "url": "https://public-api.example.com/videos?search={{query|urlencode}}&page={{page}}",
+        "responseType": "json",
+        "listElement": "data.videos",
+        "itemMapping": {
+          "title": "filename",
+          "size": "bytes",
+          "link": "video_id"
+        }
+      }
+    ]
+  },
+  "streamUrl": {
+    "steps": [
+      {
+        "action": "http",
+        "method": "GET",
+        "url": "https://public-api.example.com/videos/{{identifier}}/stream",
+        "responseType": "json",
+        "outputs": {
+          "stream_url": "url"
+        }
+      }
+    ],
+    "result": "{{stream_url}}"
+  }
+}</code></pre>
+
+            <div class="callout callout-info">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="margin-top:2px;"><circle cx="12" cy="12" r="9"/><path d="M12 10v6M12 7h.01"/></svg>
+                <p>Ak doplnok nevyžaduje autentifikáciu, sekcia <code>auth</code> môže úplne chýbať — alebo nastavte <code>"type": "none"</code>.</p>
+            </div>
+
+            <h2 id="priklad-json-api">Príklad: JSON API s vnorenou štruktúrou</h2>
+            <p>Doplnok, ktorý pracuje s REST JSON API a používa vnorené JSON cesty:</p>
+            <pre><code><span class="code-label">nested-json.json</span>{
+  "manifest": {
+    "id": "nested-api",
+    "name": "Nested JSON API",
+    "version": "1.0.0",
+    "description": "Príklad práce s vnoreným JSON.",
+    "author": "Komunita",
+    "type": "api",
+    "capabilities": ["search", "auth", "directStream"]
+  },
+  "auth": {
+    "type": "token",
+    "fields": [
+      {
+        "key": "api_key",
+        "label": "API kľúč",
+        "hint": "Vložte váš API kľúč",
+        "isSecret": true,
+        "required": true
+      }
+    ],
+    "login": [
+      {
+        "action": "http",
+        "method": "POST",
+        "url": "https://api.example.com/v2/auth",
+        "contentType": "application/json",
+        "body": "{\"api_key\": \"{{api_key}}\"}",
+        "responseType": "json",
+        "outputs": {
+          "token": "data.session.token",
+          "auth_status": "status"
+        }
+      },
+      {
+        "action": "assert",
+        "variable": "auth_status",
+        "equals": "ok"
+      }
+    ]
+  },
+  "search": {
+    "steps": [
+      {
+        "action": "http",
+        "method": "GET",
+        "url": "https://api.example.com/v2/files?q={{query|urlencode}}&page={{page}}",
+        "responseType": "json",
+        "headers": {
+          "Authorization": "Bearer {{token}}"
+        },
+        "listElement": "data.files",
+        "itemMapping": {
+          "title": "name",
+          "size": "size_bytes",
+          "link": "file_id"
+        }
+      }
+    ]
+  },
+  "streamUrl": {
+    "steps": [
+      {
+        "action": "http",
+        "method": "GET",
+        "url": "https://api.example.com/v2/files/{{identifier}}/download",
+        "responseType": "json",
+        "headers": {
+          "Authorization": "Bearer {{token}}"
+        },
+        "outputs": {
+          "stream_url": "data.download_url"
+        }
+      }
+    ],
+    "result": "{{stream_url}}"
+  }
+}</code></pre>
+
+            <h2 id="priklad-token">Príklad: Token-based auth s regexom</h2>
+            <p>Doplnok, ktorý extrahuje token z HTML odpovede pomocou regexu:</p>
+            <pre><code><span class="code-label">scraper-addon.json</span>{
+  "manifest": {
+    "id": "my-scraper",
+    "name": "My Scraper",
+    "version": "1.0.0",
+    "description": "Ukážkový scraper doplnok s regex extrakciou.",
+    "author": "Komunita",
+    "type": "scraper",
+    "capabilities": ["search", "auth", "directStream"]
+  },
+  "auth": {
+    "type": "credentials",
+    "fields": [
+      {
+        "key": "email",
+        "label": "E-mail",
+        "isSecret": false,
+        "required": true
+      },
+      {
+        "key": "password",
+        "label": "Heslo",
+        "isSecret": true,
+        "required": true
+      }
+    ],
+    "login": [
+      {
+        "action": "http",
+        "method": "POST",
+        "url": "https://example.com/login",
+        "contentType": "application/x-www-form-urlencoded",
+        "body": "email={{email}}&password={{password}}",
+        "responseType": "xml"
+      },
+      {
+        "action": "regex",
+        "input": "{{_response}}",
+        "pattern": "session_token[\"']?\\s*[:=]\\s*[\"']([a-f0-9]{32})[\"']",
+        "group": 1,
+        "output": "token"
+      }
+    ]
+  },
+  "search": {
+    "steps": [
+      {
+        "action": "http",
+        "method": "GET",
+        "url": "https://example.com/search?q={{query|urlencode}}",
+        "responseType": "xml",
+        "headers": {
+          "Cookie": "session={{token}}"
+        }
+      },
+      {
+        "action": "regex",
+        "input": "{{_response}}",
+        "pattern": "data-results='(\\[.*?\\])'",
+        "group": 1,
+        "output": "json_results"
+      },
+      {
+        "action": "http",
+        "method": "GET",
+        "url": "https://example.com/api/parse-results",
+        "responseType": "json",
+        "headers": {
+          "X-Data": "{{json_results}}"
+        },
+        "listElement": "items",
+        "itemMapping": {
+          "title": "name",
+          "size": "size",
+          "link": "url"
+        }
+      }
+    ]
+  },
+  "streamUrl": {
+    "steps": [
+      {
+        "action": "http",
+        "method": "GET",
+        "url": "{{identifier}}",
+        "responseType": "xml",
+        "headers": {
+          "Cookie": "session={{token}}"
+        }
+      },
+      {
+        "action": "regex",
+        "input": "{{_response}}",
+        "pattern": "source\\s+src=[\"'](https://[^\"']+\\.mp4)[\"']",
+        "group": 1,
+        "output": "stream_url"
+      }
+    ],
+    "result": "{{stream_url}}"
+  }
+}</code></pre>
+
+            <!-- ========================= REFERENCIA ========================= -->
+            <h2 id="capabilities">Capabilities (schopnosti)</h2>
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead><tr><th>Hodnota</th><th>Popis</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>"search"</code></td><td>Doplnok vie vyhľadávať súbory. <strong>Povinné</strong> — každý doplnok musí vedieť vyhľadávať.</td></tr>
+                        <tr><td><code>"auth"</code></td><td>Doplnok vyžaduje autentifikáciu (prihlásenie).</td></tr>
+                        <tr><td><code>"directStream"</code></td><td>Doplnok poskytuje priame streamovacie odkazy (nie redirect).</td></tr>
+                        <tr><td><code>"subtitles"</code></td><td>Doplnok podporuje titulky (rezervované pre budúce použitie).</td></tr>
+                        <tr><td><code>"download"</code></td><td>Doplnok podporuje sťahovanie súborov (rezervované pre budúce použitie).</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2 id="addon-types">Addon Types (typy)</h2>
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead><tr><th>Hodnota</th><th>Popis</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>"api"</code></td><td>Údaje sa získavajú cez štruktúrované API (REST, XML-RPC, GraphQL...).</td></tr>
+                        <tr><td><code>"scraper"</code></td><td>Údaje sa získavajú parsovaním HTML stránok (pomocou regexu).</td></tr>
+                        <tr><td><code>"hybrid"</code></td><td>Kombinácia oboch — niektoré endpointy sú API, niektoré vyžadujú scraping.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="callout callout-info">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="margin-top:2px;"><circle cx="12" cy="12" r="9"/><path d="M12 10v6M12 7h.01"/></svg>
+                <p>Typ doplnku sú informatívne metadáta — nemá vplyv na správanie enginu. Engine vykonáva kroky rovnako bez ohľadu na typ.</p>
+            </div>
+
+            <h2 id="chybove-stavy">Chybové stavy</h2>
+            <p>Engine môže zlyhať v niekoľkých situáciách:</p>
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead><tr><th>Situácia</th><th>Čo sa stane</th></tr></thead>
+                    <tbody>
+                        <tr><td>HTTP krok vráti iný status ako 200</td><td>Pipeline sa zastaví, krok vráti <code>false</code>.</td></tr>
+                        <tr><td>Assert zlyhá (hodnota != expected)</td><td>Pipeline sa zastaví, celý flow vráti <code>false</code>.</td></tr>
+                        <tr><td>Regex nenájde zhodu</td><td>Pipeline sa zastaví, krok vráti <code>false</code>.</td></tr>
+                        <tr><td>Neznáma akcia</td><td>Pipeline sa zastaví, vypíše sa varovanie do konzoly.</td></tr>
+                        <tr><td>Timeout HTTP požiadavky</td><td>Engine zachytí výnimku, krok vráti <code>false</code>.</td></tr>
+                        <tr><td>Neplatný JSON súbor</td><td>Import zlyhá, zobrazí sa chybová hláška.</td></tr>
+                        <tr><td>Duplicitné addon ID</td><td>Import je odmietnutý s upozornením.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2 id="omezeni">Obmedzenia a limity</h2>
+            <ul>
+                <li><strong>Iba HTTP GET a POST</strong> — iné metódy (PUT, DELETE, PATCH) nie sú podporované.</li>
+                <li><strong>Žiadny JavaScript</strong> — doplnok nemôže spúšťať JS kód (na rozdiel od doplnkov do prehliadača).</li>
+                <li><strong>XML menné priestory</strong> — parser podporuje tagy s atribútmi, ale nepodporuje XML namespaces (napr. <code>ns:tag</code>).</li>
+                <li><strong>JSONPath bez wildcards</strong> — nemožno použiť <code>data.*.name</code>. Podporované sú indexy <code>[0]</code> a filtre <code>[?(@.key=='val')]</code>.</li>
+                <li><strong>MD5-crypt salt max 8 znakov</strong> — dlhšie salty sú orezané.</li>
+                <li><strong>Žiadne cookies</strong> — engine automaticky nespravuje cookies. Tokeny je nutné odovzdávať explicitne.</li>
+                <li><strong>Žiadne presmerovania</strong> — HTTP klient nenasleduje 3xx redirecty automaticky v kontexte parsovania odpovedí.</li>
+                <li><strong>Premenné sú iba reťazce</strong> — všetky runtime hodnoty sú stringy bez číselných operácií.</li>
+                <li><strong>Jedna search stránka = jeden HTTP krok s listElement</strong> — nemožno kombinovať výsledky z viacerých volaní v jednej pipeline (možno však použiť <code>parallel</code> pre nezávislé volania).</li>
+            </ul>
+
+            <h2 id="pravni-upozorneni">Právne upozornenie</h2>
+            <div class="callout callout-danger">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="margin-top:2px;"><path d="M12 3L2 20h20L12 3z"/><path d="M12 9v5M12 17h.01"/></svg>
+                <p>
+                    <strong>Aplikácia KELP neobsahuje žiadny obsah ani prístup k akémukoľvek úložisku.</strong>
+                    Všetka funkcionalita úložísk je zabezpečená výhradne doplnkami, ktoré si používateľ importuje na vlastnú zodpovednosť.
+                    Vývojár aplikácie neposkytuje, neschvaľuje ani nekontroluje žiadne doplnky.
+                </p>
+            </div>
+            <div class="callout callout-danger">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="margin-top:2px;"><path d="M12 3L2 20h20L12 3z"/><path d="M12 9v5M12 17h.01"/></svg>
+                <p>
+                    <strong>Inštaláciou akéhokoľvek doplnku preberáte plnú zodpovednosť za jeho použitie.</strong>
+                    Uistite sa, že dodržiavate platné zákony vašej krajiny, najmä v oblasti autorských práv.
+                    Vývojár nenesie žiadnu zodpovednosť za obsah sprístupnený prostredníctvom doplnkov tretích strán.
+                </p>
+            </div>
+
+      </main>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-copy">© 2026 KELP  •  Neutrálne mediálne centrum bez vlastného obsahu</div>
+      <div class="footer-links">
+        <a href="index.html">Prehľad</a>
+        <a href="download.html">Stiahnuť</a>
+        <a href="faq.html">FAQ</a>
+        <a href="addon-docs.html">Doplnky</a>
+        <a href="disclaimer.html">Právna doložka</a>
+        <a href="https://discord.com/invite/N7xasCqzh6" target="_blank" rel="noopener noreferrer">Discord</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../site.js"></script>
+  <script>
+    (function () {
+      const sections = document.querySelectorAll('.docs-content h2[id], .docs-content h3[id]');
+      const links = document.querySelectorAll('.docs-sidebar a');
+      function updateActive() {
+        let current = '';
+        for (const s of sections) {
+          if (s.getBoundingClientRect().top <= 120) current = s.id;
+        }
+        links.forEach((a) => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+      }
+      window.addEventListener('scroll', updateActive, { passive: true });
+      updateActive();
+    })();
+  </script>
+</body>
+</html>

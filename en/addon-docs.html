@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add-on Documentation | KELP</title>
+  <meta name="description" content="Technical documentation of open media protocols and the declarative JSON add-on system for KELP.">
+  <link rel="alternate" hreflang="cs" href="https://kelp.page/addon-docs.html">
+  <link rel="alternate" hreflang="sk" href="https://kelp.page/sk/addon-docs.html">
+  <link rel="alternate" hreflang="en" href="https://kelp.page/en/addon-docs.html">
+  <link rel="alternate" hreflang="x-default" href="https://kelp.page/en/addon-docs.html">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand-link" aria-label="KELP home">
+        <img src="../assets/kelp-logo.svg" alt="KELP" class="brand-logo" width="67" height="24">
+      </a>
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href="index.html" class="nav-pill">Overview</a>
+        <a href="download.html" class="nav-pill">Download</a>
+        <a href="faq.html" class="nav-pill">FAQ</a>
+        <a href="addon-docs.html" class="nav-pill active">Add-ons</a>
+      </nav>
+      <div class="header-actions">
+        <div class="lang-switch" role="group" aria-label="Language">
+          <a href="../addon-docs.html" class="lang-btn" data-set-lang="cs">CS</a>
+          <a href="../sk/addon-docs.html" class="lang-btn" data-set-lang="sk">SK</a>
+          <a href="addon-docs.html" class="lang-btn active" data-set-lang="en" aria-current="true">EN</a>
+        </div>
+        <a href="download.html" class="btn btn-primary btn-sm header-cta">Download</a>
+        <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-label="Open menu">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </div>
+    <nav class="mobile-menu" data-mobile-menu aria-label="Mobile navigation">
+      <a href="index.html">Overview</a>
+      <a href="download.html">Download</a>
+      <a href="faq.html">FAQ</a>
+      <a href="addon-docs.html" class="active">Add-ons</a>
+      <a href="disclaimer.html">Legal &amp; Privacy</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="docs-layout">
+      <aside class="docs-sidebar" aria-label="Documentation table of contents">
+            <h4>Protocols</h4>
+            <a href="#protokoly">Supported Sources</a>
+
+            <h4>Overview</h4>
+            <a href="#uvod">Introduction</a>
+            <a href="#architektura">Architecture</a>
+            <a href="#zivotni-cyklus">Lifecycle</a>
+
+            <h4>JSON Structure</h4>
+            <a href="#korenova-struktura">Root Structure</a>
+            <a href="#manifest">manifest</a>
+            <a href="#auth">auth</a>
+            <a href="#search">search</a>
+            <a href="#stream-url">streamUrl</a>
+
+            <h4>Actions (Steps)</h4>
+            <a href="#akce-http">http</a>
+            <a href="#akce-md5crypt">md5crypt</a>
+            <a href="#akce-sha1">sha1</a>
+            <a href="#akce-md5">md5</a>
+            <a href="#akce-assert">assert</a>
+            <a href="#akce-clear">clear</a>
+            <a href="#akce-regex">regex</a>
+            <a href="#akce-set">set</a>
+            <a href="#akce-parallel">parallel</a>
+            <a href="#optional-steps">Optional Steps</a>
+
+            <h4>Template Engine</h4>
+            <a href="#promenne">Variables</a>
+            <a href="#interpolace">Interpolation</a>
+            <a href="#filtry">Filters</a>
+            <a href="#specialni-promenne">Special Variables</a>
+
+            <h4>Response Parsing</h4>
+            <a href="#xml-parsing">XML Parsing</a>
+            <a href="#json-parsing">JSON Parsing</a>
+            <a href="#seznam-vysledku">Result Lists</a>
+
+            <h4>Authentication</h4>
+            <a href="#auth-typy">Auth Types</a>
+            <a href="#auth-pole">Fields</a>
+            <a href="#auth-flow">Login / Check / Logout</a>
+
+            <h4>Examples</h4>
+            <a href="#priklad-kompletni">Complete Add-on</a>
+            <a href="#priklad-bez-auth">No Authentication</a>
+            <a href="#priklad-json-api">JSON API Add-on</a>
+            <a href="#priklad-token">Token-Based Auth</a>
+
+            <h4>Reference</h4>
+            <a href="#capabilities">Capabilities</a>
+            <a href="#addon-types">Addon Types</a>
+            <a href="#chybove-stavy">Error States</a>
+            <a href="#omezeni">Limitations</a>
+            <a href="#pravni-upozorneni">Legal Notice</a>
+      </aside>
+
+      <main class="docs-content">
+
+            <h1>Add-on System Documentation</h1>
+            <p class="subtitle">Complete guide to building external storage add-ons for KELP</p>
+
+            <!-- ========================= SUPPORTED PROTOCOLS ========================= -->
+            <h2 id="protokoly">Supported Sources in KELP</h2>
+            <p>
+                KELP operates exclusively through general, open protocols and ships with no built-in media or pre-installed add-ons.
+                Below is an overview of all supported source types; the rest of this page documents how to write <strong>declarative JSON add-ons</strong>.
+            </p>
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead>
+                        <tr><th>Protocol / Source</th><th>Setup in KELP</th><th>Use Case</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>STREMIO_V3</code></td><td>URL to <code>manifest.json</code> or <code>stremio://</code></td><td>Standard Stremio v3 add-ons (catalogs, streams, subtitles).</td></tr>
+                        <tr><td><code>DECLARATIVE_JSON</code></td><td>URL or local <code>.json</code> definition</td><td>Safe declarative HTTP/XML/JSON pipeline with no executable code (specification below).</td></tr>
+                        <tr><td><code>WEBDAV</code></td><td>Server URL + optional credentials</td><td>Personal NAS or WebDAV storage.</td></tr>
+                        <tr><td><code>LOCAL_DISK</code></td><td>Local folder picker</td><td>Local video files and drives (indexed directly on the device).</td></tr>
+                        <tr><td><code>M3U / XTREAM / XMLTV</code></td><td>Live TV → Sources</td><td>Live channels, channel groups, XMLTV EPG guide, and archive catch-up.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- ========================= INTRODUCTION ========================= -->
+            <h2 id="uvod">Introduction</h2>
+            <p>
+                Out of the box, KELP <strong>contains no stream sources</strong> and no built-in access to any storage provider.
+                All functionality for searching and playing files from external services is provided by <strong>add-ons</strong>
+                imported by the user — from a URL or a local JSON file.
+            </p>
+            <p>
+                An add-on is a <strong>purely declarative JSON file</strong> that describes:
+            </p>
+            <ul>
+                <li><strong>Manifest</strong> — add-on metadata (name, author, version, capabilities)</li>
+                <li><strong>Authentication</strong> — how to sign in to the service</li>
+                <li><strong>Search</strong> — how to search for files by query</li>
+                <li><strong>Streaming</strong> — how to resolve a direct stream URL</li>
+            </ul>
+            <p>
+                An add-on contains no executable code. It is a <em>declarative pipeline</em>
+                interpreted by the application's built-in <strong>Addon Engine</strong>.
+            </p>
+
+            <div class="callout callout-info">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="margin-top:2px;"><circle cx="12" cy="12" r="9"/><path d="M12 10v6M12 7h.01"/></svg>
+                <p>The add-on system is designed to be maximally safe. A JSON definition cannot execute arbitrary code — it can only run predefined actions (HTTP requests, hashing, regex).</p>
+            </div>
+
+            <!-- ========================= ARCHITECTURE ========================= -->
+            <h2 id="architektura">Architecture</h2>
+            <p>The add-on system consists of the following components:</p>
+
+            <div class="arch-diagram">
+                <div class="arch-app-title">KELP App</div>
+                
+                <div class="arch-row">
+                    <div class="arch-box">
+                        <div class="arch-box-title">AddonStore</div>
+                        <div class="arch-box-sub">(persistence)</div>
+                    </div>
+                    <div class="arch-box">
+                        <div class="arch-box-title">AddonRegistry</div>
+                        <div class="arch-box-sub">(runtime)</div>
+                    </div>
+                    <div class="arch-box">
+                        <div class="arch-box-title">AddonImporter</div>
+                        <div class="arch-box-sub">(URL / file)</div>
+                    </div>
+                </div>
+                
+                <div class="arch-arrow">
+                    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="margin:0 auto;"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+                </div>
+                
+                <div class="arch-box engine">
+                    <div class="arch-box-title">AddonEngine</div>
+                    <div class="arch-box-sub">(JSON interpreter / runner)</div>
+                </div>
+                
+                <div class="arch-arrow">
+                    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="margin:0 auto;"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+                </div>
+                
+                <div class="arch-box interface">
+                    <div class="arch-box-title">AddonInterface</div>
+                    <div class="arch-box-sub">(abstract API contract)</div>
+                </div>
+            </div>
+
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead>
+                        <tr><th>Component</th><th>Description</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>AddonDefinition</code></td><td>Data model parsed from a JSON file. Holds the manifest, auth, search, and streamUrl sections.</td></tr>
+                        <tr><td><code>AddonEngine</code></td><td>Interpreter implementing <code>AddonInterface</code> from a JSON definition. Executes step pipelines.</td></tr>
+                        <tr><td><code>AddonStore</code></td><td>Persistent storage (SQLite table <code>installed_addons</code>). Stores raw JSON definitions across app restarts.</td></tr>
+                        <tr><td><code>AddonRegistry</code></td><td>Singleton registry of active add-ons. Manages runtime state, credentials, and enabled sources.</td></tr>
+                        <tr><td><code>AddonImporter</code></td><td>Imports definitions from a URL (HTTP download) or a local file (file picker).</td></tr>
+                        <tr><td><code>AddonInterface</code></td><td>Abstract contract defining methods such as <code>authenticate</code>, <code>search</code>, and <code>getStreamUrl</code>.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- ========================= LIFECYCLE ========================= -->
+            <h2 id="zivotni-cyklus">Add-on Lifecycle</h2>
+            <ol>
+                <li><strong>Import</strong> — the user enters a URL or chooses a JSON file. <code>AddonImporter</code> downloads/reads and validates the JSON.</li>
+                <li><strong>Parsing</strong> — <code>AddonDefinition.fromJson()</code> parses the JSON into structured objects (manifest, auth, search, streamUrl).</li>
+                <li><strong>Registration</strong> — an <code>AddonEngine</code> instance is created and registered in <code>AddonRegistry</code>.</li>
+                <li><strong>Persistence</strong> — the raw JSON is stored in the SQLite table <code>installed_addons</code> so the add-on survives restarts.</li>
+                <li><strong>Authentication</strong> — the user enters credentials → the engine executes the <code>auth.login</code> pipeline.</li>
+                <li><strong>Usage</strong> — during search the engine runs the <code>search</code> pipeline; on playback it runs the <code>streamUrl</code> pipeline.</li>
+                <li><strong>Restore</strong> — on app startup <code>AddonRegistryManager</code> restores all saved definitions from SQLite and reinitializes engines and auth state.</li>
+            </ol>
+
+            <!-- ========================= ROOT STRUCTURE ========================= -->
+            <h2 id="korenova-struktura">Root JSON Structure</h2>
+            <p>Each add-on is a single JSON file with the following top-level structure:</p>
+            <pre><code><span class="code-label">JSON</span>{
+  "manifest": { ... },
+  "auth": { ... },
+  "search": { ... },
+  "streamUrl": { ... }
+}</code></pre>
+
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead>
+                        <tr><th>Key</th><th>Type</th><th>Required</th><th>Description</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>manifest</code></td><td>Object</td><td><span class="badge badge-required">Yes</span></td><td>Add-on metadata — identification, version, capabilities.</td></tr>
+                        <tr><td><code>auth</code></td><td>Object</td><td><span class="badge badge-optional">No</span></td><td>Authentication flow definition. If omitted, the add-on requires no sign-in.</td></tr>
+                        <tr><td><code>search</code></td><td>Object</td><td><span class="badge badge-required">Yes</span></td><td>Pipeline for searching files.</td></tr>
+                        <tr><td><code>streamUrl</code></td><td>Object</td><td><span class="badge badge-required">Yes</span></td><td>Pipeline for resolving a direct stream URL.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- ========================= MANIFEST ========================= -->
+            <h2 id="manifest">Section <code>manifest</code></h2>
+            <p>The manifest holds all metadata about the add-on. These fields are displayed in the application settings.</p>
+            <pre><code><span class="code-label">JSON</span>{
+  "manifest": {
+    "id": "my-addon",
+    "name": "My Add-on",
+    "version": "1.0.0",
+    "description": "Description of what this add-on does.",
+    "author": "Jane Doe",
+    "type": "api",
+    "capabilities": ["search", "auth", "directStream"],
+    "homeUrl": "https://example.com",
+    "iconUrl": "https://example.com/icon.png"
+  }
+}</code></pre>
+
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead>
+                        <tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>id</code></td><td>String</td><td><span class="badge badge-required">Yes</span></td><td>Unique add-on identifier used internally to store state and credentials. Recommended format: <code>kebab-case</code> without spaces or diacritics (e.g., <code>"my-nas"</code>, <code>"my-addon"</code>).</td></tr>
+                        <tr><td><code>name</code></td><td>String</td><td><span class="badge badge-required">Yes</span></td><td>Display name shown in the UI (e.g., <code>"My Add-on"</code>).</td></tr>
+                        <tr><td><code>version</code></td><td>String</td><td><span class="badge badge-optional">No</span></td><td>Add-on version in semver format. Default: <code>"1.0.0"</code>.</td></tr>
+                        <tr><td><code>description</code></td><td>String</td><td><span class="badge badge-optional">No</span></td><td>Short description of the add-on.</td></tr>
+                        <tr><td><code>author</code></td><td>String</td><td><span class="badge badge-optional">No</span></td><td>Author name. Default: <code>"Unknown"</code>.</td></tr>
+                        <tr><td><code>type</code></td><td>String</td><td><span class="badge badge-optional">No</span></td><td>Add-on type: <code>"api"</code>, <code>"scraper"</code>, or <code>"hybrid"</code>. Default: <code>"api"</code>. See <a href="#addon-types">Addon Types</a>.</td></tr>
+                        <tr><td><code>capabilities</code></td><td>Array&lt;String&gt;</td><td><span class="badge badge-optional">No</span></td><td>List of capabilities. Default: <code>["search"]</code>. See <a href="#capabilities">Capabilities</a>.</td></tr>
+                        <tr><td><code>homeUrl</code></td><td>String</td><td><span class="badge badge-optional">No</span></td><td>Homepage URL of the service.</td></tr>
+                        <tr><td><code>iconUrl</code></td><td>String</td><td><span class="badge badge-optional">No</span></td><td>Icon URL displayed in the UI.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="callout callout-info">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="margin-top:2px;"><circle cx="12" cy="12" r="9"/><path d="M12 10v6M12 7h.01"/></svg>
+                <p>The <code>id</code> field must be unique across all installed add-ons. Attempting to import an add-on with an existing <code>id</code> will be rejected.</p>
+            </div>
+
+            <!-- ========================= AUTH ========================= -->
+            <h2 id="auth">Section <code>auth</code></h2>
+            <p>Defines the authentication flow — which form fields the user fills in, and which steps execute for login, session verification, and logout.</p>
+            <pre><code><span class="code-label">JSON</span>{
+  "auth": {
+    "type": "credentials",
+    "fields": [
+      {
+        "key": "username",
+        "label": "Username",
+        "hint": "Enter your username",
+        "isSecret": false,
+        "required": true
+      },
+      {
+        "key": "password",
+        "label": "Password",
+        "hint": "Enter your password",
+        "isSecret": true,
+        "required": true
+      }
+    ],
+    "login": [ ... ],
+    "check": [ ... ],
+    "logout": [ ... ]
+  }
+}</code></pre>
+
+            <h3 id="auth-typy">Authentication Types</h3>
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead><tr><th>Value of <code>type</code></th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>"none"</code></td><td>The add-on requires no sign-in. The <code>auth</code> section can be omitted completely.</td></tr>
+                        <tr><td><code>"credentials"</code></td><td>Standard username and password login.</td></tr>
+                        <tr><td><code>"token"</code></td><td>API token or key authentication.</td></tr>
+                        <tr><td><code>"oauth"</code></td><td>OAuth2 flow (reserved for future use).</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 id="auth-pole">Field Definitions (<code>fields</code>)</h3>
+            <p>Fields define the form shown to the user in Settings. Each <code>key</code> becomes a runtime variable name — see <a href="#promenne">Variables</a>.</p>
+
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead><tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>key</code></td><td>String</td><td><span class="badge badge-required">Yes</span></td><td>Unique field key. Becomes the runtime variable name (e.g., <code>"username"</code>, <code>"api_key"</code>).</td></tr>
+                        <tr><td><code>label</code></td><td>String</td><td><span class="badge badge-required">Yes</span></td><td>Label shown in the UI.</td></tr>
+                        <tr><td><code>hint</code></td><td>String</td><td><span class="badge badge-optional">No</span></td><td>Placeholder / hint text in the input field.</td></tr>
+                        <tr><td><code>isSecret</code></td><td>Boolean</td><td><span class="badge badge-optional">No</span></td><td>Mask input as a password. Default: <code>false</code>.</td></tr>
+                        <tr><td><code>required</code></td><td>Boolean</td><td><span class="badge badge-optional">No</span></td><td>Whether the field is required. Default: <code>true</code>.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 id="auth-flow">Login / Check / Logout Pipelines</h3>
+            <p>Each of these sections is an <strong>array of steps</strong> — see <a href="#akce-http">Actions</a>.</p>
+
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead><tr><th>Pipeline</th><th>When It Runs</th><th>Required</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>login</code></td><td>When the user fills in credentials and confirms sign-in.</td><td><span class="badge badge-optional">No</span> (login will not run without it)</td></tr>
+                        <tr><td><code>check</code></td><td>When the engine verifies whether the current session is still valid.</td><td><span class="badge badge-optional">No</span> (fallback: checks that <code>token</code> exists)</td></tr>
+                        <tr><td><code>logout</code></td><td>When the user signs out.</td><td><span class="badge badge-optional">No</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="callout callout-info">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="margin-top:2px;"><circle cx="12" cy="12" r="9"/><path d="M12 10v6M12 7h.01"/></svg>
+                <p>If no <code>check</code> pipeline is defined, the engine falls back to checking whether a non-empty runtime variable named <code>token</code> exists. It is therefore recommended to store the session token under the variable key <code>"token"</code>.</p>
+            </div>
+
+            <!-- ========================= SEARCH ========================= -->
+            <h2 id="search">Section <code>search</code></h2>
+            <p>Defines the pipeline for searching files. Its output must be a list of items (see <a href="#seznam-vysledku">Result Lists</a>).</p>
+            <pre><code><span class="code-label">JSON</span>{
+  "search": {
+    "steps": [
+      {
+        "action": "http",
+        "method": "POST",
+        "url": "https://api.example.com/search",
+        "contentType": "application/x-www-form-urlencoded",
+        "body": "q={{query}}&limit=100&token={{token}}",
+        "responseType": "xml",
+        "listElement": "file",
+        "itemMapping": {
+          "title": "name",
+          "size": "size",
+          "link": "ident"
+        }
+      }
+    ]
+  }
+}</code></pre>
+
+            <p>The search pipeline automatically has access to the following variables:</p>
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead><tr><th>Variable</th><th>Value</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>{{query}}</code></td><td>Search query text entered by the user.</td></tr>
+                        <tr><td><code>{{page}}</code></td><td>Page number (1-based) for paginated results.</td></tr>
+                        <tr><td><code>{{token}}</code></td><td>Authentication token (when the add-on uses auth).</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Item Mapping</h3>
+            <p>The key parameter on the HTTP step in a search pipeline is <code>itemMapping</code>, which maps fields from the response to KELP's internal item structure:</p>
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead><tr><th>Target Field</th><th>Required</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>title</code> or <code>name</code></td><td><span class="badge badge-required">Yes</span></td><td>File name / title. The engine looks for <code>title</code> first, then <code>name</code>.</td></tr>
+                        <tr><td><code>size</code></td><td><span class="badge badge-optional">No</span></td><td>File size <strong>in bytes</strong> (integer). Automatically formatted to human-readable units (MB/GB).</td></tr>
+                        <tr><td><code>link</code> or <code>url</code></td><td><span class="badge badge-required">Yes</span></td><td>Unique item identifier. Passed to the <code>streamUrl</code> pipeline as <code>{{identifier}}</code>.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- ========================= STREAM URL ========================= -->
+            <h2 id="stream-url">Section <code>streamUrl</code></h2>
+            <p>Defines the pipeline that resolves a direct streaming URL for the chosen file.</p>
+            <pre><code><span class="code-label">JSON</span>{
+  "streamUrl": {
+    "steps": [
+      {
+        "action": "http",
+        "method": "POST",
+        "url": "https://api.example.com/file_link",
+        "contentType": "application/x-www-form-urlencoded",
+        "body": "ident={{identifier}}&token={{token}}",
+        "responseType": "xml",
+        "outputs": {
+          "stream_url": "link"
+        }
+      }
+    ],
+    "result": "{{stream_url}}",
+    "headers": {
+      "Referer": "https://example.com/",
+      "User-Agent": "KELP/1.0",
+      "Authorization": "Bearer {{token}}"
+    }
+  }
+}</code></pre>
+
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>steps</code></td><td>Array&lt;Step&gt;</td><td>Step pipeline that obtains the stream URL.</td></tr>
+                        <tr><td><code>result</code></td><td>String</td><td>Template referencing the variable holding the final stream URL. Typically <code>"{{stream_url}}"</code>.</td></tr>
+                        <tr><td><code>headers</code></td><td>Object</td><td><span class="badge badge-optional">No</span> Extra HTTP headers sent by the player while streaming. Supports template interpolation. Typically <code>Referer</code>, <code>User-Agent</code>, <code>Cookie</code>, or <code>Authorization</code>.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p>The streamUrl pipeline automatically has access to:</p>
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead><tr><th>Variable</th><th>Value</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>{{identifier}}</code></td><td>File identifier from search results (the value of <code>link</code>/<code>url</code> in itemMapping).</td></tr>
+                        <tr><td><code>{{token}}</code></td><td>Authentication token.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- ========================= ACTIONS ========================= -->
+            <h2 id="akce-http">Action: <code>http</code></h2>
+            <p>Executes an HTTP request. The primary and most frequently used action.</p>
+            <pre><code><span class="code-label">JSON</span>{
+  "action": "http",
+  "method": "POST",
+  "url": "https://api.example.com/endpoint",
+  "contentType": "application/x-www-form-urlencoded",
+  "body": "param1={{value1}}&param2={{value2}}",
+  "responseType": "xml",
+  "headers": {
+    "Authorization": "Bearer {{token}}",
+    "X-Custom": "value"
+  },
+  "outputs": {
+    "my_variable": "xml_tag_name"
+  }
+}</code></pre>
+
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>action</code></td><td>String</td><td>—</td><td>Must be <code>"http"</code>.</td></tr>
+                        <tr><td><code>method</code></td><td>String</td><td><code>"GET"</code></td><td>HTTP method: <code>"GET"</code> or <code>"POST"</code>.</td></tr>
+                        <tr><td><code>url</code></td><td>String</td><td>—</td><td>Endpoint URL. Supports <a href="#interpolace">interpolation</a>.</td></tr>
+                        <tr><td><code>contentType</code></td><td>String</td><td>—</td><td>Value of the <code>Content-Type</code> header.</td></tr>
+                        <tr><td><code>body</code></td><td>String</td><td>—</td><td>Request body (for POST). Supports interpolation.</td></tr>
+                        <tr><td><code>responseType</code></td><td>String</td><td><code>"xml"</code></td><td>Response format: <code>"xml"</code> or <code>"json"</code>. Controls how <code>outputs</code> are parsed.</td></tr>
+                        <tr><td><code>headers</code></td><td>Object</td><td><code>{}</code></td><td>Custom HTTP headers. Values support interpolation.</td></tr>
+                        <tr><td><code>outputs</code></td><td>Object</td><td>—</td><td>Mapping: <code>{ "variable_name": "path_in_response" }</code>. See <a href="#xml-parsing">XML</a> / <a href="#json-parsing">JSON parsing</a>.</td></tr>
+                        <tr><td><code>listElement</code></td><td>String</td><td>—</td><td><strong>Search only:</strong> name or path of the repeating list element in the response.</td></tr>
+                        <tr><td><code>itemMapping</code></td><td>Object</td><td>—</td><td><strong>Search only:</strong> field mapping for each item. See <a href="#seznam-vysledku">Result Lists</a>.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="callout callout-warn">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="margin-top:2px;"><path d="M12 3L2 20h20L12 3z"/><path d="M12 9v5M12 17h.01"/></svg>
+                <p>If an HTTP step returns any status other than <code>200</code>, the entire pipeline fails. The engine does <strong>not</strong> follow redirects or accept other 2xx codes.</p>
+            </div>
+
+            <!-- --- md5crypt --- -->
+            <h2 id="akce-md5crypt">Action: <code>md5crypt</code></h2>
+            <p>Computes a Unix MD5-crypt hash (<code>$1$salt$hash</code> format). Typically required by legacy APIs for password hashing.</p>
+            <pre><code><span class="code-label">JSON</span>{
+  "action": "md5crypt",
+  "input": "{{password}}",
+  "salt": "{{salt}}",
+  "output": "crypted_password"
+}</code></pre>
+
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>input</code></td><td>String</td><td>Input string (typically a password). Supports interpolation.</td></tr>
+                        <tr><td><code>salt</code></td><td>String</td><td>Salt value. Supports interpolation. Max 8 characters.</td></tr>
+                        <tr><td><code>output</code></td><td>String</td><td>Variable name to store the resulting hash.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p><strong>Example output:</strong> <code>$1$abcdefgh$k4x3gHwmKj1vC0B.Xr5M/.</code></p>
+
+            <!-- --- sha1 --- -->
+            <h2 id="akce-sha1">Action: <code>sha1</code></h2>
+            <p>Computes the SHA-1 hash of the input string.</p>
+            <pre><code><span class="code-label">JSON</span>{
+  "action": "sha1",
+  "input": "{{crypted_password}}",
+  "output": "hashed_password"
+}</code></pre>
+
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>input</code></td><td>String</td><td>Input text. Supports interpolation.</td></tr>
+                        <tr><td><code>output</code></td><td>String</td><td>Variable name for the hex-encoded digest.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p><strong>Example output:</strong> <code>a94a8fe5ccb19ba61c4c0873d391e987982fbbd3</code></p>
+
+            <!-- --- md5 --- -->
+            <h2 id="akce-md5">Action: <code>md5</code></h2>
+            <p>Computes the MD5 hash of the input string.</p>
+            <pre><code><span class="code-label">JSON</span>{
+  "action": "md5",
+  "input": "{{some_value}}",
+  "output": "md5_hash"
+}</code></pre>
+
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>input</code></td><td>String</td><td>Input text. Supports interpolation.</td></tr>
+                        <tr><td><code>output</code></td><td>String</td><td>Variable name for the hex-encoded digest.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p><strong>Example output:</strong> <code>5d41402abc4b2a76b9719d911017c592</code></p>
+
+            <!-- --- assert --- -->
+            <h2 id="akce-assert">Action: <code>assert</code></h2>
+            <p>Compares a runtime variable against an expected value. If they do not match, the pipeline <strong>fails</strong> and subsequent steps are skipped.</p>
+            <pre><code><span class="code-label">JSON</span>{
+  "action": "assert",
+  "variable": "login_status",
+  "equals": "OK"
+}</code></pre>
+
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>variable</code></td><td>String</td><td>Name of the runtime variable to check.</td></tr>
+                        <tr><td><code>equals</code></td><td>String</td><td>Expected value.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="callout callout-info">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="margin-top:2px;"><circle cx="12" cy="12" r="9"/><path d="M12 10v6M12 7h.01"/></svg>
+                <p>Assert is essential for validating API responses. Place it immediately after an HTTP step to verify that the operation (login, search) succeeded.</p>
+            </div>
+
+            <!-- --- clear --- -->
+            <h2 id="akce-clear">Action: <code>clear</code></h2>
+            <p>Removes runtime variables from the engine's state.</p>
+            <pre><code><span class="code-label">JSON</span>{
+  "action": "clear",
+  "variables": ["token", "salt", "crypted_password", "temp_value"]
+}</code></pre>
+
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>variables</code></td><td>Array&lt;String&gt;</td><td>List of variable names to remove.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p>Typically used in the <code>logout</code> pipeline to clear session tokens.</p>
+
+            <!-- --- regex --- -->
+            <h2 id="akce-regex">Action: <code>regex</code></h2>
+            <p>Extracts text from a variable using a regular expression.</p>
+            <pre><code><span class="code-label">JSON</span>{
+  "action": "regex",
+  "input": "{{_response}}",
+  "pattern": "href=\"(https://[^\"]+\\.mp4)\"",
+  "group": 1,
+  "output": "video_url"
+}</code></pre>
+
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>input</code></td><td>String</td><td>—</td><td>Input text. Supports interpolation. Typically <code>{{_response}}</code>.</td></tr>
+                        <tr><td><code>pattern</code></td><td>String</td><td>—</td><td>Regular expression (PCRE / Java Regex syntax).</td></tr>
+                        <tr><td><code>group</code></td><td>Integer</td><td><code>1</code></td><td>Capture group index to extract.</td></tr>
+                        <tr><td><code>output</code></td><td>String</td><td>—</td><td>Variable name for the extracted match.</td></tr>
+                        <tr><td><code>optional</code></td><td>Boolean</td><td><code>false</code></td><td>When <code>true</code>, a failure does not abort the pipeline — execution continues with the next step. See <a href="#optional-steps">Optional Steps</a>.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="callout callout-warn">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="margin-top:2px;"><path d="M12 3L2 20h20L12 3z"/><path d="M12 9v5M12 17h.01"/></svg>
+                <p>If the regex finds no match and the step is <strong>not</strong> marked <code>"optional": true</code>, the pipeline fails. Make sure the pattern matches the response format or chain optional fallback steps.</p>
+            </div>
+
+            <h3 id="optional-steps">Optional Steps (<code>optional</code>)</h3>
+            <p>Any step in a pipeline can be marked optional by adding <code>"optional": true</code>. If an optional step fails, the pipeline continues to the next step instead of aborting.</p>
+            <p>For the <code>regex</code> action specifically: if its <code>output</code> variable was already populated by an earlier step, the optional regex is skipped. This makes fallback chaining clean and straightforward:</p>
+            <pre><code><span class="code-label">Example — fallback chain</span>{
+  "steps": [
+    { "action": "http", "method": "GET", "url": "https://api.example.com/{{identifier}}", "responseType": "json" },
+    {
+      "action": "regex",
+      "input": "{{_response}}",
+      "pattern": "\"name\":\\s*\"([^\"]+\\.mp4)\",\\s*\"source\":\\s*\"original\"",
+      "group": 1,
+      "output": "video_file",
+      "optional": true
+    },
+    {
+      "action": "regex",
+      "input": "{{_response}}",
+      "pattern": "\"name\":\\s*\"([^/\"]+\\.mp4)\"",
+      "group": 1,
+      "output": "video_file",
+      "optional": true
+    }
+  ],
+  "result": "https://example.com/download/{{identifier}}/{{video_file|urlencode}}"
+}</code></pre>
+            <p>In this example, the engine first searches for an MP4 file with <code>source: "original"</code>. If none is found, the second regex falls back to any MP4. If the first regex succeeds, the second is skipped because <code>video_file</code> is already set.</p>
+
+            <div class="callout callout-info">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="margin-top:2px;"><circle cx="12" cy="12" r="9"/><path d="M12 10v6M12 7h.01"/></svg>
+                <p>The <code>optional</code> flag works on all actions (http, regex, assert, etc.), not only on regex.</p>
+            </div>
+
+            <!-- --- set --- -->
+            <h2 id="akce-set">Action: <code>set</code></h2>
+            <p>Assigns a value directly to a variable. Useful for composing strings from multiple variables or setting default values.</p>
+            <pre><code><span class="code-label">JSON</span>{
+  "action": "set",
+  "output": "full_url",
+  "value": "https://cdn.example.com/{{path}}/{{filename|urlencode}}"
+}</code></pre>
+
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>output</code></td><td>String</td><td>Name of the variable to write to.</td></tr>
+                        <tr><td><code>value</code></td><td>String</td><td>Value expression (supports interpolation and filters).</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- --- parallel --- -->
+            <h2 id="akce-parallel">Action: <code>parallel</code></h2>
+            <p>Runs multiple independent steps concurrently. All nested steps execute in parallel, and the action succeeds if all of them succeed.</p>
+            <pre><code><span class="code-label">JSON</span>{
+  "action": "parallel",
+  "steps": [
+    {
+      "action": "http",
+      "method": "GET",
+      "url": "https://api.example.com/metadata/{{identifier}}",
+      "responseType": "json",
+      "outputs": { "meta_title": "title" }
+    },
+    {
+      "action": "http",
+      "method": "GET",
+      "url": "https://api.example.com/files/{{identifier}}",
+      "responseType": "json",
+      "outputs": { "file_url": "url" }
+    }
+  ]
+}</code></pre>
+
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>steps</code></td><td>Array&lt;Step&gt;</td><td>List of steps to execute concurrently. Each item is a standard step definition.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="callout callout-warn">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="margin-top:2px;"><path d="M12 3L2 20h20L12 3z"/><path d="M12 9v5M12 17h.01"/></svg>
+                <p>Parallel steps must not depend on each other's outputs. If step B relies on an output from step A, execute them sequentially (outside <code>parallel</code>).</p>
+            </div>
+
+            <!-- ========================= TEMPLATE ENGINE ========================= -->
+            <h2 id="promenne">Variables</h2>
+            <p>Addon Engine maintains a runtime variable map (<code>Map&lt;String, String&gt;</code>) populated from:</p>
+            <ul>
+                <li><strong>Credentials</strong> — keys from <code>auth.fields</code> (e.g., <code>username</code>, <code>password</code>, <code>api_key</code>)</li>
+                <li><strong>HTTP outputs</strong> — values extracted from API responses</li>
+                <li><strong>Crypto steps</strong> — hash outputs (<code>md5crypt</code>, <code>sha1</code>, <code>md5</code>)</li>
+                <li><strong>Regex</strong> — extracted substrings</li>
+                <li><strong>Automatic</strong> — <code>query</code>, <code>page</code>, <code>identifier</code></li>
+            </ul>
+
+            <h3 id="interpolace">Interpolation <code>{{variable}}</code></h3>
+            <p>Anywhere a parameter takes a string value, double-brace interpolation can be used:</p>
+            <pre><code><span class="code-label">Example</span>"url": "https://api.example.com/search?q={{query}}&token={{token}}"
+"body": "username={{username}}&password={{hashed_password}}"
+"input": "{{crypted}}"</code></pre>
+            <p>The engine replaces every <code>{{name}}</code> placeholder with its current value from the variable map. Unknown variables evaluate to an empty string.</p>
+
+            <h3 id="filtry">Filters <code>{{variable|filter}}</code></h3>
+            <p>Append a pipe (<code>|</code>) and filter name after a variable to transform its value before insertion:</p>
+            <pre><code><span class="code-label">Example</span>"url": "https://api.example.com/search?q={{query|urlencode}}"
+"body": "token={{token|base64}}"
+"header": "{{api_key|uppercase}}"</code></pre>
+
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead><tr><th>Filter</th><th>Description</th><th>Input → Output Example</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>urlencode</code></td><td>URL percent-encoding. <strong>Recommended</strong> for <code>{{query}}</code> in URLs.</td><td><code>Movie 2026</code> → <code>Movie%202026</code></td></tr>
+                        <tr><td><code>base64</code></td><td>Base64 encoding.</td><td><code>hello</code> → <code>aGVsbG8=</code></td></tr>
+                        <tr><td><code>lowercase</code></td><td>Converts to lowercase.</td><td><code>HELLO</code> → <code>hello</code></td></tr>
+                        <tr><td><code>uppercase</code></td><td>Converts to uppercase.</td><td><code>hello</code> → <code>HELLO</code></td></tr>
+                        <tr><td><code>trim</code></td><td>Trims leading and trailing whitespace.</td><td><code> hello </code> → <code>hello</code></td></tr>
+                        <tr><td><code>htmldecode</code></td><td>Decodes HTML entities.</td><td><code>&amp;amp; &amp;lt;</code> → <code>&amp; &lt;</code></td></tr>
+                        <tr><td><code>length</code></td><td>String length (returns a number string).</td><td><code>hello</code> → <code>5</code></td></tr>
+                        <tr><td><code>reverse</code></td><td>Reverses the string characters.</td><td><code>hello</code> → <code>olleh</code></td></tr>
+                        <tr><td><code>timestamp</code></td><td>Returns current Unix timestamp in seconds (ignores variable value).</td><td>→ <code>1741700000</code></td></tr>
+                        <tr><td><code>timestamp_ms</code></td><td>Returns current Unix timestamp in milliseconds.</td><td>→ <code>1741700000000</code></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="callout callout-warn">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="margin-top:2px;"><path d="M12 3L2 20h20L12 3z"/><path d="M12 9v5M12 17h.01"/></svg>
+                <p>If a filter name is unrecognized, the value is inserted without transformation.</p>
+            </div>
+
+            <h3 id="specialni-promenne">Special Variables</h3>
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead><tr><th>Variable</th><th>Automatically Available</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>_response</code></td><td>After every HTTP step</td><td>Full raw body of the last HTTP response. Useful for the <code>regex</code> action.</td></tr>
+                        <tr><td><code>_http_status</code></td><td>After a failed HTTP step</td><td>HTTP status code of the last failed request (e.g., <code>403</code>, <code>500</code>). Useful for diagnostics.</td></tr>
+                        <tr><td><code>query</code></td><td>In search pipeline</td><td>The user's search query string.</td></tr>
+                        <tr><td><code>page</code></td><td>In search pipeline</td><td>Page number (1, 2, 3...).</td></tr>
+                        <tr><td><code>identifier</code></td><td>In streamUrl pipeline</td><td>Identifier of the selected file (from itemMapping <code>link</code>/<code>url</code>).</td></tr>
+                        <tr><td><code>token</code></td><td>After login pipeline</td><td>Authentication token. Recommended output key for login steps.</td></tr>
+                        <tr><td><code>{{timestamp}}</code></td><td>Always</td><td>Current Unix timestamp in seconds. Can be used directly without a variable.</td></tr>
+                        <tr><td><code>{{timestamp_ms}}</code></td><td>Always</td><td>Current Unix timestamp in milliseconds.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- ========================= PARSING ========================= -->
+            <h2 id="xml-parsing">XML Parsing</h2>
+            <p>With <code>"responseType": "xml"</code>, the engine extracts values by XML tag name.</p>
+            <pre><code><span class="code-label">XML response</span>&lt;response&gt;
+  &lt;status&gt;OK&lt;/status&gt;
+  &lt;token&gt;abc123xyz&lt;/token&gt;
+  &lt;user_id&gt;42&lt;/user_id&gt;
+&lt;/response&gt;</code></pre>
+            <pre><code><span class="code-label">outputs</span>"outputs": {
+  "status_var": "status",
+  "token": "token",
+  "uid": "user_id"
+}</code></pre>
+            <p>Result: <code>status_var = "OK"</code>, <code>token = "abc123xyz"</code>, <code>uid = "42"</code></p>
+
+            <div class="callout callout-info">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="margin-top:2px;"><circle cx="12" cy="12" r="9"/><path d="M12 10v6M12 7h.01"/></svg>
+                <p>The XML parser supports tags with attributes — e.g., <code>&lt;file id="123"&gt;...&lt;/file&gt;</code> matches when looking up the <code>file</code> tag. To extract attributes, use the <code>tag@attr</code> notation in mappings (see below).</p>
+            </div>
+            <p>To extract attributes from XML tags, use <code>tag@attribute</code> notation:</p>
+            <pre><code><span class="code-label">XML with attributes</span>&lt;files&gt;
+  &lt;file id="abc123" type="video"&gt;Movie.mp4&lt;/file&gt;
+  &lt;file id="def456" type="subtitle"&gt;Movie.srt&lt;/file&gt;
+&lt;/files&gt;</code></pre>
+            <pre><code><span class="code-label">itemMapping</span>"itemMapping": {
+  "title": "file",
+  "link": "file@id",
+  "type": "file@type"
+}</code></pre>
+            <p>Result: <code>link = "abc123"</code>, <code>type = "video"</code>. Using <code>@attr</code> (without a tag name) extracts an attribute from the parent element.</p>
+
+            <h2 id="json-parsing">JSON Parsing</h2>
+            <p>With <code>"responseType": "json"</code>, the engine uses dot notation to navigate JSON objects.</p>
+            <pre><code><span class="code-label">JSON response</span>{
+  "status": "ok",
+  "data": {
+    "token": "xyz789",
+    "user": {
+      "id": 42,
+      "name": "Alex"
+    }
+  }
+}</code></pre>
+            <pre><code><span class="code-label">outputs</span>"outputs": {
+  "my_token": "data.token",
+  "user_name": "data.user.name",
+  "user_id": "data.user.id"
+}</code></pre>
+            <p>Result: <code>my_token = "xyz789"</code>, <code>user_name = "Alex"</code>, <code>user_id = "42"</code></p>
+
+            <p>To access array elements, use bracket or numeric index notation:</p>
+            <pre><code><span class="code-label">JSON path with array</span>"outputs": {
+  "first_item": "results[0].name",
+  "first_item_alt": "results.0.name"
+}</code></pre>
+
+            <p>To filter an array by field value, use <code>[?(@.key=='value')]</code>:</p>
+            <pre><code><span class="code-label">JSON path with filter</span>"outputs": {
+  "video_file": "files[?(@.source=='original')].name"
+}</code></pre>
+            <p>The filter scans the <code>files</code> array, picks the first element where <code>source</code> equals <code>"original"</code>, and extracts its <code>name</code>.</p>
+
+            <div class="callout callout-info">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="margin-top:2px;"><circle cx="12" cy="12" r="9"/><path d="M12 10v6M12 7h.01"/></svg>
+                <p>Nested paths also work inside search <code>itemMapping</code>: e.g., <code>"title": "metadata.title"</code> or <code>"id": "files[0].id"</code>.</p>
+            </div>
+
+            <h2 id="seznam-vysledku">Result Lists (List Parsing)</h2>
+            <p>In a search pipeline, an HTTP step with <code>listElement</code> identifies repeating items in the response:</p>
+
+            <h4>XML List</h4>
+            <pre><code><span class="code-label">XML response</span>&lt;response&gt;
+  &lt;status&gt;OK&lt;/status&gt;
+  &lt;file&gt;
+    &lt;name&gt;Movie.2024.EN.mkv&lt;/name&gt;
+    &lt;size&gt;1536000000&lt;/size&gt;
+    &lt;ident&gt;abc123&lt;/ident&gt;
+  &lt;/file&gt;
+  &lt;file&gt;
+    &lt;name&gt;Movie.2024.4K.mp4&lt;/name&gt;
+    &lt;size&gt;987000000&lt;/size&gt;
+    &lt;ident&gt;def456&lt;/ident&gt;
+  &lt;/file&gt;
+&lt;/response&gt;</code></pre>
+            <pre><code><span class="code-label">Search step</span>{
+  "action": "http",
+  "method": "POST",
+  "url": "https://api.example.com/search",
+  "body": "q={{query}}&token={{token}}",
+  "responseType": "xml",
+  "listElement": "file",
+  "itemMapping": {
+    "title": "name",
+    "size": "size",
+    "link": "ident"
+  }
+}</code></pre>
+            <p>The engine locates every <code>&lt;file&gt;...&lt;/file&gt;</code> block and extracts <code>name</code>, <code>size</code>, and <code>ident</code> according to the mapping.</p>
+
+            <h4>JSON List</h4>
+            <pre><code><span class="code-label">JSON response</span>{
+  "status": "ok",
+  "results": [
+    { "title": "Movie.2024.EN.mkv", "filesize": 1536000000, "id": "abc123" },
+    { "title": "Movie.2024.4K.mp4", "filesize": 987000000, "id": "def456" }
+  ]
+}</code></pre>
+            <pre><code><span class="code-label">Search step</span>{
+  "action": "http",
+  "method": "GET",
+  "url": "https://api.example.com/search?q={{query|urlencode}}",
+  "responseType": "json",
+  "listElement": "results",
+  "itemMapping": {
+    "title": "title",
+    "size": "filesize",
+    "link": "id"
+  }
+}</code></pre>
+            <p>For JSON responses, <code>listElement</code> is a dot-notation path to an array of objects. Each object's fields are extracted using the keys in <code>itemMapping</code>.</p>
+
+            <!-- ========================= EXAMPLES ========================= -->
+            <h2 id="priklad-kompletni">Example: Complete Add-on with Authentication</h2>
+            <p>Sample add-on for a fictional “CloudStorage” service featuring a full auth flow (salt + md5crypt + sha1):</p>
+            <pre><code><span class="code-label">cloudstorage.json</span>{
+  "manifest": {
+    "id": "cloudstorage",
+    "name": "CloudStorage",
+    "version": "1.0.0",
+    "description": "Demo add-on for CloudStorage.",
+    "author": "Community",
+    "type": "api",
+    "capabilities": ["search", "auth", "directStream"],
+    "homeUrl": "https://cloudstorage.example"
+  },
+  "auth": {
+    "type": "credentials",
+    "fields": [
+      {
+        "key": "username",
+        "label": "Username",
+        "hint": "Your e-mail or username",
+        "isSecret": false,
+        "required": true
+      },
+      {
+        "key": "password",
+        "label": "Password",
+        "hint": "Enter your account password",
+        "isSecret": true,
+        "required": true
+      }
+    ],
+    "login": [
+      {
+        "action": "http",
+        "method": "POST",
+        "url": "https://cloudstorage.example/api/salt/",
+        "contentType": "application/x-www-form-urlencoded",
+        "body": "username={{username}}",
+        "responseType": "xml",
+        "outputs": {
+          "salt": "salt",
+          "salt_status": "status"
+        }
+      },
+      {
+        "action": "assert",
+        "variable": "salt_status",
+        "equals": "OK"
+      },
+      {
+        "action": "md5crypt",
+        "input": "{{password}}",
+        "salt": "{{salt}}",
+        "output": "crypted"
+      },
+      {
+        "action": "sha1",
+        "input": "{{crypted}}",
+        "output": "hashed_password"
+      },
+      {
+        "action": "http",
+        "method": "POST",
+        "url": "https://cloudstorage.example/api/login/",
+        "contentType": "application/x-www-form-urlencoded",
+        "body": "username={{username}}&password={{hashed_password}}&keep_logged_in=1",
+        "responseType": "xml",
+        "outputs": {
+          "token": "token",
+          "login_status": "status"
+        }
+      },
+      {
+        "action": "assert",
+        "variable": "login_status",
+        "equals": "OK"
+      }
+    ],
+    "check": [
+      {
+        "action": "http",
+        "method": "POST",
+        "url": "https://cloudstorage.example/api/user_data/",
+        "contentType": "application/x-www-form-urlencoded",
+        "body": "token={{token}}",
+        "responseType": "xml",
+        "outputs": {
+          "check_status": "status"
+        }
+      },
+      {
+        "action": "assert",
+        "variable": "check_status",
+        "equals": "OK"
+      }
+    ],
+    "logout": [
+      {
+        "action": "clear",
+        "variables": ["token", "salt", "crypted", "hashed_password"]
+      }
+    ]
+  },
+  "search": {
+    "steps": [
+      {
+        "action": "http",
+        "method": "POST",
+        "url": "https://cloudstorage.example/api/search/",
+        "contentType": "application/x-www-form-urlencoded",
+        "body": "what={{query}}&sort=largest&limit=100&category=video&token={{token}}",
+        "responseType": "xml",
+        "listElement": "file",
+        "itemMapping": {
+          "title": "name",
+          "size": "size",
+          "link": "ident"
+        }
+      }
+    ]
+  },
+  "streamUrl": {
+    "steps": [
+      {
+        "action": "http",
+        "method": "POST",
+        "url": "https://cloudstorage.example/api/file_link/",
+        "contentType": "application/x-www-form-urlencoded",
+        "body": "ident={{identifier}}&download_type=video_stream&token={{token}}",
+        "responseType": "xml",
+        "outputs": {
+          "stream_url": "link"
+        }
+      }
+    ],
+    "result": "{{stream_url}}"
+  }
+}</code></pre>
+
+            <h2 id="priklad-bez-auth">Example: Add-on Without Authentication</h2>
+            <p>Simple add-on for a public API that does not require signing in:</p>
+            <pre><code><span class="code-label">public-api.json</span>{
+  "manifest": {
+    "id": "public-videos",
+    "name": "Public Videos API",
+    "version": "1.0.0",
+    "description": "Public API for searching videos.",
+    "author": "Community",
+    "type": "api",
+    "capabilities": ["search", "directStream"]
+  },
+  "search": {
+    "steps": [
+      {
+        "action": "http",
+        "method": "GET",
+        "url": "https://public-api.example.com/videos?search={{query|urlencode}}&page={{page}}",
+        "responseType": "json",
+        "listElement": "data.videos",
+        "itemMapping": {
+          "title": "filename",
+          "size": "bytes",
+          "link": "video_id"
+        }
+      }
+    ]
+  },
+  "streamUrl": {
+    "steps": [
+      {
+        "action": "http",
+        "method": "GET",
+        "url": "https://public-api.example.com/videos/{{identifier}}/stream",
+        "responseType": "json",
+        "outputs": {
+          "stream_url": "url"
+        }
+      }
+    ],
+    "result": "{{stream_url}}"
+  }
+}</code></pre>
+
+            <div class="callout callout-info">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="margin-top:2px;"><circle cx="12" cy="12" r="9"/><path d="M12 10v6M12 7h.01"/></svg>
+                <p>When an add-on requires no authentication, omit the <code>auth</code> section completely or set <code>"type": "none"</code>.</p>
+            </div>
+
+            <h2 id="priklad-json-api">Example: JSON API with Nested Structure</h2>
+            <p>An add-on talking to a REST JSON API using nested dot-notation paths:</p>
+            <pre><code><span class="code-label">nested-json.json</span>{
+  "manifest": {
+    "id": "nested-api",
+    "name": "Nested JSON API",
+    "version": "1.0.0",
+    "description": "Example using nested JSON paths.",
+    "author": "Community",
+    "type": "api",
+    "capabilities": ["search", "auth", "directStream"]
+  },
+  "auth": {
+    "type": "token",
+    "fields": [
+      {
+        "key": "api_key",
+        "label": "API Key",
+        "hint": "Paste your API key",
+        "isSecret": true,
+        "required": true
+      }
+    ],
+    "login": [
+      {
+        "action": "http",
+        "method": "POST",
+        "url": "https://api.example.com/v2/auth",
+        "contentType": "application/json",
+        "body": "{\"api_key\": \"{{api_key}}\"}",
+        "responseType": "json",
+        "outputs": {
+          "token": "data.session.token",
+          "auth_status": "status"
+        }
+      },
+      {
+        "action": "assert",
+        "variable": "auth_status",
+        "equals": "ok"
+      }
+    ]
+  },
+  "search": {
+    "steps": [
+      {
+        "action": "http",
+        "method": "GET",
+        "url": "https://api.example.com/v2/files?q={{query|urlencode}}&page={{page}}",
+        "responseType": "json",
+        "headers": {
+          "Authorization": "Bearer {{token}}"
+        },
+        "listElement": "data.files",
+        "itemMapping": {
+          "title": "name",
+          "size": "size_bytes",
+          "link": "file_id"
+        }
+      }
+    ]
+  },
+  "streamUrl": {
+    "steps": [
+      {
+        "action": "http",
+        "method": "GET",
+        "url": "https://api.example.com/v2/files/{{identifier}}/download",
+        "responseType": "json",
+        "headers": {
+          "Authorization": "Bearer {{token}}"
+        },
+        "outputs": {
+          "stream_url": "data.download_url"
+        }
+      }
+    ],
+    "result": "{{stream_url}}"
+  }
+}</code></pre>
+
+            <h2 id="priklad-token">Example: Token-Based Auth with Regex</h2>
+            <p>An add-on extracting a session token from an HTML response using a regular expression:</p>
+            <pre><code><span class="code-label">scraper-addon.json</span>{
+  "manifest": {
+    "id": "my-scraper",
+    "name": "My Scraper",
+    "version": "1.0.0",
+    "description": "Sample scraper add-on using regex extraction.",
+    "author": "Community",
+    "type": "scraper",
+    "capabilities": ["search", "auth", "directStream"]
+  },
+  "auth": {
+    "type": "credentials",
+    "fields": [
+      {
+        "key": "email",
+        "label": "E-mail",
+        "isSecret": false,
+        "required": true
+      },
+      {
+        "key": "password",
+        "label": "Password",
+        "isSecret": true,
+        "required": true
+      }
+    ],
+    "login": [
+      {
+        "action": "http",
+        "method": "POST",
+        "url": "https://example.com/login",
+        "contentType": "application/x-www-form-urlencoded",
+        "body": "email={{email}}&password={{password}}",
+        "responseType": "xml"
+      },
+      {
+        "action": "regex",
+        "input": "{{_response}}",
+        "pattern": "session_token[\"']?\\s*[:=]\\s*[\"']([a-f0-9]{32})[\"']",
+        "group": 1,
+        "output": "token"
+      }
+    ]
+  },
+  "search": {
+    "steps": [
+      {
+        "action": "http",
+        "method": "GET",
+        "url": "https://example.com/search?q={{query|urlencode}}",
+        "responseType": "xml",
+        "headers": {
+          "Cookie": "session={{token}}"
+        }
+      },
+      {
+        "action": "regex",
+        "input": "{{_response}}",
+        "pattern": "data-results='(\\[.*?\\])'",
+        "group": 1,
+        "output": "json_results"
+      },
+      {
+        "action": "http",
+        "method": "GET",
+        "url": "https://example.com/api/parse-results",
+        "responseType": "json",
+        "headers": {
+          "X-Data": "{{json_results}}"
+        },
+        "listElement": "items",
+        "itemMapping": {
+          "title": "name",
+          "size": "size",
+          "link": "url"
+        }
+      }
+    ]
+  },
+  "streamUrl": {
+    "steps": [
+      {
+        "action": "http",
+        "method": "GET",
+        "url": "{{identifier}}",
+        "responseType": "xml",
+        "headers": {
+          "Cookie": "session={{token}}"
+        }
+      },
+      {
+        "action": "regex",
+        "input": "{{_response}}",
+        "pattern": "source\\s+src=[\"'](https://[^\"']+\\.mp4)[\"']",
+        "group": 1,
+        "output": "stream_url"
+      }
+    ],
+    "result": "{{stream_url}}"
+  }
+}</code></pre>
+
+            <!-- ========================= REFERENCE ========================= -->
+            <h2 id="capabilities">Capabilities</h2>
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead><tr><th>Value</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>"search"</code></td><td>The add-on supports file search. <strong>Required</strong> — every add-on must support search.</td></tr>
+                        <tr><td><code>"auth"</code></td><td>The add-on requires authentication (sign-in).</td></tr>
+                        <tr><td><code>"directStream"</code></td><td>The add-on returns direct stream URLs (not redirects).</td></tr>
+                        <tr><td><code>"subtitles"</code></td><td>The add-on provides subtitles (reserved for future use).</td></tr>
+                        <tr><td><code>"download"</code></td><td>The add-on supports file downloads (reserved for future use).</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2 id="addon-types">Addon Types</h2>
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead><tr><th>Value</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>"api"</code></td><td>Data is fetched through a structured API (REST, XML-RPC, GraphQL, etc.).</td></tr>
+                        <tr><td><code>"scraper"</code></td><td>Data is extracted by parsing HTML pages (using regex).</td></tr>
+                        <tr><td><code>"hybrid"</code></td><td>Combination of both — some endpoints use an API while others rely on scraping.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="callout callout-info">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="margin-top:2px;"><circle cx="12" cy="12" r="9"/><path d="M12 10v6M12 7h.01"/></svg>
+                <p>The add-on type is informational metadata only — it does not change engine behavior. The engine runs steps identically regardless of type.</p>
+            </div>
+
+            <h2 id="chybove-stavy">Error States</h2>
+            <p>The engine can fail in the following situations:</p>
+            <div class="docs-table-wrapper">
+                <table>
+                    <thead><tr><th>Situation</th><th>Behavior</th></tr></thead>
+                    <tbody>
+                        <tr><td>HTTP step returns a status other than 200</td><td>Pipeline stops; the step returns <code>false</code>.</td></tr>
+                        <tr><td>Assert fails (value != expected)</td><td>Pipeline stops; the entire flow returns <code>false</code>.</td></tr>
+                        <tr><td>Regex finds no match</td><td>Pipeline stops; the step returns <code>false</code>.</td></tr>
+                        <tr><td>Unknown action</td><td>Pipeline stops; a warning is logged to the console.</td></tr>
+                        <tr><td>HTTP request timeout</td><td>Engine catches the exception; the step returns <code>false</code>.</td></tr>
+                        <tr><td>Invalid JSON file</td><td>Import fails and displays an error message.</td></tr>
+                        <tr><td>Duplicate add-on ID</td><td>Import is rejected with a warning.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2 id="omezeni">Limitations</h2>
+            <ul>
+                <li><strong>HTTP GET and POST only</strong> — other methods (PUT, DELETE, PATCH) are not supported.</li>
+                <li><strong>No JavaScript</strong> — add-ons cannot run JS code (unlike browser extensions).</li>
+                <li><strong>XML namespaces</strong> — the parser handles tags with attributes, but does not support XML namespaces (e.g., <code>ns:tag</code>).</li>
+                <li><strong>JSONPath without wildcards</strong> — expressions like <code>data.*.name</code> are unsupported. Indexes <code>[0]</code> and filters <code>[?(@.key=='val')]</code> are supported.</li>
+                <li><strong>MD5-crypt salt max 8 chars</strong> — longer salts are truncated.</li>
+                <li><strong>No automatic cookies</strong> — the engine does not manage cookies automatically. Tokens must be passed explicitly.</li>
+                <li><strong>No redirects</strong> — the HTTP client does not automatically follow 3xx redirects when parsing responses.</li>
+                <li><strong>String-only variables</strong> — all runtime values are strings with no numeric arithmetic.</li>
+                <li><strong>One search page = one HTTP step with listElement</strong> — results cannot be merged across multiple calls within one search step (though <code>parallel</code> can be used for independent calls).</li>
+            </ul>
+
+            <h2 id="pravni-upozorneni">Legal Notice</h2>
+            <div class="callout callout-danger">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="margin-top:2px;"><path d="M12 3L2 20h20L12 3z"/><path d="M12 9v5M12 17h.01"/></svg>
+                <p>
+                    <strong>KELP contains no media content and no built-in access to any storage service.</strong>
+                    All storage functionality is provided solely by add-ons imported by the user at their own responsibility.
+                    The developer does not provide, endorse, or inspect any third-party add-ons.
+                </p>
+            </div>
+            <div class="callout callout-danger">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="margin-top:2px;"><path d="M12 3L2 20h20L12 3z"/><path d="M12 9v5M12 17h.01"/></svg>
+                <p>
+                    <strong>By installing any add-on, you assume full responsibility for its use.</strong>
+                    Make sure you comply with all applicable laws in your jurisdiction, especially copyright law.
+                    The developer bears no responsibility for content accessed through third-party add-ons.
+                </p>
+            </div>
+
+      </main>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-copy">© 2026 KELP  •  Neutral media center with no hosted content</div>
+      <div class="footer-links">
+        <a href="index.html">Overview</a>
+        <a href="download.html">Download</a>
+        <a href="faq.html">FAQ</a>
+        <a href="addon-docs.html">Add-ons</a>
+        <a href="disclaimer.html">Legal &amp; Privacy</a>
+        <a href="https://discord.com/invite/N7xasCqzh6" target="_blank" rel="noopener noreferrer">Discord</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../site.js"></script>
+  <script>
+    (function () {
+      const sections = document.querySelectorAll('.docs-content h2[id], .docs-content h3[id]');
+      const links = document.querySelectorAll('.docs-sidebar a');
+      function updateActive() {
+        let current = '';
+        for (const s of sections) {
+          if (s.getBoundingClientRect().top <= 120) current = s.id;
+        }
+        links.forEach((a) => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+      }
+      window.addEventListener('scroll', updateActive, { passive: true });
+      updateActive();
+    })();
+  </script>
+</body>
+</html>

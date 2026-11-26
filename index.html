@@ -10,6 +10,10 @@
   <meta property="og:image" content="https://kelp.page/assets/screenshots/tv-home.webp">
   <meta property="og:url" content="https://kelp.page/">
   <meta property="og:type" content="website">
+  <link rel="alternate" hreflang="cs" href="https://kelp.page/">
+  <link rel="alternate" hreflang="sk" href="https://kelp.page/sk/">
+  <link rel="alternate" hreflang="en" href="https://kelp.page/en/">
+  <link rel="alternate" hreflang="x-default" href="https://kelp.page/en/">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <link rel="stylesheet" href="style.css">
@@ -28,6 +32,11 @@
         <a href="addon-docs.html" class="nav-pill">Doplňky</a>
       </nav>
       <div class="header-actions">
+        <div class="lang-switch" role="group" aria-label="Jazyk">
+          <a href="index.html" class="lang-btn active" data-set-lang="cs" aria-current="true">CS</a>
+          <a href="sk/index.html" class="lang-btn" data-set-lang="sk">SK</a>
+          <a href="en/index.html" class="lang-btn" data-set-lang="en">EN</a>
+        </div>
         <a href="download.html" class="btn btn-primary btn-sm header-cta">Stáhnout</a>
         <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-label="Otevřít menu">
           <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>

@@ -1,6 +1,58 @@
-/* KELP Website — minimal vanilla JS (mobile nav, clean slideshow + gallery lightbox, GitHub Releases) */
+/* KELP Website — minimal vanilla JS (i18n switcher, mobile nav, slideshow + gallery lightbox, GitHub Releases) */
 
 (function () {
+  const pageLang = (document.documentElement.lang || 'cs').toLowerCase().slice(0, 2);
+
+  // Persist explicit language switches & preserve URL hash
+  document.querySelectorAll('[data-set-lang]').forEach((link) => {
+    link.addEventListener('click', (e) => {
+      const targetLang = link.dataset.setLang;
+      try {
+        localStorage.setItem('kelp_lang', targetLang);
+      } catch (_) {}
+      if (window.location.hash && !link.href.includes('#')) {
+        e.preventDefault();
+        window.location.href = link.getAttribute('href') + window.location.hash;
+      }
+    });
+  });
+
+  // Auto-route on root Czech pages according to saved choice or browser locale (never loops, skips crawlers)
+  (function handleLanguageRouting() {
+    if (window.location.protocol === 'file:') return;
+    if (/bot|crawl|spider|slurp|facebookexternalhit|discordbot/i.test(navigator.userAgent || '')) return;
+
+    const path = window.location.pathname;
+    const isSubdir = path.startsWith('/en/') || path.startsWith('/sk/') || path === '/en' || path === '/sk';
+    if (isSubdir) return;
+
+    let preferred = null;
+    try {
+      preferred = localStorage.getItem('kelp_lang');
+    } catch (_) {}
+
+    if (!preferred) {
+      try {
+        if (sessionStorage.getItem('kelp_lang_auto') === '1') return;
+        sessionStorage.setItem('kelp_lang_auto', '1');
+      } catch (_) {}
+      const navLang = ((navigator.languages && navigator.languages[0]) || navigator.language || 'cs').toLowerCase();
+      if (navLang.startsWith('cs') || navLang.startsWith('cz')) {
+        preferred = 'cs';
+      } else if (navLang.startsWith('sk')) {
+        preferred = 'sk';
+      } else {
+        preferred = 'en';
+      }
+    }
+
+    if (preferred === 'en' || preferred === 'sk') {
+      const file = path.endsWith('/') ? '' : path.replace(/^\/+/, '');
+      const target = `/${preferred}/${file}${window.location.hash || ''}`;
+      window.location.replace(target);
+    }
+  })();
+
   // Mobile navigation toggle
   const toggle = document.querySelector('[data-nav-toggle]');
   const mobileMenu = document.querySelector('[data-mobile-menu]');
@@ -21,6 +73,13 @@
     } catch (_) {
       shots = [];
     }
+
+    const slideAria =
+      pageLang === 'en'
+        ? (n, t) => `Show screenshot ${n}: ${t}`
+        : pageLang === 'sk'
+          ? (n, t) => `Zobraziť snímku ${n}: ${t}`
+          : (n, t) => `Zobrazit snímek ${n}: ${t}`;
 
     if (shots.length > 0) {
       const mainImg = showcase.querySelector('[data-slide-img]');
@@ -44,12 +103,11 @@
       let timer = null;
       const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      // Render slide indicator dots
       const dots = shots.map((shot, idx) => {
         const b = document.createElement('button');
         b.type = 'button';
         b.className = 'slide-dot' + (idx === 0 ? ' active' : '');
-        b.setAttribute('aria-label', `Zobrazit snímek ${idx + 1}: ${shot.title}`);
+        b.setAttribute('aria-label', slideAria(idx + 1, shot.title));
         b.addEventListener('click', () => {
           showSlide(idx);
           restartAuto();

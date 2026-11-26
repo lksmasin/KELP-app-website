@@ -4,7 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dokumentace doplňků | KELP</title>
-  <meta name="description" content="Technická dokumentace otevřených zdrojů a deklarativního JSON addon systému pro KELP v2.">
+  <meta name="description" content="Technická dokumentace otevřených zdrojů a deklarativního JSON addon systému pro KELP.">
+  <link rel="alternate" hreflang="cs" href="https://kelp.page/addon-docs.html">
+  <link rel="alternate" hreflang="sk" href="https://kelp.page/sk/addon-docs.html">
+  <link rel="alternate" hreflang="en" href="https://kelp.page/en/addon-docs.html">
+  <link rel="alternate" hreflang="x-default" href="https://kelp.page/en/addon-docs.html">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <link rel="stylesheet" href="style.css">
@@ -23,6 +27,11 @@
         <a href="addon-docs.html" class="nav-pill active">Doplňky</a>
       </nav>
       <div class="header-actions">
+        <div class="lang-switch" role="group" aria-label="Jazyk">
+          <a href="addon-docs.html" class="lang-btn active" data-set-lang="cs" aria-current="true">CS</a>
+          <a href="sk/addon-docs.html" class="lang-btn" data-set-lang="sk">SK</a>
+          <a href="en/addon-docs.html" class="lang-btn" data-set-lang="en">EN</a>
+        </div>
         <a href="download.html" class="btn btn-primary btn-sm header-cta">Stáhnout</a>
         <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-label="Otevřít menu">
           <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
@@ -41,7 +50,7 @@
   <div class="container">
     <div class="docs-layout">
       <aside class="docs-sidebar" aria-label="Obsah dokumentace">
-            <h4>Protokoly v2</h4>
+            <h4>Protokoly</h4>
             <a href="#protokoly">Podporované zdroje</a>
 
             <h4>Přehled</h4>
@@ -106,9 +115,9 @@
 
             
             <!-- ========================= PODPOROVANÉ PROTOKOLY ========================= -->
-            <h2 id="protokoly">Podporované zdroje v KELP v2</h2>
+            <h2 id="protokoly">Podporované zdroje v KELP</h2>
             <p>
-                KELP v2 pracuje výhradně přes obecné otevřené protokoly a v základní instalaci neobsahuje žádný obsah ani předinstalované doplňky.
+                KELP pracuje výhradně přes obecné otevřené protokoly a v základní instalaci neobsahuje žádný obsah ani předinstalované doplňky.
                 Níže je přehled všech podporovaných typů zdrojů; tato stránka podrobně popisuje tvorbu <strong>deklarativních JSON doplňků</strong>.
             </p>
             <div class="docs-table-wrapper">
@@ -628,7 +637,7 @@
                     <thead><tr><th>Parametr</th><th>Typ</th><th>Výchozí</th><th>Popis</th></tr></thead>
                     <tbody>
                         <tr><td><code>input</code></td><td>String</td><td>—</td><td>Vstupní text. Podporuje interpolaci. Typicky <code>{{_response}}</code>.</td></tr>
-                        <tr><td><code>pattern</code></td><td>String</td><td>—</td><td>Regulární výraz (Dart/PCRE syntaxe).</td></tr>
+                        <tr><td><code>pattern</code></td><td>String</td><td>—</td><td>Regulární výraz (PCRE / Java Regex syntaxe).</td></tr>
                         <tr><td><code>group</code></td><td>Integer</td><td><code>1</code></td><td>Číslo zachytávací skupiny k extrakci.</td></tr>
                         <tr><td><code>output</code></td><td>String</td><td>—</td><td>Název proměnné pro extrahovanou hodnotu.</td></tr>
                         <tr><td><code>optional</code></td><td>Boolean</td><td><code>false</code></td><td>Pokud <code>true</code>, selhání kroku nezpůsobí selhání celého pipeline — pokračuje se dalším krokem. Viz <a href="#optional-steps">Volitelné kroky</a>.</td></tr>
@@ -810,9 +819,9 @@
 
             <div class="callout callout-info">
                 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="margin-top:2px;"><circle cx="12" cy="12" r="9"/><path d="M12 10v6M12 7h.01"/></svg>
-                <p>XML parser podporuje tagy s atributy – např. <code>&lt;file id="123"&gt;...&lt;/file&gt;</code> bude nalezeno při hledání tagu <code>file</code>. Pro extrakci atributů použijte notáci <code>tag@attr</code> v mappingu (viz níže).</p>
+                <p>XML parser podporuje tagy s atributy – např. <code>&lt;file id="123"&gt;...&lt;/file&gt;</code> bude nalezeno při hledání tagu <code>file</code>. Pro extrakci atributů použijte notaci <code>tag@attr</code> v mappingu (viz níže).</p>
             </div>
-            <p>Pro extrakci atributů z XML tagů použijte notáci <code>tag@atribut</code>:</p>
+            <p>Pro extrakci atributů z XML tagů použijte notaci <code>tag@atribut</code>:</p>
             <pre><code><span class="code-label">XML s atributy</span>&lt;files&gt;
   &lt;file id="abc123" type="video"&gt;Film.mp4&lt;/file&gt;
   &lt;file id="def456" type="subtitle"&gt;Film.srt&lt;/file&gt;
@@ -822,7 +831,7 @@
   "link": "file@id",
   "type": "file@type"
 }</code></pre>
-            <p>Výsledek: <code>link = "abc123"</code>, <code>type = "video"</code>. Notáce <code>@attr</code> (bez tagu) extrahuje atribut z rodičovského elementu.</p>
+            <p>Výsledek: <code>link = "abc123"</code>, <code>type = "video"</code>. Notace <code>@attr</code> (bez tagu) extrahuje atribut z rodičovského elementu.</p>
 
             <h2 id="json-parsing">JSON parsing</h2>
             <p>Při <code>"responseType": "json"</code> engine používá tečkovou notaci pro navigaci v JSON struktuře.</p>
@@ -916,7 +925,7 @@
 
             <!-- ========================= PŘÍKLADY ========================= -->
             <h2 id="priklad-kompletni">Příklad: Kompletní addon s autentizací</h2>
-            <p>Ukázkový addon pro fiktivní službu „CloudStorage.cz" s plným auth flow (salt + md5crypt + sha1):</p>
+            <p>Ukázkový addon pro fiktivní službu „CloudStorage.cz“ s plným auth flow (salt + md5crypt + sha1):</p>
             <pre><code><span class="code-label">cloudstorage.json</span>{
   "manifest": {
     "id": "cloudstorage",

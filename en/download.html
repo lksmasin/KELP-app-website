@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Download | KELP</title>
+  <meta name="description" content="Download KELP for Android, Android TV, Windows, and Linux.">
+  <link rel="alternate" hreflang="cs" href="https://kelp.page/download.html">
+  <link rel="alternate" hreflang="sk" href="https://kelp.page/sk/download.html">
+  <link rel="alternate" hreflang="en" href="https://kelp.page/en/download.html">
+  <link rel="alternate" hreflang="x-default" href="https://kelp.page/en/download.html">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand-link" aria-label="KELP home">
+        <img src="../assets/kelp-logo.svg" alt="KELP" class="brand-logo" width="67" height="24">
+      </a>
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href="index.html" class="nav-pill">Overview</a>
+        <a href="download.html" class="nav-pill active">Download</a>
+        <a href="faq.html" class="nav-pill">FAQ</a>
+        <a href="addon-docs.html" class="nav-pill">Add-ons</a>
+      </nav>
+      <div class="header-actions">
+        <div class="lang-switch" role="group" aria-label="Language">
+          <a href="../download.html" class="lang-btn" data-set-lang="cs">CS</a>
+          <a href="../sk/download.html" class="lang-btn" data-set-lang="sk">SK</a>
+          <a href="download.html" class="lang-btn active" data-set-lang="en" aria-current="true">EN</a>
+        </div>
+        <a href="#platforms" class="btn btn-primary btn-sm header-cta">Download</a>
+        <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-label="Open menu">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </div>
+    <nav class="mobile-menu" data-mobile-menu aria-label="Mobile navigation">
+      <a href="index.html">Overview</a>
+      <a href="download.html" class="active">Download</a>
+      <a href="faq.html">FAQ</a>
+      <a href="addon-docs.html">Add-ons</a>
+      <a href="disclaimer.html">Legal &amp; Privacy</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <div class="meta-eyebrow">Latest release<span class="sep">•</span><span class="mono" data-latest-version>v7.0.0-beta.1</span></div>
+        <h1>Download KELP</h1>
+        <p>Choose the build for your device. Every platform stays in sync via end-to-end encrypted pairing without an account.</p>
+      </div>
+    </section>
+
+    <section class="section" id="platforms" data-releases-repo="lksmasin/KELP-app-website">
+      <div class="container">
+        <div class="dl-platforms">
+
+          <article class="platform-card">
+            <div class="platform-card-head">
+              <svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 20h8M12 17v3"/></svg>
+              <h2>Android &amp; Android TV</h2>
+            </div>
+            <p class="platform-desc">Publicly available on Google Play for Android phones, tablets, and Android TV devices (Android 10 and newer).</p>
+            <div class="platform-meta">Google Play  •  Android 10+</div>
+            <div class="platform-actions">
+              <a href="https://play.google.com/store/apps/details?id=page.kelp" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-full">Get on Google Play</a>
+              <a href="https://github.com/lksmasin/KELP-app-website/releases" target="_blank" rel="noopener noreferrer" class="platform-alt">Direct APKs on GitHub Releases</a>
+            </div>
+          </article>
+
+          <article class="platform-card">
+            <div class="platform-card-head">
+              <svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg>
+              <h2>Windows</h2>
+            </div>
+            <p class="platform-desc">MSI installer or portable ZIP package for 64-bit Windows 10 and 11 with the media player library bundled in.</p>
+            <div class="platform-meta" data-meta-for="dl-windows">Windows 10 / 11 (x64)  •  MSI / ZIP</div>
+            <div class="platform-actions">
+              <a href="https://github.com/lksmasin/KELP-app-website/releases/latest" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-full" id="dl-windows">Download for Windows</a>
+              <a href="https://github.com/lksmasin/KELP-app-website/releases" target="_blank" rel="noopener noreferrer" class="platform-alt">All packages (MSI &amp; portable ZIP)</a>
+            </div>
+          </article>
+
+          <article class="platform-card">
+            <div class="platform-card-head">
+              <svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M2 20h20"/></svg>
+              <h2>Linux</h2>
+            </div>
+            <p class="platform-desc">DEB package and portable tar.gz archive for 64-bit Linux distributions with automatic HiDPI scaling.</p>
+            <div class="platform-meta" data-meta-for="dl-linux">Linux (x64)  •  DEB / tar.gz</div>
+            <div class="platform-actions">
+              <a href="https://github.com/lksmasin/KELP-app-website/releases/latest" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-full" id="dl-linux">Download for Linux</a>
+              <a href="https://github.com/lksmasin/KELP-app-website/releases" target="_blank" rel="noopener noreferrer" class="platform-alt">All packages (DEB &amp; tar.gz)</a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="changelog">
+      <div class="container">
+        <div class="section-head">
+          <h2>Changelog</h2>
+          <a href="https://github.com/lksmasin/KELP-app-website/releases" target="_blank" rel="noopener noreferrer" class="text-link">Release archive on GitHub</a>
+        </div>
+
+        <article class="changelog-card">
+          <div class="changelog-head">
+            <h3>KELP 7.0.0-beta.1</h3>
+            <span class="mono section-sub">November 2026</span>
+          </div>
+
+          <ul class="changelog-list">
+            <li><strong>All-new native foundation:</strong> faster startup, smoother browsing, and a unified codebase across Android TV, Android phones and tablets, Windows, and Linux.</li>
+            <li><strong>Dedicated Android phone &amp; tablet app:</strong> touch-first interface with player gestures (brightness, volume, seek), Picture-in-Picture (PiP), and a built-in QR scanner for pairing.</li>
+            <li><strong>Account-free encrypted sync:</strong> link devices with a QR or 6-character code to sync profiles, watch history, collections, and add-ons — including one-tap Send to TV from mobile.</li>
+            <li><strong>Offline downloads:</strong> save movies, individual episodes, or full seasons with subtitles and artwork, with local files taking automatic priority offline.</li>
+            <li><strong>Redesigned stream picker &amp; open sources:</strong> automatic detection of resolution, HDR/Dolby Vision, audio tracks, and languages; support for Stremio v3, declarative JSON v2 add-ons, WebDAV, and local folders.</li>
+            <li><strong>Live TV with EPG &amp; catch-up:</strong> support for M3U and Xtream playlists, XMLTV program guides, and channel archive catch-up playback.</li>
+            <li><strong>Ambient screensaver, profiles &amp; languages:</strong> ambient screensaver on idle and pause for TV and Desktop, touch-drag gestures for desktop tablets, adult and kids profile management, and full Czech, Slovak, and English localization.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-copy">© 2026 KELP  •  Neutral media center with no hosted content</div>
+      <div class="footer-links">
+        <a href="index.html">Overview</a>
+        <a href="download.html">Download</a>
+        <a href="faq.html">FAQ</a>
+        <a href="addon-docs.html">Add-ons</a>
+        <a href="disclaimer.html">Legal &amp; Privacy</a>
+        <a href="https://discord.com/invite/N7xasCqzh6" target="_blank" rel="noopener noreferrer">Discord</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../site.js"></script>
+</body>
+</html>
