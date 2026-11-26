@@ -1,4 +1,4 @@
-/* KELP Website — minimal vanilla JS (mobile nav, screenshot stage, lightbox, GitHub Releases) */
+/* KELP Website — minimal vanilla JS (mobile nav, clean slideshow + gallery lightbox, GitHub Releases) */
 
 (function () {
   // Mobile navigation toggle
@@ -11,113 +11,154 @@
     });
   }
 
-  // Interactive Screenshot Stage + Lightbox (index.html)
-  const stageRoot = document.querySelector('[data-stage]');
-  if (stageRoot) {
-    const shots = Array.from(stageRoot.querySelectorAll('[data-shot]')).map((el) => ({
-      el,
-      src: el.dataset.src,
-      title: el.dataset.title,
-      desc: el.dataset.desc,
-      platform: el.dataset.platform,
-      portrait: el.dataset.portrait === 'true'
-    }));
-
-    const viewport = stageRoot.querySelector('[data-stage-viewport]');
-    const mainImg = stageRoot.querySelector('[data-stage-img]');
-    const titleEl = stageRoot.querySelector('[data-stage-title]');
-    const descEl = stageRoot.querySelector('[data-stage-desc]');
-    const countEl = stageRoot.querySelector('[data-stage-count]');
-    const prevBtn = stageRoot.querySelector('[data-stage-prev]');
-    const nextBtn = stageRoot.querySelector('[data-stage-next]');
-    const filterBtns = Array.from(stageRoot.querySelectorAll('[data-platform-filter]'));
-
-    const lightbox = document.querySelector('[data-lightbox]');
-    const lightboxImg = lightbox ? lightbox.querySelector('[data-lightbox-img]') : null;
-    const lightboxCaption = lightbox ? lightbox.querySelector('[data-lightbox-caption]') : null;
-    const lightboxClose = lightbox ? lightbox.querySelector('[data-lightbox-close]') : null;
-
-    let activePlatform = 'all';
-    let currentIndex = 0;
-
-    function visibleShots() {
-      return activePlatform === 'all'
-        ? shots
-        : shots.filter((s) => s.platform === activePlatform);
+  // Homepage minimal slideshow + Fullscreen Gallery Lightbox
+  const galleryDataEl = document.getElementById('kelp-gallery-data');
+  const showcase = document.querySelector('[data-showcase]');
+  if (galleryDataEl && showcase) {
+    let shots = [];
+    try {
+      shots = JSON.parse(galleryDataEl.textContent || '[]');
+    } catch (_) {
+      shots = [];
     }
 
-    function render(idx) {
-      const list = visibleShots();
-      if (!list.length) return;
-      currentIndex = ((idx % list.length) + list.length) % list.length;
-      const shot = list[currentIndex];
+    if (shots.length > 0) {
+      const mainImg = showcase.querySelector('[data-slide-img]');
+      const captionEl = showcase.querySelector('[data-slide-caption]');
+      const dotsWrap = showcase.querySelector('[data-slide-dots]');
+      const prevBtn = showcase.querySelector('[data-slide-prev]');
+      const nextBtn = showcase.querySelector('[data-slide-next]');
+      const openGalleryBtn = showcase.querySelector('[data-open-gallery]');
+      const frame = showcase.querySelector('[data-slide-frame]');
 
-      mainImg.src = shot.src;
-      mainImg.alt = shot.title;
-      viewport.classList.toggle('is-portrait', shot.portrait);
-      titleEl.textContent = shot.title;
-      descEl.textContent = shot.desc;
-      countEl.textContent = `${currentIndex + 1} / ${list.length}`;
+      const lightbox = document.querySelector('[data-lightbox]');
+      const lbImg = lightbox ? lightbox.querySelector('[data-lightbox-img]') : null;
+      const lbTitle = lightbox ? lightbox.querySelector('[data-lightbox-title]') : null;
+      const lbDesc = lightbox ? lightbox.querySelector('[data-lightbox-desc]') : null;
+      const lbCount = lightbox ? lightbox.querySelector('[data-lightbox-count]') : null;
+      const lbPrev = lightbox ? lightbox.querySelector('[data-lightbox-prev]') : null;
+      const lbNext = lightbox ? lightbox.querySelector('[data-lightbox-next]') : null;
+      const lbClose = lightbox ? lightbox.querySelector('[data-lightbox-close]') : null;
 
-      shots.forEach((s) => {
-        const show = activePlatform === 'all' || s.platform === activePlatform;
-        s.el.hidden = !show;
-        s.el.classList.toggle('active', s === shot);
+      let current = 0;
+      let timer = null;
+      const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // Render slide indicator dots
+      const dots = shots.map((shot, idx) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'slide-dot' + (idx === 0 ? ' active' : '');
+        b.setAttribute('aria-label', `Zobrazit snímek ${idx + 1}: ${shot.title}`);
+        b.addEventListener('click', () => {
+          showSlide(idx);
+          restartAuto();
+        });
+        if (dotsWrap) dotsWrap.appendChild(b);
+        return b;
       });
-    }
 
-    filterBtns.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        activePlatform = btn.dataset.platformFilter;
-        filterBtns.forEach((b) => b.classList.toggle('active', b === btn));
-        render(0);
-      });
-    });
+      function showSlide(idx) {
+        current = ((idx % shots.length) + shots.length) % shots.length;
+        const s = shots[current];
+        if (mainImg) {
+          mainImg.src = s.src;
+          mainImg.alt = s.title;
+        }
+        if (captionEl) {
+          captionEl.innerHTML = `<strong>${s.platform}</strong><span class="sep">•</span>${s.title}`;
+        }
+        dots.forEach((d, i) => d.classList.toggle('active', i === current));
+        if (lightbox && lightbox.classList.contains('open')) {
+          syncLightbox();
+        }
+      }
 
-    shots.forEach((s) => {
-      s.el.addEventListener('click', () => {
-        const list = visibleShots();
-        const idx = list.indexOf(s);
-        if (idx >= 0) render(idx);
-      });
-    });
+      function syncLightbox() {
+        const s = shots[current];
+        if (lbImg) {
+          lbImg.src = s.src;
+          lbImg.alt = s.title;
+        }
+        if (lbTitle) lbTitle.textContent = `${s.platform}  •  ${s.title}`;
+        if (lbDesc) lbDesc.textContent = s.desc;
+        if (lbCount) lbCount.textContent = `${current + 1} / ${shots.length}`;
+      }
 
-    if (prevBtn) prevBtn.addEventListener('click', () => render(currentIndex - 1));
-    if (nextBtn) nextBtn.addEventListener('click', () => render(currentIndex + 1));
+      function stopAuto() {
+        if (timer) {
+          clearInterval(timer);
+          timer = null;
+        }
+      }
 
-    // Keyboard navigation when stage is focused
-    stageRoot.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowLeft') render(currentIndex - 1);
-      if (e.key === 'ArrowRight') render(currentIndex + 1);
-    });
+      function restartAuto() {
+        stopAuto();
+        if (prefersReduced) return;
+        timer = setInterval(() => {
+          if (!lightbox || !lightbox.classList.contains('open')) {
+            showSlide(current + 1);
+          }
+        }, 6000);
+      }
 
-    // Lightbox open / close
-    if (viewport && lightbox && lightboxImg) {
-      viewport.addEventListener('click', () => {
-        const list = visibleShots();
-        const shot = list[currentIndex];
-        if (!shot) return;
-        lightboxImg.src = shot.src;
-        lightboxImg.alt = shot.title;
-        if (lightboxCaption) lightboxCaption.textContent = `${shot.title}  •  ${shot.desc}`;
+      function openLightbox(idx) {
+        if (!lightbox) return;
+        if (typeof idx === 'number') showSlide(idx);
+        syncLightbox();
+        stopAuto();
         lightbox.classList.add('open');
         lightbox.setAttribute('aria-hidden', 'false');
-      });
+      }
 
-      const closeLb = () => {
+      function closeLightbox() {
+        if (!lightbox) return;
         lightbox.classList.remove('open');
         lightbox.setAttribute('aria-hidden', 'true');
-      };
-      if (lightboxClose) lightboxClose.addEventListener('click', closeLb);
-      lightbox.addEventListener('click', (e) => {
-        if (e.target === lightbox) closeLb();
-      });
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLb();
-      });
-    }
+        restartAuto();
+      }
 
-    render(0);
+      if (prevBtn) {
+        prevBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          showSlide(current - 1);
+          restartAuto();
+        });
+      }
+      if (nextBtn) {
+        nextBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          showSlide(current + 1);
+          restartAuto();
+        });
+      }
+      if (frame) {
+        frame.addEventListener('click', () => openLightbox(current));
+        frame.addEventListener('mouseenter', stopAuto);
+        frame.addEventListener('mouseleave', restartAuto);
+      }
+      if (openGalleryBtn) {
+        openGalleryBtn.addEventListener('click', () => openLightbox(0));
+      }
+      if (lbPrev) lbPrev.addEventListener('click', () => showSlide(current - 1));
+      if (lbNext) lbNext.addEventListener('click', () => showSlide(current + 1));
+      if (lbClose) lbClose.addEventListener('click', closeLightbox);
+      if (lightbox) {
+        lightbox.addEventListener('click', (e) => {
+          if (e.target === lightbox) closeLightbox();
+        });
+      }
+
+      document.addEventListener('keydown', (e) => {
+        if (!lightbox || !lightbox.classList.contains('open')) return;
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowLeft') showSlide(current - 1);
+        if (e.key === 'ArrowRight') showSlide(current + 1);
+      });
+
+      showSlide(0);
+      restartAuto();
+    }
   }
 
   // Dynamic GitHub Releases lookup (download.html)
@@ -135,27 +176,27 @@
         if (versionBadge && release.tag_name) {
           versionBadge.textContent = release.tag_name;
         }
-        const matchers = [
-          { id: 'dl-linux', re: /linux.*\.zip$/i },
-          { id: 'dl-windows', re: /windows.*\.zip$/i },
-          { id: 'dl-tv-apk', re: /android-tv.*\.apk$/i },
-          { id: 'dl-mobile-apk', re: /android-mobile.*\.apk$/i }
-        ];
-        matchers.forEach(({ id, re }) => {
-          const asset = release.assets.find((a) => re.test(a.name));
+        const bind = (id, patterns) => {
           const link = document.getElementById(id);
-          if (asset && link) {
-            link.href = asset.browser_download_url;
-            const meta = link.querySelector('[data-dl-meta]');
-            if (meta) {
-              const mb = (asset.size / (1024 * 1024)).toFixed(1);
-              meta.textContent = `${release.tag_name}  •  ${mb} MB`;
+          if (!link) return;
+          for (const re of patterns) {
+            const asset = release.assets.find((a) => re.test(a.name));
+            if (asset) {
+              link.href = asset.browser_download_url;
+              const meta = document.querySelector(`[data-meta-for="${id}"]`);
+              if (meta) {
+                const mb = (asset.size / (1024 * 1024)).toFixed(1);
+                meta.textContent = `${asset.name}  •  ${mb} MB`;
+              }
+              return;
             }
           }
-        });
+        };
+        bind('dl-windows', [/windows.*\.msi$/i, /windows.*\.zip$/i]);
+        bind('dl-linux', [/linux.*\.deb$/i, /linux.*\.tar\.gz$/i, /linux.*\.zip$/i]);
       })
       .catch(() => {
-        // Keep clean static fallback URLs pointing to GitHub Releases & Google Play
+        // Keep static fallback URLs pointing to GitHub Releases & Google Play
       });
   }
 })();

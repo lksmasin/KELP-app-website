@@ -23,7 +23,7 @@
         <a href="addon-docs.html" class="nav-pill">Doplňky</a>
       </nav>
       <div class="header-actions">
-        <a href="download.html" class="btn btn-primary btn-sm header-cta">Stáhnout v2.0</a>
+        <a href="download.html" class="btn btn-primary btn-sm header-cta">Stáhnout</a>
         <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-label="Otevřít menu">
           <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
         </button>
@@ -42,7 +42,7 @@
     <section class="page-hero">
       <div class="container">
         <h1>Časté dotazy</h1>
-        <p>Věcné odpovědi o tom, jak KELP funguje, jaké protokoly podporuje a jak nakládá s daty.</p>
+        <p>Věcné odpovědi o tom, jak KELP funguje, jaké zdroje podporuje a jak nakládá s daty.</p>
       </div>
     </section>
 
@@ -56,21 +56,21 @@
               <svg class="icon icon-sm faq-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
             </summary>
             <div class="faq-body">
-              <p><strong>Ne.</strong> KELP je otevřené mediální centrum, které spojuje metadata z TMDb s vašimi vlastními zdroji a přehrává je ve vestavěném přehrávači (Media3 na Androidu, libmpv na Desktopu).</p>
-              <p>V základní instalaci neobsahuje žádný obsah, žádný předinstalovaný doplněk ani napojení na konkrétní hostingové služby.</p>
+              <p><strong>Ne.</strong> KELP je otevřené mediální centrum, které spojuje katalogová metadata z TMDb s vašimi vlastními zdroji a přehrává je ve vestavěném přehrávači.</p>
+              <p>V základní instalaci neobsahuje žádný obsah, předinstalovaný doplněk ani napojení na konkrétní služby.</p>
             </div>
           </details>
 
           <details class="faq-item">
             <summary>
-              <span>Jaké zdroje obsahu a protokoly mohu připojit?</span>
+              <span>Jaké zdroje obsahu mohu připojit?</span>
               <svg class="icon icon-sm faq-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
             </summary>
             <div class="faq-body">
               <p>KELP pracuje výhradně přes obecné otevřené protokoly:</p>
               <p><strong>Filmy a seriály:</strong> Stremio v3 (<span class="inline-code">manifest.json</span>), deklarativní JSON doplňky, WebDAV a lokální složky na disku.</p>
-              <p><strong>Živá TV:</strong> M3U playlisty, Xtream Codes a programový průvodce XMLTV EPG včetně podpory archivu (catchup).</p>
-              <p>Technický popis vlastních doplňků najdete v <a href="addon-docs.html">dokumentaci doplňků</a>.</p>
+              <p><strong>Živá TV:</strong> M3U playlisty, Xtream Codes a programový průvodce XMLTV EPG včetně podpory archivu.</p>
+              <p>Technický popis tvorby doplňků najdete v <a href="addon-docs.html">dokumentaci doplňků</a>.</p>
             </div>
           </details>
 
@@ -80,19 +80,19 @@
               <svg class="icon icon-sm faq-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
             </summary>
             <div class="faq-body">
-              <p>KELP nepotřebuje žádný uživatelský účet ani e-mail. Zařízení spárujete <strong>QR kódem nebo 6znakovým kódem</strong>.</p>
-              <p>Data (rozkoukané tituly, profily, kolekce, doplňky a zdroje Živé TV) se komprimují a šifrují přímo na zařízení pomocí <strong>AES-256-GCM</strong>. Synchronizace probíhá buď přímo v domácí síti přes <strong>LAN P2P</strong> (včetně rychlého přenosu „Na TV“), nebo volitelně přes open-source zero-knowledge relay, který vidí jen anonymní zašifrované bloky.</p>
+              <p>KELP nevyžaduje uživatelský účet ani e-mail. Zařízení spárujete <strong>QR kódem nebo 6znakovým kódem</strong>.</p>
+              <p>Rozkoukané tituly, profily, kolekce, doplňky i zdroje Živé TV se šifrují přímo na zařízení pomocí <strong>AES-256-GCM</strong>. Synchronizace funguje v domácí síti přes LAN (včetně rychlého odeslání videa „Na TV“) i na dálku přes volitelný zero-knowledge relay.</p>
             </div>
           </details>
 
           <details class="faq-item">
             <summary>
-              <span>Podporuje KELP stahování pro sledování offline?</span>
+              <span>Podporuje KELP sledování offline?</span>
               <svg class="icon icon-sm faq-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
             </summary>
             <div class="faq-body">
-              <p>Ano. Filmy, jednotlivé epizody i celé série (včetně volby „jen nezhlédnuté“) můžete stáhnout přes HTTP Range s obnovením přenosu nebo HLS. Stažená kopie uloží i plakát, titulky a kapitoly a při dalším spuštění má automaticky přednost.</p>
-              <p>V nastavení lze omezit maximální velikost úložiště, souběžnost stahování a na mobilu povolit stahování pouze přes Wi-Fi.</p>
+              <p>Ano. Filmy, jednotlivé epizody i celé série (včetně volby „jen nezhlédnuté“) můžete stáhnout předem včetně titulků a přebalů. Stažená kopie má při dalším spuštění automaticky přednost.</p>
+              <p>V nastavení lze nastavit maximální limit úložiště i stahování pouze přes Wi-Fi.</p>
             </div>
           </details>
 
@@ -102,30 +102,29 @@
               <svg class="icon icon-sm faq-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
             </summary>
             <div class="faq-body">
-              <p>KELP má specializované nativní rozhraní pro <strong>Android TV</strong> (10-foot ovládání D-padem), <strong>Android telefony a tablety</strong> (dotyková gesta, PiP, QR skener), <strong>Linux x64</strong> a <strong>Windows x64</strong>.</p>
-              <p>Rozhraní i katalog podporují <strong>češtinu, slovenštinu a angličtinu</strong>.</p>
+              <p>KELP má nativní rozhraní pro <strong>Android TV</strong>, <strong>Android telefony a tablety</strong> (obě veřejně na Google Play), <strong>Windows 10/11</strong> a <strong>Linux</strong>.</p>
+              <p>Aplikace i katalog podporují <strong>češtinu, slovenštinu a angličtinu</strong>.</p>
             </div>
           </details>
 
           <details class="faq-item">
             <summary>
-              <span>Co potřebuji na Linuxu nebo Windows pro přehrávání videa?</span>
+              <span>Potřebuji pro přehrávání na počítači něco doinstalovat?</span>
               <svg class="icon icon-sm faq-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
             </summary>
             <div class="faq-body">
-              <p>Desktopová verze využívá knihovnu <strong>libmpv</strong>:</p>
-              <p><strong>Linux:</strong> nainstalujte balíček <span class="inline-code">mpv-libs</span> (Fedora) nebo <span class="inline-code">libmpv2</span> (Debian / Ubuntu).</p>
-              <p><strong>Windows:</strong> umístěte <span class="inline-code">mpv-2.dll</span> do <span class="inline-code">PATH</span> nebo přímo vedle souboru <span class="inline-code">page.kelp.exe</span>.</p>
+              <p><strong>Windows:</strong> Ne — knihovna přehrávače (<span class="inline-code">libmpv-2.dll</span>) je přibalená přímo v instalačním i přenosném balíku.</p>
+              <p><strong>Linux:</strong> Pokud nemáte přehrávač <span class="inline-code">mpv</span> v systému, nainstalujte balíček <span class="inline-code">mpv-libs</span> (Fedora) nebo <span class="inline-code">libmpv2</span> (Debian / Ubuntu).</p>
             </div>
           </details>
 
           <details class="faq-item">
             <summary>
-              <span>Sbírá aplikace nějaká osobní data nebo telemetrii?</span>
+              <span>Sbírá aplikace nějaká osobní data nebo reklamy?</span>
               <svg class="icon icon-sm faq-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
             </summary>
             <div class="faq-body">
-              <p>Ne. KELP neobsahuje reklamy, analytiku, cookies ani sledování. Veškerá databáze je uložena lokálně v SQLite na vašem zařízení. Podrobnosti najdete v <a href="disclaimer.html">právní doložce a zásadách soukromí</a>.</p>
+              <p>Ne. KELP neobsahuje reklamy, analytiku, cookies ani sledování. Veškerá data jsou uložena lokálně na vašem zařízení. Podrobnosti najdete v <a href="disclaimer.html">právní doložce a zásadách GDPR</a>.</p>
             </div>
           </details>
 

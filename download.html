@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Stáhnout | KELP</title>
-  <meta name="description" content="Stáhněte si KELP v2.0 pro Android TV, Android telefony a tablety, Linux x64 a Windows x64.">
+  <meta name="description" content="Stáhněte si KELP pro Android, Android TV, Windows a Linux.">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <link rel="stylesheet" href="style.css">
@@ -23,7 +23,7 @@
         <a href="addon-docs.html" class="nav-pill">Doplňky</a>
       </nav>
       <div class="header-actions">
-        <a href="#platforms" class="btn btn-primary btn-sm header-cta">Stáhnout v2.0</a>
+        <a href="#platforms" class="btn btn-primary btn-sm header-cta">Stáhnout</a>
         <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-label="Otevřít menu">
           <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
         </button>
@@ -41,74 +41,55 @@
   <main>
     <section class="page-hero">
       <div class="container">
-        <div class="meta-eyebrow">Aktuální vydání<span class="sep">•</span><span class="mono" data-latest-version>v2.0.0</span><span class="sep">•</span>Android 10+  •  Linux x64  •  Windows x64</div>
+        <div class="meta-eyebrow">Aktuální verze<span class="sep">•</span><span class="mono" data-latest-version>v7.0.0-beta.1</span></div>
         <h1>Stáhnout KELP</h1>
-        <p>Vyberte sestavení pro svou platformu. Všechny verze sdílejí stejnou knihovnu i šifrovanou synchronizaci bez účtu.</p>
+        <p>Vyberte verzi pro své zařízení. Všechny platformy spolupracují přes šifrovanou synchronizaci bez uživatelského účtu.</p>
       </div>
     </section>
 
     <section class="section" id="platforms" data-releases-repo="lksmasin/KELP-app-website">
       <div class="container">
-        <div class="dl-grid">
+        <div class="dl-platforms">
 
-          <a href="https://play.google.com/store/apps/details?id=page.kelp" target="_blank" rel="noopener noreferrer" class="dl-card" id="dl-tv">
-            <div class="dl-card-head">
+          <article class="platform-card">
+            <div class="platform-card-head">
               <svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 20h8M12 17v3"/></svg>
-              <span class="badge badge-emp">Google Play</span>
+              <h2>Android a Android TV</h2>
             </div>
-            <h3>Android TV</h3>
-            <div class="dl-meta" data-dl-meta>v2.0.0  •  10-foot UI</div>
-            <p class="dl-note">Optimalizováno pro dálkový ovladač, Media3 + AFR a 4K televize. Sideload APK najdete v GitHub Releases.</p>
-          </a>
-
-          <a href="https://play.google.com/store/apps/details?id=page.kelp" target="_blank" rel="noopener noreferrer" class="dl-card" id="dl-mobile">
-            <div class="dl-card-head">
-              <svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></svg>
-              <span class="badge badge-emp">Google Play</span>
+            <p class="platform-desc">Veřejně dostupné na Google Play pro telefony, tablety i televizory s Android TV (Android 10 a novější).</p>
+            <div class="platform-meta">Google Play  •  Android 10+</div>
+            <div class="platform-actions">
+              <a href="https://play.google.com/store/apps/details?id=page.kelp" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-full">Otevřít na Google Play</a>
+              <a href="https://github.com/lksmasin/KELP-app-website/releases" target="_blank" rel="noopener noreferrer" class="platform-alt">Přímé APK na GitHub Releases</a>
             </div>
-            <h3>Android Mobil &amp; Tablet</h3>
-            <div class="dl-meta" data-dl-meta>v2.0.0  •  Dotykové UI</div>
-            <p class="dl-note">Material 3 na OLED černé, dotyková gesta, Picture-in-Picture, QR skener a posílání „Na TV“.</p>
-          </a>
+          </article>
 
-          <a href="https://github.com/lksmasin/KELP-app-website/releases/latest" target="_blank" rel="noopener noreferrer" class="dl-card" id="dl-linux">
-            <div class="dl-card-head">
-              <svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M2 20h20"/></svg>
-              <span class="badge">ZIP x64</span>
-            </div>
-            <h3>Linux</h3>
-            <div class="dl-meta" data-dl-meta>GitHub Releases  •  x64</div>
-            <p class="dl-note">Přenosný balík s nativním HiDPI škálováním, podporou myši i klávesnice a libmpv přehrávačem.</p>
-          </a>
-
-          <a href="https://github.com/lksmasin/KELP-app-website/releases/latest" target="_blank" rel="noopener noreferrer" class="dl-card" id="dl-windows">
-            <div class="dl-card-head">
+          <article class="platform-card">
+            <div class="platform-card-head">
               <svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg>
-              <span class="badge">ZIP x64</span>
+              <h2>Windows</h2>
             </div>
-            <h3>Windows</h3>
-            <div class="dl-meta" data-dl-meta>GitHub Releases  •  Windows 10/11</div>
-            <p class="dl-note">Spustitelný balík <span class="inline-code">page.kelp.exe</span> s klávesovými zkratkami <span class="inline-code">F11</span> a <span class="inline-code">Ctrl +/-/0</span>.</p>
-          </a>
-
-        </div>
-
-        <div class="req-grid">
-          <div class="notice-box">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 10v6M12 7h.01"/></svg>
-            <div>
-              <h4>Přístup k uzavřené betě na Google Play</h4>
-              <p>Pokud není veřejná verze na Google Play pro váš účet dostupná, napište Gmail účet na <a href="mailto:mail@lukymas.eu.org">mail@lukymas.eu.org</a> nebo na <a href="https://discord.com/invite/N7xasCqzh6" target="_blank" rel="noopener noreferrer">Discord</a>. Přímá APK sestavení jsou k dispozici v <a href="https://github.com/lksmasin/KELP-app-website/releases" target="_blank" rel="noopener noreferrer">GitHub Releases</a>.</p>
+            <p class="platform-desc">Instalátor MSI nebo přenosný ZIP balík pro 64bitová Windows 10 a 11 včetně přibaleného přehrávače.</p>
+            <div class="platform-meta" data-meta-for="dl-windows">Windows 10 / 11 (x64)  •  MSI / ZIP</div>
+            <div class="platform-actions">
+              <a href="https://github.com/lksmasin/KELP-app-website/releases/latest" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-full" id="dl-windows">Stáhnout pro Windows</a>
+              <a href="https://github.com/lksmasin/KELP-app-website/releases" target="_blank" rel="noopener noreferrer" class="platform-alt">Všechny balíčky (MSI a přenosný ZIP)</a>
             </div>
-          </div>
+          </article>
 
-          <div class="panel">
-            <h3>Požadavky přehrávače na Desktopu</h3>
-            <ul>
-              <li><strong>Linux:</strong> nainstalovaný balíček <span class="inline-code">mpv-libs</span> (Fedora) nebo <span class="inline-code">libmpv2</span> (Debian / Ubuntu).</li>
-              <li><strong>Windows:</strong> knihovna <span class="inline-code">mpv-2.dll</span> v <span class="inline-code">PATH</span> nebo ve složce s <span class="inline-code">page.kelp.exe</span>.</li>
-            </ul>
-          </div>
+          <article class="platform-card">
+            <div class="platform-card-head">
+              <svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M2 20h20"/></svg>
+              <h2>Linux</h2>
+            </div>
+            <p class="platform-desc">Instalační balíček DEB i přenosný archiv tar.gz pro 64bitové linuxové distribuce s nativní podporou HiDPI.</p>
+            <div class="platform-meta" data-meta-for="dl-linux">Linux (x64)  •  DEB / tar.gz</div>
+            <div class="platform-actions">
+              <a href="https://github.com/lksmasin/KELP-app-website/releases/latest" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-full" id="dl-linux">Stáhnout pro Linux</a>
+              <a href="https://github.com/lksmasin/KELP-app-website/releases" target="_blank" rel="noopener noreferrer" class="platform-alt">Všechny balíčky (DEB a tar.gz)</a>
+            </div>
+          </article>
+
         </div>
       </div>
     </section>
@@ -117,39 +98,24 @@
       <div class="container">
         <div class="section-head">
           <h2>Přehled změn</h2>
-          <a href="https://github.com/lksmasin/KELP-app-website/releases" target="_blank" rel="noopener noreferrer" class="section-sub" style="text-decoration: underline; text-underline-offset: 3px;">Všechna vydání na GitHubu</a>
+          <a href="https://github.com/lksmasin/KELP-app-website/releases" target="_blank" rel="noopener noreferrer" class="text-link">Archiv vydání na GitHubu</a>
         </div>
 
-        <article class="changelog-entry">
+        <article class="changelog-card">
           <div class="changelog-head">
-            <div class="changelog-ver">
-              <span>KELP v2.0.0</span>
-              <span class="badge badge-emp">Nová generace</span>
-            </div>
-            <span class="mono section-sub">Kotlin Multiplatform &amp; Compose</span>
+            <h3>KELP 7.0.0-beta.1</h3>
+            <span class="mono section-sub">Listopad 2026</span>
           </div>
 
-          <div class="changelog-cols">
-            <div class="changelog-group">
-              <h4>Architektura a platformy</h4>
-              <ul>
-                <li><strong>Kompletní přepis do KMP / Compose:</strong> nativní aplikace pro Android TV, Android telefony/tablety, Linux x64 a Windows x64 ze sdíleného jádra.</li>
-                <li><strong>Nové mobilní rozhraní:</strong> dotyková gesta jasu, hlasitosti a posunu, Picture-in-Picture, zámek obrazovky a CameraX + ZXing QR skener.</li>
-                <li><strong>Hybridní E2EE synchronizace:</strong> AES-256-GCM bez účtu — LAN P2P včetně přenosu „Na TV“ a volitelný zero-knowledge relay.</li>
-                <li><strong>Lokalizace:</strong> kompletní podpora češtiny, slovenštiny a angličtiny s úvodním průvodcem.</li>
-              </ul>
-            </div>
-
-            <div class="changelog-group">
-              <h4>Přehrávání, offline a zdroje</h4>
-              <ul>
-                <li><strong>Otevřené zdroje:</strong> Stremio v3, deklarativní JSON doplňky, WebDAV, lokální disk a Živá TV (M3U, Xtream Codes, XMLTV EPG s archivem).</li>
-                <li><strong>Strukturovaný výběr streamů:</strong> detekce rozlišení, HDR/DV, kodeků, zvuku a CZ/SK dabingu/titulků s monochromatickým řazením.</li>
-                <li><strong>Offline stahování:</strong> HTTP Range s obnovením, HLS, dávkové stažení sérií, titulky, limity úložiště a přednost lokálních kopií.</li>
-                <li><strong>Přehrávač:</strong> Media3 s AFR na Androidu, libmpv na Desktopu, kapitoly, Přeskočit intro a karta Další díl.</li>
-              </ul>
-            </div>
-          </div>
+          <ul class="changelog-list">
+            <li><strong>Zcela nový nativní základ:</strong> rychlejší start, plynulejší procházení katalogu a jednotný vývoj pro Android TV, Android telefony/tablety, Windows a Linux.</li>
+            <li><strong>Samostatná aplikace pro Android telefony a tablety:</strong> dotykové rozhraní s gesty v přehrávači (jas, hlasitost, posun), obrazem v obraze (PiP) a QR skenerem pro párování.</li>
+            <li><strong>Šifrovaná synchronizace bez účtu:</strong> propojení zařízení pomocí QR nebo 6znakového kódu — synchronizace profilů, historie sledování, kolekcí a doplňků včetně posílání videa z mobilu přímo na TV.</li>
+            <li><strong>Offline stahování:</strong> stahování filmů, epizod i celých sérií včetně titulků a přebalů s přednostním přehráním bez připojení.</li>
+            <li><strong>Přepracovaný výběr streamů a nové zdroje:</strong> rozpoznávání rozlišení, HDR/Dolby Vision, zvuku a českého/slovenského dabingu i titulků; podpora Stremio v3, JSON doplňků v2, WebDAV a lokálních složek.</li>
+            <li><strong>Živá TV s EPG a archivem:</strong> podpora M3U a Xtream playlistů, programového průvodce XMLTV a zpětného přehrávání z archivu.</li>
+            <li><strong>Spořič obrazovky, profily a jazyky:</strong> ambientní spořič při nečinnosti a pauze na TV i Desktopu, dotyková gesta pro desktopové tablety, správa dospělých i dětských profilů a podpora češtiny, slovenštiny a angličtiny.</li>
+          </ul>
         </article>
       </div>
     </section>
